@@ -3,6 +3,7 @@
 
 int SDL_ScreenShot(void)
 {
+#if 0
     SDL_Surface *temp = NULL;
     unsigned char *pixels;
     int i;
@@ -42,7 +43,7 @@ int SDL_ScreenShot(void)
     SDL_SaveBMP(temp, "../Screenshots/Screenshot.bmp");
 
     SDL_FreeSurface(temp);
-
+#endif
     return 0;
 }
 

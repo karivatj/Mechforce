@@ -1,5 +1,19 @@
+#	CMakeCache.txt
+#	CMakeFiles/
+#	CMakeLists.txt.user
+#	Makefile
+#	Mechforce.cbp
+#	bin/System/Mechforce
+#	cmake_install.cmake
 gitignore
-CmakeCache.txt
+
 Makefile
+Mechforce.cbp
+
 cmake_install.cmake
+CMakeLists.txt.user
+CMakeCache
 CMakeFiles/*
+
+bin/System/Mechforce
+bin/System/Mechforce.exe

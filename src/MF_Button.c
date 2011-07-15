@@ -1,15 +1,3 @@
-/****************************************************************************/
-/* Button.c                                                                 */
-/* --------                                                                 */
-/* Sis‰lt‰‰ 5 osaa:                                                         */
-/* ReadButtonData - Lue tiedostosta nappula data taulukkoon                 */
-/* IsButtonPressed - Tarkistetaan onko nappi painettuna                     */
-/* IsButtonHovered - Tarkistetaan onko kursori napin p‰‰ll‰                 */
-/* IsButtonReleased - Onko napista p‰‰stetty irti                           */
-/* DrawButtonScene - Piirret‰‰n tarvittavat napit ruutuun                   */
-/* DrawButton - Piirret‰‰n parametrina annetun tyypin mukainen nappi ruutuun*/
-/****************************************************************************/
-
 #include <stdio.h>
 #include "Mechforce.h"
 #include "Button.h"
@@ -128,15 +116,15 @@ void BTN_HandleButtonStateChanges(SDL_EventType eventtype, int button, int butto
             {
                 switch(eventtype)
                 {
-                    case SDL_MOUSEMOTION:   //Onko kyseess‰ hiiren heilautus
+                    case SDL_MOUSEMOTION:
                     Buttons[i] = BTN_HandleMouseOvers(Buttons[i], button);
                     break;
 
-                    case SDL_MOUSEBUTTONDOWN:   //Onko kyseess‰ hiiren klikkaus
+                    case SDL_MOUSEBUTTONDOWN:
                     Buttons[i] = BTN_HandlePresses(Buttons[i], button);
                     break;
 
-                    case SDL_MOUSEBUTTONUP:     //Onko kyseess‰ hiiren napin vapautus
+                    case SDL_MOUSEBUTTONUP:
                     Buttons[i] = BTN_HandleReleases(Buttons[i]);
                     break;
 
@@ -163,7 +151,8 @@ BUTTON BTN_HandlePresses(BUTTON b, int button)
     {
         case 0:
         case 1:
-            if(button == SDL_BUTTON_LEFT && b.enabled == 0) {  //Jos hiiren vasenta nappia painetaan ja nappi ei ole viel‰ aktivoitu
+            if(button == SDL_BUTTON_LEFT && b.enabled == 0)
+            {
                 SDL_PlaySound(1);
                 b.enabled = 1;
             }
@@ -202,7 +191,8 @@ BUTTON BTN_HandleReleases(BUTTON b)
 {
     switch(b.type)
     {
-        case 0 ... 1:
+        case 0:
+        case 1:
             state = b.kohdetila;
             SDL_PlaySound(3);
             SDL_Delay(500);
@@ -221,7 +211,8 @@ BUTTON BTN_HandleMouseOvers(BUTTON b, int button)
 {
     switch(b.type)
     {
-        case 0 ... 1:
+        case 0:
+        case 1:
         if(button == 1 && b.enabled == 0)
         {  //Jos hiiren vasenta nappia painetaan ja nappi ei ole viel‰ aktivoitu
             b.enabled = 1;
@@ -277,11 +268,11 @@ void BTN_DrawButtonScene(void)
             else
             glBindTexture(GL_TEXTURE_2D,buttontextures[Buttons[i].type * 3 + stride + 3]);
 
-            BTN_DrawButton(Buttons[i]); //Piirret‰‰n maski
+            BTN_DrawButton(Buttons[i]);
 
             glBlendFunc( GL_ONE, GL_ONE );
 
-            if(Buttons[i].enabled == 1) //Jos nappi on aktiivisena
+            if(Buttons[i].enabled == 1)
             {
                 if(Buttons[i].type == 2 || Buttons[i].type == 3)
                 glBindTexture(GL_TEXTURE_2D,buttontextures[Buttons[i].type * 3 + stride + 1]);
@@ -292,18 +283,16 @@ void BTN_DrawButtonScene(void)
                 BTN_DrawButton(Buttons[i]);
             }
 
-            else if(Buttons[i].mouseover == 1 && (Buttons[i].type == 0 || Buttons[i].type == 1)) //Jos kursori on napin p‰‰ll‰. Radio ja Check tyyppisille napeille t‰t‰ tapahtumaa ei tarkisteta
+            else if(Buttons[i].mouseover == 1 && (Buttons[i].type == 0 || Buttons[i].type == 1))
             {
                 glBindTexture(GL_TEXTURE_2D,buttontextures[Buttons[i].type * 3 + stride + 1]);
                 BTN_DrawButton(Buttons[i]);
             }
-            else //Muuten piirret‰‰n vain normaali nappi joka ei ole aktiivinen eik‰ hiiri ole sen p‰‰ll‰.
+            else
             {
                 glBindTexture(GL_TEXTURE_2D,buttontextures[Buttons[i].type * 3 + stride]);
                 BTN_DrawButton(Buttons[i]);
             }
-
-            /*Seuraavana piirret‰‰n nappuloille tekstis ja asetellaan ne oikeanlaisesti*/
         }
     }
 

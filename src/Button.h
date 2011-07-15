@@ -6,7 +6,6 @@
 #include "Mechforce.h"
 #include "SDL/SDL.h"
 
-/*Different kinds of button types*/
 typedef struct {
     int type;
     int size;

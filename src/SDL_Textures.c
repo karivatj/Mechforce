@@ -51,7 +51,7 @@ void SDL_LoadTextures(void)
     printf("Finished loading textures.\n\n");
 }
 
-void SDL_GenerateTilemap()  //Luodaa tilekartta eli pilkotaa tilemap.png kuvasta 32x32 kokoisia tilej‰.
+void SDL_GenerateTilemap()
 {
     int i;
     int x,y;
@@ -75,7 +75,7 @@ void SDL_GenerateTilemap()  //Luodaa tilekartta eli pilkotaa tilemap.png kuvasta
 
     printf("Generating tilemap.\n");
 
-    tilemap = IMG_Load("../Images/tilemap.png");             //K‰ytet‰‰n SDL_imagen Load funktiota tilemapin lataamiseen ja survotaan se tilemap surfacelle
+    tilemap = IMG_Load("../Images/tilemap.png");
 
     if(tilemap == NULL)
     {
@@ -94,10 +94,10 @@ void SDL_GenerateTilemap()  //Luodaa tilekartta eli pilkotaa tilemap.png kuvasta
     {
         for(x = 0; x < TILEMAP_WIDTH; x++)
         {
-            slice_x = x * TILE_WIDTH;   //Leikattavan palan leveys
-            slice_y = y * TILE_HEIGHT;  //Slicen y korkeus
+            slice_x = x * TILE_WIDTH;
+            slice_y = y * TILE_HEIGHT;
 
-            SDL_Rect srcRect;   //Alue joka liimataan tyhj‰lle alustalle
+            SDL_Rect srcRect;
             srcRect.x = slice_x;
             srcRect.y = slice_y;
             srcRect.w = TILE_WIDTH;
@@ -107,10 +107,10 @@ void SDL_GenerateTilemap()  //Luodaa tilekartta eli pilkotaa tilemap.png kuvasta
             dstRect.x = 0;
             dstRect.y = 0;
 
-            int i =  x + (TILEMAP_WIDTH * y);   //Lasketaan indeksi
+            int i =  x + (TILEMAP_WIDTH * y);
 
-            SDL_SetColorKey(tilemap, SDL_SRCCOLORKEY, SDL_MapRGB(tilemap->format, 255, 255, 255 )); //Asetetaan valkoinen v‰ri l‰pin‰kyv‰ksi
-            SDL_BlitSurface(tilemap, &srcRect, tiles[i], &dstRect); //Blitataan eli liitet‰‰n leikattu kuva pienemm‰lle tyhj‰lle alustalle.
+            SDL_SetColorKey(tilemap, SDL_SRCCOLORKEY, SDL_MapRGB(tilemap->format, 255, 255, 255 ));
+            SDL_BlitSurface(tilemap, &srcRect, tiles[i], &dstRect);
         }
     }
 

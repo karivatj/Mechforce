@@ -227,7 +227,7 @@ void SDL_DrawScene(void)
 
 }
 
-void SDL_DrawTile(int index, int x, int y)   //Piirretään vain tile ruutuun.
+void SDL_DrawTile(int index, int x, int y)
 {
     glLoadIdentity();
     glTranslated(x,y,0);

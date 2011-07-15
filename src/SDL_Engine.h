@@ -58,7 +58,7 @@ GLuint buttontextures[14];
 
 int flags;  //Variable that contains info about our videoflags.
 
-void Init_SDL(void);    //K‰ynnistet‰‰n SDL
+void Init_SDL(void);
 void Init_GL(int width, int height);
 void OrthogonalStart(void);
 void OrthogonalEnd(void);
@@ -67,15 +67,15 @@ void Print(int size, double x, double y, double r, double g, double b, int fonti
 GLuint glGenerateTexture(SDL_Surface *surface, int type);
 
 void SDL_BuildDisplayLists(void);
-void SDL_Close(int code);								                            //Ohjelman sulku funktio
+void SDL_Close(int code);
 void SDL_CountFPS(void);
-void SDL_DrawScene(void);								                            //Piirret‰‰n kamat ruutuun
+void SDL_DrawScene(void);
 void SDL_DrawText(int size, int x, int y, double r, double g, double b, int font, char *msg, ...);
-void SDL_DrawTile(int index, int x, int y);                                         //Piirret‰‰n haluttu tile ruutuun
-void SDL_GenerateTilemap(void);                                                     //Muodostetaan tilemap
+void SDL_DrawTile(int index, int x, int y);
+void SDL_GenerateTilemap(void);
 void SDL_LoadTextures(void);
-void SDL_LoadSounds(void);                                                          //ƒ‰nen latauksia
-void SDL_PlaySound(int id);							                                //ƒ‰nen soittoa
+void SDL_LoadSounds(void);
+void SDL_PlaySound(int id);
 int  SDL_ScreenShot(void);
 
 #endif  //SDL_ENGINE_H

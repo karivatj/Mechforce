@@ -10,9 +10,11 @@ find_package(SDL_mixer REQUIRED)
 
 ADD_DEFINITIONS(-Wall)
 
-file(GLOB SourceFiles ./src/*.c)
+file(GLOB SourceFiles ${CMAKE_SOURCE_DIR}/src/*.c)
+file(GLOB HeaderFiles ${CMAKE_SOURCE_DIR}/src/*.h)
 
 set(SourceFiles ${SourceFiles})
+set(HeadereFiles ${HeaderFiles})
 
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src/)
 
@@ -24,10 +26,9 @@ INCLUDE_DIRECTORIES("C:/Program Files/Qt/mingw/include")
 INCLUDE_DIRECTORIES("C:/Program Files/Qt/mingw/include/freetype2")
 endif()
 
-ADD_EXECUTABLE(Mechforce ${SourceFiles})
+ADD_EXECUTABLE(Mechforce ${SourceFiles} ${HeaderFiles})
 
 set_target_properties(Mechforce PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/System)
-
 
 if(WIN32)
 	TARGET_LINK_LIBRARIES(Mechforce mingw32 freetype ftgl SDLmain SDL SDL_mixer SDL_image opengl32 glu32)

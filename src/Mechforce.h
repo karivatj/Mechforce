@@ -30,10 +30,10 @@ typedef enum {
 extern STATE state;
 
 void MF_StateMachine(void); //Tilakone
-void MF_MouseEventPress(SDL_EventType type, int button, int buttonstate,  int x, int y); //Hiiri klikkaus eventtien käsittelyä
+void MF_MouseEventPress(SDL_EventType type, int button, int buttonstate,  int x, int y);
 void MF_MouseEventRelease(SDL_EventType type, int button, int buttonstate,int x, int y);
-void MF_MouseEventMotion(SDL_EventType type, int button, int buttonstate, int x, int y); //Hiiri liike eventtien käsittelyä
-int  MF_Event_Handler(void); //Hallinnoidaan kaikki nappuloiden ja hiiren painallukset
+void MF_MouseEventMotion(SDL_EventType type, int button, int buttonstate, int x, int y);
+int  MF_Event_Handler(void);
 void MF_DrawHUD(void);
 
 #endif /* MECHFORCE_H */

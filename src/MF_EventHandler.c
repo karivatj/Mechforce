@@ -31,11 +31,11 @@ int MF_Event_Handler(void)
                     }
                             break;
 
-                    case SDL_MOUSEBUTTONDOWN:	//Tässä seurataa painetaanko hiirennappia alas ja verrataan sitte kumpaako painetaan
+                    case SDL_MOUSEBUTTONDOWN:
                           MF_MouseEventPress(event.type, event.button.button, event.button.state, event.button.x, event.button.y);
                     break;
 
-                    case SDL_MOUSEBUTTONUP:		//Samat temput tehdään myös jos hiiren nappia nousee ylös
+                    case SDL_MOUSEBUTTONUP:
                         MF_MouseEventRelease(event.type, event.button.button, event.button.state, event.button.x, event.button.y);
                     break;
 

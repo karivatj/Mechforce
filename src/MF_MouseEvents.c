@@ -31,8 +31,8 @@ void MF_MouseEventRelease(SDL_EventType type, int button, int buttonstate,  int 
 
 void MF_MouseEventMotion(SDL_EventType type, int button, int buttonstate,  int x, int y)
 {
-    float diffx = x - lastx;
-    float diffy = y - lasty;
+    //float diffx = x - lastx;
+    //float diffy = y - lasty;
 
     lastx = x;
     lasty = y;
@@ -46,6 +46,6 @@ void MF_MouseEventMotion(SDL_EventType type, int button, int buttonstate,  int x
         cameray += (float) 0.05f * diffy;
     }
 */
-    int cy = HEIGHT - y;    //K‰‰nnet‰‰n y akseli ymp‰ri ku SDL:ss‰ se o erip‰in mit‰ OpenGL:s‰
+    int cy = HEIGHT - y;
     BTN_HandleButtonStateChanges(type,button,buttonstate,x,cy);
 }

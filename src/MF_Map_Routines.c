@@ -8,6 +8,7 @@
 
 void MAP_LoadMap (char keyword[]) //Koetetaan ladata parametrina annettu kartta muistiin.
 {
+#if 0
     FILE *tiedosto;
     char string[128];
     char *token = NULL;
@@ -72,20 +73,21 @@ void MAP_LoadMap (char keyword[]) //Koetetaan ladata parametrina annettu kartta 
     }
 
     fclose (tiedosto);
+#endif
 }
 
 
-void MAP_DrawTileMap() //Piirret‰‰n kartta
+void MAP_DrawTileMap()
 {
-
+#if 0
     int cx,cy;
     OrthogonalStart();
     glEnable(GL_BLEND);
     glBlendFunc(GL_ONE, GL_ONE);
 
-    for(cy = 0; cy < MAP_HEIGHT; cy++)
+    for(cy = 0; cy < MAP_SIZE; cy++)
     {
-        for(cx = 0; cx < MAP_WIDTH; cx++)
+        for(cx = 0; cx < MAP_SIZE; cx++)
         {
             if(cy % 2)
             {
@@ -100,25 +102,26 @@ void MAP_DrawTileMap() //Piirret‰‰n kartta
 
     glDisable(GL_BLEND);
     OrthogonalEnd();
+#endif
 }
 
 void MAP_DrawFractalMap(void)
 {
     int i,j;
-    Vertexarray temp[MAP_WIDTH * MAP_HEIGHT];
+    Vertexarray temp[MAP_SIZE * MAP_SIZE];
 
 	glEnableClientState(GL_VERTEX_ARRAY);   //We want a vertex array
 
 	glVertexPointer(3, GL_FLOAT, 0, &Map_VertexArray[0]);   //All values are grouped to three Floats, we start at the beginning of the array (offset=0) and want to use as VertexArray
 
-    for(i = 0; i<MAP_HEIGHT; i++)
+    for(i = 0; i<MAP_SIZE; i++)
     {
-        glDrawArrays(GL_LINE_STRIP, MAP_WIDTH * i, MAP_WIDTH); //We draw the first three vertices in the array as a triangle
+        glDrawArrays(GL_LINE_STRIP, MAP_SIZE * i, MAP_SIZE); //We draw the first three vertices in the array as a triangle
     }
 
-	for(i=0; i < MAP_HEIGHT; i++)
+        for(i=0; i < MAP_SIZE; i++)
 	{
-	    for(j=0; j < MAP_WIDTH; j++)
+            for(j=0; j < MAP_SIZE; j++)
 	    {
 	        temp[i * 20 + j].x = Map_VertexArray[j * 20 + i].x;
 	        temp[i * 20 + j].y = Map_VertexArray[j * 20 + i].y;
@@ -128,9 +131,9 @@ void MAP_DrawFractalMap(void)
 
 	glVertexPointer(3, GL_FLOAT, 0, &temp[0]);   //All values are grouped to three Floats, we start at the beginning of the array (offset=0) and want to use as VertexArray
 
-    for(i = 0; i<MAP_HEIGHT; i++)
+    for(i = 0; i<MAP_SIZE; i++)
     {
-        glDrawArrays(GL_LINE_STRIP, MAP_WIDTH * i, MAP_WIDTH);
+        glDrawArrays(GL_LINE_STRIP, MAP_SIZE * i, MAP_SIZE);
     }
 
 	glDisableClientState(GL_VERTEX_ARRAY);
@@ -138,11 +141,12 @@ void MAP_DrawFractalMap(void)
 
 void MAP_SetTile()
 {
+#if 0
     int x,y;
 
-    for(y = 0; y < MAP_HEIGHT; y++)
+    for(y = 0; y < MAP_SIZE; y++)
     {
-        for(x = 0; x < MAP_WIDTH; x++)
+        for(x = 0; x < MAP_SIZE; x++)
         {
             if(Map[PAIKKA(x,y)].korkeus < -0.20)
             Map[PAIKKA(x,y)].type = 11;
@@ -184,5 +188,5 @@ void MAP_SetTile()
             Map[PAIKKA(x,y)].type = 0;
         }
     }
-
+#endif
 }
