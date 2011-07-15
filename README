@@ -1,0 +1,20 @@
+Mechforce is a Battletech simulator inspired by the old Amiga game called Mechforce. 
+This program tries to mimic the look and feel of the Amiga version and tries to add some 3D features to it also. 
+So user can basically choose whether to play the game with the classic style Amiga graphics or with the new ones. 
+
+This project is my first which utilizes OpenGL and SDL so this project will be a learning experience for me also
+
+Mechforce will compile on Linux and Windows with cmake. On Windows systems one should just modify few paths inside 
+CMakeLists.txt to point to the right include directories so Windows platforms can locate Freetype and pals correctly. 
+On Linux systems no modifications are needed. One should just install the dependencies necessary.
+
+Dependencies:
+
+OpenGL
+Freetype
+FTGL
+SDL
+SDL_image
+SDL_mixer
+
+Lets hope that I dont encounter too many problems on the way! Perhaps some day there will be a working Battletech simulator up and running. Stay tuned!
