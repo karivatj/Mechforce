@@ -1,10 +1,10 @@
 #ifndef MAP_H
 #define MAP_H
 
-#define MAP_SIZE 9
-#define SEED 1000
+#define MAP_SIZE 65
+#define SEED 5
 
-#define POINT(x,y) (MAP_SIZE*(y)+(x))
+#define POINT(x,y) (MAP_SIZE*(y)+(x)) //Macro for mimicing the behaviour of a 2-dimensional array in 1-dimensional array.
 
 #include "SDL_Engine.h"
 
@@ -17,7 +17,7 @@ typedef struct {
     float x,y,z;
 }Vertexarray;
 
-double Map[MAP_SIZE * MAP_SIZE];
+MAP Map[MAP_SIZE * MAP_SIZE];
 Vertexarray Map_VertexArray[MAP_SIZE * MAP_SIZE];
 
 void MAP_DrawFractalMap(void);

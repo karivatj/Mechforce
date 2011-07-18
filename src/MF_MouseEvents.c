@@ -31,21 +31,21 @@ void MF_MouseEventRelease(SDL_EventType type, int button, int buttonstate,  int 
 
 void MF_MouseEventMotion(SDL_EventType type, int button, int buttonstate,  int x, int y)
 {
-    //float diffx = x - lastx;
-    //float diffy = y - lasty;
+    float diffx = x - lastx;
+    float diffy = y - lasty;
 
     lastx = x;
     lasty = y;
-/*
+
     if(button == 1 && state == STATE_GAME)
     {
         rotx += (float) 0.5f * diffy;
         roty -= (float) 0.5f * diffx;
 
-        camerax -= (float) 0.05f * diffx;
-        cameray += (float) 0.05f * diffy;
+        camerax -= (float) 0.10f * diffx;
+        cameray += (float) 0.10f * diffy;
     }
-*/
+
     int cy = HEIGHT - y;
     BTN_HandleButtonStateChanges(type,button,buttonstate,x,cy);
 }

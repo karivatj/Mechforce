@@ -8,7 +8,7 @@ find_package(SDL REQUIRED)
 find_package(SDL_image REQUIRED)
 find_package(SDL_mixer REQUIRED)
 
-ADD_DEFINITIONS(-Wall)
+ADD_DEFINITIONS(-Wall -g)
 
 file(GLOB SourceFiles ${CMAKE_SOURCE_DIR}/src/*.c)
 file(GLOB HeaderFiles ${CMAKE_SOURCE_DIR}/src/*.h)

@@ -24,7 +24,7 @@ int MF_Event_Handler(void)
                             break;
                         case SDLK_4:
                             MAP_GenerateMap();
-                            MAP_LoadMap("KARTTA3");
+                            //MAP_LoadMap("KARTTA3");
                             break;
                         default:
                         break;

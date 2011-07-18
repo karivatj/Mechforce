@@ -69,7 +69,7 @@ void SDL_CountFPS(void)
     if(deltatime < (1000 / FPS))
     {
         SDL_Delay((1000 / FPS) - deltatime);
-        printf("delayed %d ms\n",(1000 / FPS) - deltatime);
+        //printf("delayed %d ms\n",(1000 / FPS) - deltatime);
     }
 }
 

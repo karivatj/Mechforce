@@ -27,8 +27,8 @@ int main(int argc, char **argv)
     MAP_GenerateMap();
 
     camerax = 0;
-    cameray = 15;
-    cameraz = 25;
+    cameray = 200;
+    cameraz = 200;
     rotx = 45;
     roty = 0;
 
@@ -176,10 +176,12 @@ void SDL_Close(int code)
 
     printf("Audio closed.\n");
 
-    ftglDestroyFont(font[0]);
-    ftglDestroyFont(font[1]);
-
-    printf("Fonts destroyed.\n");
+    if(font[0] != NULL && font[1] != NULL)
+    {
+        ftglDestroyFont(font[0]);
+        ftglDestroyFont(font[1]);
+        printf("Fonts destroyed.\n");
+    }
 
     glDeleteTextures(3,&backgrounds[0]);
     glDeleteTextures(11,&buttontextures[0]);
