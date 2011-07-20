@@ -3,16 +3,10 @@
 
 int SDL_ScreenShot(void)
 {
-#if 0
+#if 1
     SDL_Surface *temp = NULL;
     unsigned char *pixels;
     int i;
-
-    if (!(screen->flags & SDL_OPENGL))
-    {
-            SDL_SaveBMP(temp, "../Screenshots/Screenshot.bmp");
-            return 0;
-    }
 
     temp = SDL_CreateRGBSurface(SDL_SWSURFACE, screen->w, screen->h, 24,
     #if SDL_BYTEORDER == SDL_LIL_ENDIAN
@@ -25,7 +19,7 @@ int SDL_ScreenShot(void)
     if (temp == NULL)
             return -1;
 
-    pixels = malloc(3 * screen->w * screen->h);
+    pixels = malloc(4 * screen->w * screen->h);
 
     if (pixels == NULL)
     {
@@ -33,10 +27,10 @@ int SDL_ScreenShot(void)
             return -1;
     }
 
-    glReadPixels(0, 0, screen->w, screen->h, GL_RGB, GL_UNSIGNED_BYTE, pixels);
+    glReadPixels(0, 0, screen->w, screen->h, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
 
     for (i=0; i<screen->h; i++)
-            memcpy(((char *) temp->pixels) + temp->pitch * i, pixels + 3*screen->w * (screen->h-i-1), screen->w*3);
+            memcpy(((char *) temp->pixels) + temp->pitch * i, pixels + 4*screen->w * (screen->h-i-1), screen->w*4);
 
     free(pixels);
 
@@ -61,15 +55,35 @@ void SDL_CountFPS(void)
     {
         GLfloat seconds = (framestart - T0) / 1000.0;
         fps = Frames / seconds;
-        //printf("%d frames in %g seconds = %g FPS\n", Frames, seconds, fps);
         T0 = framestart;
         Frames = 0;
     }
 
     if(deltatime < (1000 / FPS))
-    {
         SDL_Delay((1000 / FPS) - deltatime);
-        //printf("delayed %d ms\n",(1000 / FPS) - deltatime);
-    }
 }
 
+void MF_DrawHUD(void)
+{
+    OrthogonalStart();
+
+    glEnable(GL_BLEND);
+    glDisable(GL_DEPTH_TEST );
+
+    glLoadIdentity();
+
+    glBlendFunc(GL_DST_COLOR, GL_ZERO);
+    glBindTexture(GL_TEXTURE_2D,backgrounds[3]);        //Mask
+    glCallList(background);
+
+    glLoadIdentity();
+
+    glBlendFunc( GL_ONE, GL_ONE );
+    glBindTexture(GL_TEXTURE_2D,backgrounds[2]);        //HUD
+    glCallList(background);
+
+    glDisable(GL_BLEND);
+    glEnable( GL_DEPTH_TEST );
+
+    OrthogonalEnd();
+}

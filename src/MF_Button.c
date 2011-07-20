@@ -59,8 +59,8 @@ int BTN_ReadButtonData(void)
                 case 2: Buttons[counter1].group = temp; break;
                 case 3: Buttons[counter1].x = temp; break;
                 case 4: Buttons[counter1].y = temp; break;
-                case 5: Buttons[counter1].tila = ResolveState(temp); break;
-                case 6: Buttons[counter1].kohdetila = ResolveState(temp); break;
+                case 5: Buttons[counter1].state = ResolveState(temp); break;
+                case 6: Buttons[counter1].targetstate = ResolveState(temp); break;
                 case 7: strncpy(Buttons[counter1].caption,token,length); break;
 
                 default:
@@ -94,50 +94,52 @@ void BTN_HandleButtonStateChanges(SDL_EventType eventtype, int button, int butto
 
     for(i = 0; i < MAX_BUTTONS; i++)
     {
-        if(Buttons[i].tila == state)
+        if(Buttons[i].state == state)
         {
-            if(Buttons[i].type == 0) {
+            if(Buttons[i].type == 0)
+            {
                 xstride = 25.8 * Buttons[i].size;
                 ystride = 4.2 * Buttons[i].size;
             }
-            else if(Buttons[i].type == 1) {
+            else if(Buttons[i].type == 1)
+            {
                 xstride = 12.8 * Buttons[i].size;
                 ystride = 4.2 * Buttons[i].size;
             }
-            else if(Buttons[i].type == 2) {
+            else if(Buttons[i].type == 2)
+            {
                 xstride = 8.2 * Buttons[i].size;
                 ystride = 8.2 * Buttons[i].size;
             }
-            else if(Buttons[i].type == 3) {
+            else if(Buttons[i].type == 3)
+            {
                 xstride = 10 * Buttons[i].size;
                 ystride = 10 * Buttons[i].size;
             }
-            if(x >= Buttons[i].x + 2 && x <= Buttons[i].x + xstride && y >= Buttons[i].y + 2 && y <= Buttons[i].y + ystride) //Jos kursori on napin sisällä
+            if(x >= Buttons[i].x + 2 && x <= Buttons[i].x + xstride && y >= Buttons[i].y + 2 && y <= Buttons[i].y + ystride) //If the cursor is inside the button
             {
                 switch(eventtype)
                 {
                     case SDL_MOUSEMOTION:
-                    Buttons[i] = BTN_HandleMouseOvers(Buttons[i], button);
+                        Buttons[i] = BTN_HandleMouseOvers(Buttons[i], button);
                     break;
 
                     case SDL_MOUSEBUTTONDOWN:
-                    Buttons[i] = BTN_HandlePresses(Buttons[i], button);
+                        Buttons[i] = BTN_HandlePresses(Buttons[i], button);
                     break;
 
                     case SDL_MOUSEBUTTONUP:
-                    Buttons[i] = BTN_HandleReleases(Buttons[i]);
+                        Buttons[i] = BTN_HandleReleases(Buttons[i]);
                     break;
 
                     default:
                     break;
                 }
             }
-            else
+            else if(Buttons[i].type  == 0 || Buttons[i].type == 1)
             {
-                if(Buttons[i].type  == 0 || Buttons[i].type == 1) {
                 Buttons[i].enabled = 0;
                 Buttons[i].mouseover = 0;
-                }
             }
         }
     }
@@ -166,7 +168,7 @@ BUTTON BTN_HandlePresses(BUTTON b, int button)
 
                 for(i = 0; i < MAX_BUTTONS; i++)
                 {
-                    if(Buttons[i].tila == state && Buttons[i].group == b.group)
+                    if(Buttons[i].state == state && Buttons[i].group == b.group)
                     {
                         Buttons[i].enabled = 0;
                     }
@@ -193,7 +195,7 @@ BUTTON BTN_HandleReleases(BUTTON b)
     {
         case 0:
         case 1:
-            state = b.kohdetila;
+            state = b.targetstate;
             SDL_PlaySound(3);
             SDL_Delay(500);
             break;
@@ -240,7 +242,7 @@ BUTTON BTN_HandleMouseOvers(BUTTON b, int button)
 
 void BTN_DrawButtonScene(void)
 {
-    int i,stride;
+    int i, stride;
 
     glEnable(GL_BLEND);
     glDisable(GL_DEPTH_TEST);
@@ -248,22 +250,22 @@ void BTN_DrawButtonScene(void)
     for(i = 0; i < MAX_BUTTONS; i++)
     {
         if(Buttons[i].type == 0)
-        stride = 0;
+            stride = 0;
 
         else if(Buttons[i].type == 1)
-        stride = 1;
+            stride = 1;
 
         else
-        stride = 2;
+            stride = 2;
 
-        if(Buttons[i].tila == state)
+        if(Buttons[i].state == state)
         {
             glBlendFunc(GL_DST_COLOR, GL_ZERO);
             glLoadIdentity();
-            glTranslated(Buttons[i].x, Buttons[i].y,0);
+            glTranslated(Buttons[i].x, Buttons[i].y, 0);
 
             if(Buttons[i].type == 2 || Buttons[i].type == 3)
-            glBindTexture(GL_TEXTURE_2D,buttontextures[Buttons[i].type * 3 + stride + 2]);
+            glBindTexture(GL_TEXTURE_2D, buttontextures[Buttons[i].type * 3 + stride + 2]);
 
             else
             glBindTexture(GL_TEXTURE_2D,buttontextures[Buttons[i].type * 3 + stride + 3]);
@@ -304,50 +306,50 @@ void BTN_DrawButton(BUTTON b)
 {
     float height, length;
 
-    ftglSetFontFaceSize(font[0],25 - (10 - b.size), 72);
+    ftglSetFontFaceSize(font[0], 25 - (10 - b.size), 72);
     length = ftglGetFontAdvance(font[0], b.caption);
     height = ftglGetFontAscender(font[0]) + ftglGetFontDescender(font[0]);
 
     switch(b.type)
     {
         case 0:
-        glBegin(GL_QUADS);
-            glTexCoord2d(0,1);        glVertex2d(0 , 0);
-            glTexCoord2d(1,1);        glVertex2d(26 * b.size, 0);
-            glTexCoord2d(1,0);        glVertex2d(26 * b.size, 4.4 * b.size);
-            glTexCoord2d(0,0);        glVertex2d(0 , 4.4 * b.size);
-        glEnd();
-        SDL_DrawText(25 - (10-b.size),b.x + ((25.8 * b.size) / 2 - (length / 2)) ,b.y + ((4.4 * b.size) / 2 - (height / 2)),1,1,1,0,b.caption);
+            glBegin(GL_QUADS);
+                glTexCoord2d(0,1);        glVertex2d(0 , 0);
+                glTexCoord2d(1,1);        glVertex2d(26 * b.size, 0);
+                glTexCoord2d(1,0);        glVertex2d(26 * b.size, 4.4 * b.size);
+                glTexCoord2d(0,0);        glVertex2d(0 , 4.4 * b.size);
+            glEnd();
+            SDL_DrawText(25 - (10-b.size),b.x + ((25.8 * b.size) / 2 - (length / 2)) ,b.y + ((4.4 * b.size) / 2 - (height / 2)),1,1,1,0,b.caption);
         break;
 
         case 1:
-        glBegin(GL_QUADS);
-            glTexCoord2d(0,1);        glVertex2d(0 , 0);
-            glTexCoord2d(1,1);        glVertex2d(13 * b.size , 0);
-            glTexCoord2d(1,0);        glVertex2d(13 * b.size, 4.4 * b.size);
-            glTexCoord2d(0,0);        glVertex2d(0 , 4.4 * b.size);
-        glEnd();
-        SDL_DrawText(25 - (10-b.size),b.x + ((13 * b.size) / 2 - (length / 2)) ,b.y + ((4.4 * b.size) / 2 - (height / 2)),1,1,1,0,b.caption);
+            glBegin(GL_QUADS);
+                glTexCoord2d(0,1);        glVertex2d(0 , 0);
+                glTexCoord2d(1,1);        glVertex2d(13 * b.size , 0);
+                glTexCoord2d(1,0);        glVertex2d(13 * b.size, 4.4 * b.size);
+                glTexCoord2d(0,0);        glVertex2d(0 , 4.4 * b.size);
+            glEnd();
+            SDL_DrawText(25 - (10-b.size),b.x + ((13 * b.size) / 2 - (length / 2)) ,b.y + ((4.4 * b.size) / 2 - (height / 2)),1,1,1,0,b.caption);
         break;
 
         case 2:
-        glBegin(GL_QUADS);
-            glTexCoord2d(0,1);        glVertex2d(0 , 0);
-            glTexCoord2d(1,1);        glVertex2d(8.2 * b.size, 0);
-            glTexCoord2d(1,0);        glVertex2d(8.2 * b.size, 8.2 * b.size);
-            glTexCoord2d(0,0);        glVertex2d(0 , 8.2 * b.size);
-        glEnd();
-        SDL_DrawText(25 - (10-b.size),b.x + 2 + (8.2 * b.size) ,b.y + ((8.2 * b.size) / 2 - (height / 2)),1,1,1,0,b.caption);
+            glBegin(GL_QUADS);
+                glTexCoord2d(0,1);        glVertex2d(0 , 0);
+                glTexCoord2d(1,1);        glVertex2d(8.2 * b.size, 0);
+                glTexCoord2d(1,0);        glVertex2d(8.2 * b.size, 8.2 * b.size);
+                glTexCoord2d(0,0);        glVertex2d(0 , 8.2 * b.size);
+            glEnd();
+            SDL_DrawText(25 - (10-b.size),b.x + 2 + (8.2 * b.size) ,b.y + ((8.2 * b.size) / 2 - (height / 2)),1,1,1,0,b.caption);
         break;
 
         case 3:
-        glBegin(GL_QUADS);
-            glTexCoord2d(0,1);        glVertex2d(0 , 0);
-            glTexCoord2d(1,1);        glVertex2d(10 * b.size, 0);
-            glTexCoord2d(1,0);        glVertex2d(10 * b.size, 10 * b.size);
-            glTexCoord2d(0,0);        glVertex2d(0 , 10 * b.size);
-        glEnd();
-        SDL_DrawText(25 - (10-b.size),b.x + 2 + (10 * b.size) ,b.y + ((10 * b.size) / 2 - (height / 2)),1,1,1,0,b.caption);
+            glBegin(GL_QUADS);
+                glTexCoord2d(0,1);        glVertex2d(0 , 0);
+                glTexCoord2d(1,1);        glVertex2d(10 * b.size, 0);
+                glTexCoord2d(1,0);        glVertex2d(10 * b.size, 10 * b.size);
+                glTexCoord2d(0,0);        glVertex2d(0 , 10 * b.size);
+            glEnd();
+            SDL_DrawText(25 - (10-b.size),b.x + 2 + (10 * b.size) ,b.y + ((10 * b.size) / 2 - (height / 2)),1,1,1,0,b.caption);
         break;
 
         default:

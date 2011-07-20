@@ -15,8 +15,8 @@ typedef struct {
     int x;
     int y;
     char caption[32];
-    STATE tila;
-    STATE kohdetila;
+    STATE state;
+    STATE targetstate;
 } BUTTON;    //Button datatype
 
 BUTTON Buttons[MAX_BUTTONS];

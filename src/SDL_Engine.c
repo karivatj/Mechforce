@@ -22,18 +22,19 @@ STATE state;
 int main(int argc, char **argv)
 {
     int done = 0, value = 0;
-    srand (time(NULL));   //Initialize rand seed
+    srand (time(NULL));   //Initialize random seed
 
     MAP_GenerateMap();
 
     camerax = 0;
     cameray = 200;
     cameraz = 200;
+
     rotx = 45;
     roty = 0;
 
     Init_SDL();
-    Init_GL(WIDTH,HEIGHT);
+    Init_GL();
 
     SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
 
@@ -84,12 +85,13 @@ int main(int argc, char **argv)
 void Init_SDL(void)
 {
     const SDL_VideoInfo *videoInfo;
+    int flags;  //Variable that contains info about our videoflags.
 
-    SDL_Surface* icon = SDL_LoadBMP("./Images/icon.bmp");	        //Tehdään ikkunalle oma pieni ikoni. Ladataan eka kuva
+    SDL_Surface* icon = SDL_LoadBMP("./Images/icon.bmp");
 
     printf("Initializing SDL.\n");
 
-    if(SDL_Init(SDL_INIT_AUDIO|SDL_INIT_VIDEO) != 0 ) 				//Alustetaa SDL käyttöön Videon ja Audion osalta
+    if(SDL_Init(SDL_INIT_AUDIO|SDL_INIT_VIDEO) != 0 )
     {
         fprintf(stderr, "Error occured while initializing SDL: %s", SDL_GetError());
         SDL_Close(1);
@@ -103,29 +105,29 @@ void Init_SDL(void)
         SDL_Close(1);
     }
 
-    if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) != 0) 		//Avataan mixeri käyttöön perus asetuksilla.
+    if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) != 0)
     {
         fprintf(stderr, "Error encountered while initializing SDL_mixer: %s\n", Mix_GetError());
         SDL_Close(1);
     }
 
-    SDL_WM_SetCaption("Mechforce: Rearmed","MechForce: Rearmed");	//Nimetään vielä ikkuna mieleiseksemme
-    SDL_WM_SetIcon(icon, NULL);					                    //Ja asetetaan ikoni tällä käskyllä ikkunalle
-    SDL_FreeSurface(icon);						                    //Lopuksi vielä vapautetaan kuva ettei se jää muistiin
+    SDL_WM_SetCaption("Mechforce","Mechforce");
+    SDL_WM_SetIcon(icon, NULL);
+    SDL_FreeSurface(icon);
 
     flags = SDL_OPENGL;
 
-    if ( videoInfo->hw_available )
+    if (videoInfo->hw_available )
 	flags |= SDL_HWSURFACE;
     else
 	flags |= SDL_SWSURFACE;
 
     /* This checks if hardware blits can be done */
-    if ( videoInfo->blit_hw )
+    if (videoInfo->blit_hw )
 	flags |= SDL_HWACCEL;
 
     /* Sets up OpenGL double buffering */
-    SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 1 );
+    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
     /* get a SDL surface */
     if ((screen = SDL_SetVideoMode(WIDTH, HEIGHT, 16, flags )) == NULL )
@@ -135,7 +137,7 @@ void Init_SDL(void)
     }
 }
 
-void Init_GL(int Width, int Height)	        // We call this right after our OpenGL window is created.
+void Init_GL()	        // We call this right after our OpenGL window is created.
 {
     printf("Initializing OpenGL.\n\n");
 
@@ -190,13 +192,13 @@ void SDL_Close(int code)
     printf("Textures deleted.\n");
 
     glDeleteLists(background,1);
-    glDeleteLists(tile,1);
+    glDeleteLists(state,1);
 
     printf("Shutting down SDL.\n");
 
     SDL_QuitSubSystem(SDL_INIT_AUDIO|SDL_INIT_VIDEO);
 
-    printf("\nAll Done. Thank You for trying MF - Rearmed!. Bye Bye.\n");
+    printf("\nAll Done. Thank You for trying MF - Rearmed!\n");
 
     SDL_Quit();
 
@@ -207,10 +209,10 @@ void SDL_DrawScene(void)
 {
     int i;
 
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);		// Clear The Screen And The Depth Buffer
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// Clear The Screen And The Depth Buffer
     glEnable3D();
 
-    MF_StateMachine();  //Tilakone
+    MF_StateMachine();
     OrthogonalStart();
     BTN_DrawButtonScene();
 
@@ -221,7 +223,9 @@ void SDL_DrawScene(void)
             if (text_events[i].reserved == 0)
                 break;
 
-            Print(text_events[i].size, text_events[i].x, text_events[i].y, text_events[i].r, text_events[i].g, text_events[i].b, text_events[i].font, text_events[i].text);
+            Print(text_events[i].size, text_events[i].x, text_events[i].y, text_events[i].r,
+                  text_events[i].g, text_events[i].b, text_events[i].font, text_events[i].text);
+
             text_events[i].reserved = 0;
     }
 
@@ -234,10 +238,11 @@ void SDL_DrawTile(int index, int x, int y)
     glLoadIdentity();
     glTranslated(x,y,0);
     glBindTexture(GL_TEXTURE_2D, tiletexture[index]);
-    glCallList(tile);
+    glCallList(state);
 }
 
-void SDL_BuildDisplayLists (void)
+/*Build displaylists*/
+void SDL_BuildDisplayLists(void)
 {
     /*Buttons for mainmenu*/
     background = glGenLists(1);
@@ -252,7 +257,7 @@ void SDL_BuildDisplayLists (void)
 
     /*Tile Displaylist*/
     tile = glGenLists(1);
-    glNewList(tile,GL_COMPILE);
+    glNewList(tile, GL_COMPILE);
     glBegin(GL_QUADS);
         glTexCoord2d(0,1);        glVertex2d(0 , 0);
         glTexCoord2d(1,1);        glVertex2d(32, 0);
