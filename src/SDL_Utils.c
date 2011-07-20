@@ -61,7 +61,7 @@ void SDL_CountFPS(void)
     {
         GLfloat seconds = (framestart - T0) / 1000.0;
         fps = Frames / seconds;
-        printf("%d frames in %g seconds = %g FPS\n", Frames, seconds, fps);
+        //printf("%d frames in %g seconds = %g FPS\n", Frames, seconds, fps);
         T0 = framestart;
         Frames = 0;
     }

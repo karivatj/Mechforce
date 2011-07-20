@@ -18,16 +18,16 @@ int BTN_ReadButtonData(void)
         }
     }
 
-    FILE *tiedosto;
+    FILE *file;
     char *token = NULL;
     char string[128];
-    int laskuri1 = 0;
-    int laskuri2 = 0;
+    int counter1 = 0;
+    int counter2 = 0;
     int done = 0;
     int length;
     int temp;
 
-    if((tiedosto = fopen ("../Data/buttons.txt", "r")) == NULL)
+    if((file = fopen ("../Data/buttons.txt", "r")) == NULL)
     {
         fprintf(stderr,"ERROR*** Couldn't open buttons datafile (./Data/Buttons.txt)\n");
         SDL_Close(-1);
@@ -35,10 +35,10 @@ int BTN_ReadButtonData(void)
 
     printf("Succesfully opened button datafile.\nPreparing to read button data.\n");
 
-    while(!feof(tiedosto))
+    while(!feof(file))
     {
-        laskuri2 = 0;
-        fgets(string, 128, tiedosto);
+        counter2 = 0;
+        fgets(string, 128, file);
         token = strtok (string,",");
 
         while (token != NULL)
@@ -52,37 +52,37 @@ int BTN_ReadButtonData(void)
             temp = atoi(token);
             length = strlen(token);
 
-            switch(laskuri2)
+            switch(counter2)
             {
-                case 0: Buttons[laskuri1].type = temp; break;
-                case 1: Buttons[laskuri1].size = temp; break;
-                case 2: Buttons[laskuri1].group = temp; break;
-                case 3: Buttons[laskuri1].x = temp; break;
-                case 4: Buttons[laskuri1].y = temp; break;
-                case 5: Buttons[laskuri1].tila = ResolveState(temp); break;
-                case 6: Buttons[laskuri1].kohdetila = ResolveState(temp); break;
-                case 7: strncpy(Buttons[laskuri1].caption,token,length); break;
+                case 0: Buttons[counter1].type = temp; break;
+                case 1: Buttons[counter1].size = temp; break;
+                case 2: Buttons[counter1].group = temp; break;
+                case 3: Buttons[counter1].x = temp; break;
+                case 4: Buttons[counter1].y = temp; break;
+                case 5: Buttons[counter1].tila = ResolveState(temp); break;
+                case 6: Buttons[counter1].kohdetila = ResolveState(temp); break;
+                case 7: strncpy(Buttons[counter1].caption,token,length); break;
 
                 default:
                 break;
             }
 
             token = strtok (NULL, ",");
-            laskuri2++;
+            counter2++;
         }
 
-        laskuri1++;
+        counter1++;
 
-        if(laskuri1 > MAX_BUTTONS || done)
+        if(counter1 > MAX_BUTTONS || done)
         {
             printf("Finished reading buttons.\n\n");
             break;
         }
 
-        printf("Button read succesfully. Type = %d and caption = %s. [%d/%d]\n", Buttons[laskuri1-1].type, Buttons[laskuri1-1].caption, laskuri1-1, MAX_BUTTONS);
+        printf("Button read succesfully. Type = %d and caption = %s. [%d/%d]\n", Buttons[counter1-1].type, Buttons[counter1-1].caption, counter1-1, MAX_BUTTONS);
     }
 
-    fclose (tiedosto);
+    fclose (file);
 
     return 0;   //OK
 }

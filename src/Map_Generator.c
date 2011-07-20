@@ -10,7 +10,7 @@ void MAP_GenerateMap()
 
     int x;
     int y;
-    double h = 25;
+    double h = 50;
 
     //Seed the data
     Map[POINT(0,0)].height = Map[POINT(0,MAP_SIZE-1)].height = Map[POINT(MAP_SIZE-1,0)].height = Map[POINT(MAP_SIZE-1,MAP_SIZE-1)].height = SEED;
