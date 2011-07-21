@@ -108,6 +108,11 @@ void MAP_DrawTileMap()
 void MAP_DrawFractalMap(void)
 {
     int i,j;
+
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glEnable(GL_LINE_SMOOTH);
+
     Vertexarray temp[MAP_SIZE * MAP_SIZE];
 
     glEnableClientState(GL_VERTEX_ARRAY);   //We want a vertex array
@@ -137,6 +142,8 @@ void MAP_DrawFractalMap(void)
     }
 
     glDisableClientState(GL_VERTEX_ARRAY);
+    glDisable(GL_BLEND);
+    glDisable(GL_LINE_SMOOTH);
 }
 
 void MAP_SetTile()
