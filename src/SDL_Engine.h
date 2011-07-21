@@ -6,8 +6,8 @@
 #include "SDL/SDL_opengl.h"
 #include "FTGL/ftgl.h"
 
-#define WIDTH 800
-#define HEIGHT 600
+#define SCREEN_WIDTH 800
+#define SCREEN_HEIGHT 600
 #define BPP 16
 
 #define FPS 60
@@ -66,6 +66,9 @@ GLuint glGenerateTexture(SDL_Surface *surface, int type);
 void SDL_BuildDisplayLists(void);
 void SDL_Close(int code);
 void SDL_CountFPS(void);
+STATE ResolveState(int id);
+STATE ResolveButton(int id);
+
 void SDL_DrawScene(void);
 void SDL_DrawText(int size, int x, int y, double r, double g, double b, int font, char *msg, ...);
 void SDL_DrawTile(int index, int x, int y);

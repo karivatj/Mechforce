@@ -1,15 +1,30 @@
+/* MF_EventHandler.c
+ *
+ * Mechforce Event Handler where all of the keyboard and
+ * mouse events are handled.
+ *
+ * @author Kari Vatjus-Anttila <kari.vatjus-anttila@cie.fi>
+ *
+ */
 #include "Mechforce.h"
 #include "Map.h"
 #include "Button.h"
 #include "SDL_Engine.h"
 
+/**
+ * MF_Event_Handler is a function which
+ * handles the events the user has made
+ *
+ * @return int returns in special cases an integer
+ *
+ */
 int MF_Event_Handler(void)
 {
      while(SDL_PollEvent(&event))
      {
         switch(event.type)
         {
-            case SDL_QUIT:
+            case SDL_QUIT:      //X was pressed
                     return (1);
             break;
 
@@ -48,9 +63,14 @@ int MF_Event_Handler(void)
     return(0);
 }
 
+/**
+ * MF_MouseEventPress is a function which
+ * handles the mouse press events.
+ *
+ */
 void MF_MouseEventPress(SDL_EventType type, int button, int buttonstate,  int x, int y)
 {
-    int cy = HEIGHT - y;
+    int cy = SCREEN_HEIGHT - y;
     switch(button)
     {
         case SDL_BUTTON_LEFT:
@@ -67,14 +87,26 @@ void MF_MouseEventPress(SDL_EventType type, int button, int buttonstate,  int x,
     }
 }
 
+/**
+ * MF_MouseEventRelease is a function which
+ * handles the mouse release events.
+ *
+ */
 void MF_MouseEventRelease(SDL_EventType type, int button, int buttonstate,  int x, int y)
 {
-    int cy = HEIGHT - y;
+    int cy = SCREEN_HEIGHT - y;
+
     lastx = x;
     lasty = y;
+
     BTN_HandleButtonStateChanges(type,button,buttonstate,x,cy);
 }
 
+/**
+ * MF_MouseEventMotion is a function which
+ * handles the mouse motion events.
+ *
+ */
 void MF_MouseEventMotion(SDL_EventType type, int button, int buttonstate,  int x, int y)
 {
     float diffx = x - lastx;
@@ -94,6 +126,6 @@ void MF_MouseEventMotion(SDL_EventType type, int button, int buttonstate,  int x
         printf("Camera X: %f Camera Y: %f\n",camerax, cameray);
     }
 
-    int cy = HEIGHT - y;
+    int cy = SCREEN_HEIGHT - y;
     BTN_HandleButtonStateChanges(type,button,buttonstate,x,cy);
 }

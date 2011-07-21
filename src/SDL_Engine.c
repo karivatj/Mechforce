@@ -130,7 +130,7 @@ void Init_SDL(void)
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
     /* get a SDL surface */
-    if ((screen = SDL_SetVideoMode(WIDTH, HEIGHT, 16, flags )) == NULL )
+    if ((screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 16, flags )) == NULL )
     {
         fprintf(stderr, "Unable to create OpenGL screen: %s\n", SDL_GetError());
         SDL_Close(1);
@@ -249,9 +249,9 @@ void SDL_BuildDisplayLists(void)
     glNewList(background,GL_COMPILE);
     glBegin(GL_QUADS);
         glTexCoord2d(0,1);        glVertex2d(0 ,    0);
-        glTexCoord2d(1,1);        glVertex2d(WIDTH, 0);
-        glTexCoord2d(1,0);        glVertex2d(WIDTH, HEIGHT);
-        glTexCoord2d(0,0);        glVertex2d(0 ,    HEIGHT);
+        glTexCoord2d(1,1);        glVertex2d(SCREEN_WIDTH, 0);
+        glTexCoord2d(1,0);        glVertex2d(SCREEN_WIDTH, SCREEN_HEIGHT);
+        glTexCoord2d(0,0);        glVertex2d(0 ,    SCREEN_HEIGHT);
     glEnd();
     glEndList();
 
@@ -270,12 +270,12 @@ void SDL_BuildDisplayLists(void)
 
 void glEnable3D()
 {
-    glViewport (0, 0, (GLsizei)WIDTH, (GLsizei)HEIGHT);
+    glViewport (0, 0, (GLsizei)SCREEN_WIDTH, (GLsizei)SCREEN_HEIGHT);
 
     glMatrixMode (GL_PROJECTION);
     glLoadIdentity ();
 
-    gluPerspective (45, (GLfloat)WIDTH / (GLfloat)HEIGHT, 0.1, 1000.0);
+    gluPerspective (45, (GLfloat)SCREEN_WIDTH / (GLfloat)SCREEN_HEIGHT, 0.1, 1000.0);
 /*
     glTranslatef(camerax,cameray,-cameraz);     //Move Camera
 
@@ -294,7 +294,7 @@ void OrthogonalStart()
     glPushMatrix();
     glLoadIdentity();
 
-    gluOrtho2D(0, WIDTH, 0, HEIGHT);
+    gluOrtho2D(0, SCREEN_WIDTH, 0, SCREEN_HEIGHT);
 
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();

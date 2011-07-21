@@ -87,3 +87,28 @@ void MF_DrawHUD(void)
 
     OrthogonalEnd();
 }
+
+STATE ResolveState(int id)
+{
+    switch(id)
+    {
+        case 0:  return STATE_QUIT;     break;
+        case 1:  return STATE_MAINMENU; break;
+        case 2:  return STATE_GAME;     break;
+        case 3:  return STATE_OPTIONS;  break;
+        case -1: return STATE_NULL;     break;
+        default: return STATE_NULL;     break;
+    }
+}
+
+STATE ResolveButton(int id)
+{
+    switch(id)
+    {
+        case 0:  return BTN_RECT_BIG;     break;
+        case 1:  return BTN_RECT_SMALL; break;
+        case 2:  return RADIO_BUTTON;     break;
+        case 3:  return CHECKBOX;  break;
+        default: return STATE_NULL;     break;
+    }
+}
