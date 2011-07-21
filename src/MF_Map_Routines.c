@@ -6,34 +6,32 @@
 #include "SDL_Engine.h"
 #include "Map.h"
 
-void MAP_LoadMap (char keyword[]) //Koetetaan ladata parametrina annettu kartta muistiin.
+void MAP_LoadMap (char keyword[])
 {
-#if 1
-    FILE *tiedosto;
+    FILE *file;
     char string[128];
     char *token = NULL;
     int done = 0;
     int x = 0, y = 0;
 
-    if((tiedosto = fopen ("../Data/map.txt", "r")) == NULL)
+    if((file = fopen ("../Data/map.txt", "r")) == NULL)
     {
         fprintf(stderr,"ERROR*** Couldn't open Map file! (./Data/map.txt)\n");
         SDL_Close(-1);
     }
 
-    printf("Opening map datafile.\nPreparing to read mapdata.\n");
+    printf("Opening map datafile.\nStarting to read map data.\n");
 
-    while(!feof(tiedosto))
+    while(!feof(file))
     {
-        fgets(string,64,tiedosto);
+        fgets(string,64,file);
 
         if(strstr(string, keyword))
         {
-            printf("Found %s section. Starting to read data.\n",keyword);
-            while(!feof(tiedosto))
+            printf("Found %s section. Starting to read data.\n", keyword);
+            while(!feof(file))
             {
-                fgets(string,64,tiedosto);
-
+                fgets(string,64,file);
                 token = strtok(string," ");
 
                 while(token != NULL)
@@ -57,52 +55,41 @@ void MAP_LoadMap (char keyword[]) //Koetetaan ladata parametrina annettu kartta 
                     token = strtok (NULL, " ");
                 }
 
-                y++;
-                x=0;
+                y++; x=0;
 
                 if(done)
-                break;
+                    break;
             }
         }
-
         if(done)
-        {
-            printf("Succesfully read mapdata.\n");
             break;
-        }
     }
 
-    fclose (tiedosto);
-#endif
+    fclose (file);
 }
 
 
 void MAP_DrawTileMap()
 {
-#if 1
-    int cx,cy;
+
+    int x,y;
     OrthogonalStart();
     glEnable(GL_BLEND);
     glBlendFunc(GL_ONE, GL_ONE);
 
-    for(cy = 0; cy < MAP_SIZE; cy++)
+    for(y = 0; y < MAP_SIZE; y++)
     {
-        for(cx = 0; cx < MAP_SIZE; cx++)
+        for(x = 0; x < MAP_SIZE; x++)
         {
-            if(cy % 2)
-            {
-                SDL_DrawTile(Map[POINT(cx,cy)].type, 68 + (cx * 32), 500 - (cy * 16) - (cy * 8));
-            }
+            if(y % 2)
+                SDL_DrawTile(Map[POINT(x,y)].type, 68 + (x * 32), 500 - (y * 16) - (y * 8));
             else
-            {
-                SDL_DrawTile(Map[POINT(cx,cy)].type, 84 + (cx * 32), 500 - (cy * 16) - (cy * 8));
-            }
+                SDL_DrawTile(Map[POINT(x,y)].type, 84 + (x * 32), 500 - (y * 16) - (y * 8));
         }
     }
 
     glDisable(GL_BLEND);
     OrthogonalEnd();
-#endif
 }
 
 void MAP_DrawFractalMap(void)
@@ -148,52 +135,50 @@ void MAP_DrawFractalMap(void)
 
 void MAP_SetTile()
 {
-#if 0
     int x,y;
 
     for(y = 0; y < MAP_SIZE; y++)
     {
         for(x = 0; x < MAP_SIZE; x++)
         {
-            if(Map[POINT(x,y)].korkeus < -0.20)
-            Map[POINT(x,y)].type = 11;
+            if(Map[POINT(x,y)].height < 10)
+                Map[POINT(x,y)].type = 11;
 
-            else if(Map[POINT(x,y)].korkeus < -0.16 && Map[POINT(x,y)].korkeus >= -0.20)//vesi
-            Map[POINT(x,y)].type = 10;
+            else if(Map[POINT(x,y)].height < -0.16 && Map[POINT(x,y)].height >= -0.20)//vesi
+                Map[POINT(x,y)].type = 10;
 
-            else if(Map[POINT(x,y)].korkeus < -0.13 && Map[POINT(x,y)].korkeus >= -0.16)
-            Map[POINT(x,y)].type = 9;
+            else if(Map[POINT(x,y)].height < -0.13 && Map[POINT(x,y)].height >= -0.16)
+                Map[POINT(x,y)].type = 9;
 
-            else if(Map[POINT(x,y)].korkeus < -0.07 && Map[POINT(x,y)].korkeus >= -0.13)
-            Map[POINT(x,y)].type = 8;
+            else if(Map[POINT(x,y)].height < -0.07 && Map[POINT(x,y)].height >= -0.13)
+                Map[POINT(x,y)].type = 8;
 
-            else if(Map[POINT(x,y)].korkeus < -0.05 && Map[POINT(x,y)].korkeus >= -0.07)//metsät
-            Map[POINT(x,y)].type = 4;
+            else if(Map[POINT(x,y)].height < -0.05 && Map[POINT(x,y)].height >= -0.07)//metsät
+                Map[POINT(x,y)].type = 4;
 
-            else if(Map[POINT(x,y)].korkeus > 0.5 && Map[POINT(x,y)].korkeus <= 0.10)
-            Map[POINT(x,y)].type = 5;
+            else if(Map[POINT(x,y)].height > 0.5 && Map[POINT(x,y)].height <= 0.10)
+                Map[POINT(x,y)].type = 5;
 
-            else if(Map[POINT(x,y)].korkeus > 0.10 && Map[POINT(x,y)].korkeus <= 0.14)
-            Map[POINT(x,y)].type = 6;
+            else if(Map[POINT(x,y)].height > 0.10 && Map[POINT(x,y)].height <= 0.14)
+                Map[POINT(x,y)].type = 6;
 
-            else if(Map[POINT(x,y)].korkeus > 0.14 && Map[POINT(x,y)].korkeus <= 0.15)
-            Map[POINT(x,y)].type = 7;
+            else if(Map[POINT(x,y)].height > 0.14 && Map[POINT(x,y)].height <= 0.15)
+                Map[POINT(x,y)].type = 7;
 
-            else if(Map[POINT(x,y)].korkeus > 0.15 && Map[POINT(x,y)].korkeus <= 0.20)//vuoret
-            Map[POINT(x,y)].type = 12;
+            else if(Map[POINT(x,y)].height > 0.15 && Map[POINT(x,y)].height <= 0.20)//vuoret
+                Map[POINT(x,y)].type = 12;
 
-            else if(Map[POINT(x,y)].korkeus > 0.20 && Map[POINT(x,y)].korkeus <= 0.24)
-            Map[POINT(x,y)].type = 13;
+            else if(Map[POINT(x,y)].height > 0.20 && Map[POINT(x,y)].height <= 0.24)
+                Map[POINT(x,y)].type = 13;
 
-            else if(Map[POINT(x,y)].korkeus > 0.24 && Map[POINT(x,y)].korkeus <= 0.26)
-            Map[POINT(x,y)].type = 14;
+            else if(Map[POINT(x,y)].height > 0.24 && Map[POINT(x,y)].height <= 0.26)
+                Map[POINT(x,y)].type = 14;
 
-            else if(Map[POINT(x,y)].korkeus > 0.26)
-            Map[POINT(x,y)].type = 15;
+            else if(Map[POINT(x,y)].height > 0.26)
+                Map[POINT(x,y)].type = 15;
 
             else
-            Map[POINT(x,y)].type = 0;
+                Map[POINT(x,y)].type = 0;
         }
     }
-#endif
 }

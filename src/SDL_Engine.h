@@ -16,8 +16,7 @@
 #define MAX_TILES 16
 
 #define TILEMAP_WIDTH 4
-#define TILEMAP_HEIGTH 4
-
+#define TILEMAP_HEIGHT 4
 #define TILE_WIDTH 32
 #define TILE_HEIGHT 32
 
@@ -29,16 +28,18 @@ Mix_Chunk *sounds[MAX_SOUNDS];  //3 sounds
 FTGLfont *font[2];
 
 typedef struct {
-	int reserved;
-	int x;
-	int y;
-	int r;
-	int g;
-	int b;
-	int size;
-	int font;
-	char text[128];
+    int reserved;
+    int x;
+    int y;
+    int r;
+    int g;
+    int b;
+    int size;
+    int font;
+    char text[128];
 } TXT_EVENTS;
+
+TXT_EVENTS text_events[MAX_TXT_EVENTS];
 
 float camerax, cameray, cameraz;
 float rotx, roty, lastx, lasty;
@@ -47,19 +48,15 @@ float rotx, roty, lastx, lasty;
 GLfloat fps;
 GLfloat framestart;
 
-TXT_EVENTS text_events[MAX_TXT_EVENTS];
-
-GLuint background;  //Displaylist variable for background and HUD
-GLuint tile;        //Displaylist variable for tiles
+GLuint background;      //Displaylist variable for background and HUD
+GLuint tile;           //Displaylist variable for states
 
 GLuint tiletexture[MAX_TILES];  //Texture array for tile textures
 GLuint backgrounds[3];
 GLuint buttontextures[14];
 
-int flags;  //Variable that contains info about our videoflags.
-
 void Init_SDL(void);
-void Init_GL(int width, int height);
+void Init_GL(void);
 void OrthogonalStart(void);
 void OrthogonalEnd(void);
 void glEnable3D(void);

@@ -22,18 +22,18 @@
 typedef enum {
     STATE_NULL,
     STATE_QUIT,
-	STATE_MAINMENU,
-	STATE_GAME,
-	STATE_OPTIONS
+    STATE_MAINMENU,
+    STATE_GAME,
+    STATE_OPTIONS
 } STATE;
 
 extern STATE state;
 
-void MF_StateMachine(void); //Tilakone
+void MF_StateMachine(void);
 void MF_MouseEventPress(SDL_EventType type, int button, int buttonstate,  int x, int y);
 void MF_MouseEventRelease(SDL_EventType type, int button, int buttonstate,int x, int y);
 void MF_MouseEventMotion(SDL_EventType type, int button, int buttonstate, int x, int y);
-int  MF_Event_Handler(void);
 void MF_DrawHUD(void);
+int  MF_Event_Handler(void);
 
 #endif /* MECHFORCE_H */

@@ -25,9 +25,7 @@ void SDL_DrawText(int size, int x, int y, double r, double g, double b, int font
         for (i=0; i<MAX_TXT_EVENTS; i++)
         {
             if (text_events[i].reserved == 0)
-            {
                 return(i);
-            }
         }
         return(-1);
     }
