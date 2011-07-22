@@ -66,8 +66,6 @@ GLuint glGenerateTexture(SDL_Surface *surface, int type);
 void SDL_BuildDisplayLists(void);
 void SDL_Close(int code);
 void SDL_CountFPS(void);
-STATE ResolveState(int id);
-STATE ResolveButton(int id);
 
 void SDL_DrawScene(void);
 void SDL_DrawText(int size, int x, int y, double r, double g, double b, int font, char *msg, ...);

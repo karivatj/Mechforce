@@ -83,22 +83,22 @@ void BTN_HandleButtonStateChanges(SDL_EventType eventtype, int button, int butto
     {
         if(Buttons[i].state == state)
         {
-            if(Buttons[i].type == 0)
+            if(Buttons[i].type == BIG_RECT)
             {
                 xstride = 25.8 * Buttons[i].size;
                 ystride = 4.2 * Buttons[i].size;
             }
-            else if(Buttons[i].type == 1)
+            else if(Buttons[i].type == SMALL_RECT)
             {
                 xstride = 12.8 * Buttons[i].size;
                 ystride = 4.2 * Buttons[i].size;
             }
-            else if(Buttons[i].type == 2)
+            else if(Buttons[i].type == RADIOBUTTON)
             {
                 xstride = 8.2 * Buttons[i].size;
                 ystride = 8.2 * Buttons[i].size;
             }
-            else if(Buttons[i].type == 3)
+            else if(Buttons[i].type == CHECKBOX)
             {
                 xstride = 10 * Buttons[i].size;
                 ystride = 10 * Buttons[i].size;
@@ -138,8 +138,8 @@ BUTTON BTN_HandlePresses(BUTTON b, int button)
 
     switch(b.type)
     {
-        case 0:
-        case 1:
+        case BIG_RECT:
+        case SMALL_RECT:
             if(button == SDL_BUTTON_LEFT && b.enabled == 0)
             {
                 SDL_PlaySound(1);
@@ -147,7 +147,7 @@ BUTTON BTN_HandlePresses(BUTTON b, int button)
             }
         break;
 
-        case 2:
+        case RADIOBUTTON:
             if(button == SDL_BUTTON_LEFT)
             {
                 b.enabled = 1 - b.enabled;
@@ -163,7 +163,7 @@ BUTTON BTN_HandlePresses(BUTTON b, int button)
             }
         break;
 
-        case 3:
+        case CHECKBOX:
             if(button == SDL_BUTTON_LEFT)
             {
                 b.enabled = 1 - b.enabled;
@@ -180,15 +180,15 @@ BUTTON BTN_HandleReleases(BUTTON b)
 {
     switch(b.type)
     {
-        case 0:
-        case 1:
+        case BIG_RECT:
+        case SMALL_RECT:
             state = b.targetstate;
             SDL_PlaySound(3);
             SDL_Delay(500);
             break;
 
-        case 2:
-        case 3:
+        case RADIOBUTTON:
+        case CHECKBOX:
         break;
 
         default:
@@ -200,8 +200,8 @@ BUTTON BTN_HandleMouseOvers(BUTTON b, int button)
 {
     switch(b.type)
     {
-        case 0:
-        case 1:
+        case BIG_RECT:
+        case SMALL_RECT:
         if(button == 1 && b.enabled == 0)
         {  //Jos hiiren vasenta nappia painetaan ja nappi ei ole vielä aktivoitu
             b.enabled = 1;
@@ -215,10 +215,10 @@ BUTTON BTN_HandleMouseOvers(BUTTON b, int button)
         }
         break;
 
-        case 2:
+        case RADIOBUTTON:
         break;
 
-        case 3:
+        case CHECKBOX:
         break;
 
         default:

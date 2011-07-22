@@ -22,11 +22,11 @@ STATE state;
 int main(int argc, char **argv)
 {
     int done = 0, value = 0;
-    srand (time(NULL));   //Initialize random seed
+    //srand (time(NULL));   //Initialize random seed
 
     MAP_GenerateMap();
 
-    camerax = 0;
+    camerax = -4.5;
     cameray = 200;
     cameraz = 200;
 
@@ -276,16 +276,16 @@ void glEnable3D()
     glLoadIdentity ();
 
     gluPerspective (45, (GLfloat)SCREEN_WIDTH / (GLfloat)SCREEN_HEIGHT, 0.1, 1000.0);
-/*
-    glTranslatef(camerax,cameray,-cameraz);     //Move Camera
 
-    glRotatef(rotx,1,0,0);
-    glRotatef(roty,0,1,0);
-*/
-    gluLookAt(camerax, cameray, cameraz,0,0,-10,0,1,0);
+    gluLookAt(camerax, 200, 200, 0, 0, 0,0,1,0);
+
+    printf("Camera X %f Camera Y %f Camera Z %f Rotx %f Roty %f\n",camerax,cameray,cameraz, rotx, roty);
 
     glMatrixMode (GL_MODELVIEW);
+
     glLoadIdentity();
+
+    glRotatef(rotx,1,0,0);
 }
 
 void OrthogonalStart()

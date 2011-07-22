@@ -34,9 +34,8 @@ int MF_Event_Handler(void)
                     case SDLK_F1:
                         return (4);
                         break;
-                    case SDLK_4:
+                    case SDLK_7:
                         MAP_GenerateMap();
-                        //MAP_LoadMap("KARTTA3");
                         break;
                     default:
                     break;
@@ -116,10 +115,10 @@ void MF_MouseEventMotion(SDL_EventType type, int button, int buttonstate,  int x
     lasty = y;
 
     if(button == 1 && state == STATE_GAME)
-    {
+    {/*
         rotx += (float) 0.5f * diffy;
         roty -= (float) 0.5f * diffx;
-
+*/
         camerax -= (float) 0.50f * diffx;
         cameray += (float) 0.50f * diffy;
 

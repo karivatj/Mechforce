@@ -17,18 +17,18 @@ void MF_StateMachine(void)
             OrthogonalEnd();
         break;
 
-        case STATE_GAME:
-            glLoadIdentity();
-            //MAP_DrawFractalMap();
-            MAP_DrawTileMap();
-            MF_DrawHUD();
-        break;
-
         case STATE_OPTIONS:
             OrthogonalStart();
             glBindTexture(GL_TEXTURE_2D,backgrounds[1]);
             glCallList(background);
             OrthogonalEnd();
+        break;
+
+        case STATE_GAME:
+            glLoadIdentity();
+            MAP_Draw3DTerrain();
+            //MAP_Draw2DTerrain();
+            MF_DrawHUD();
         break;
 
         default:

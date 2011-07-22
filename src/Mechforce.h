@@ -29,6 +29,9 @@ typedef enum {
 
 extern STATE state;
 
+STATE ResolveState(int id);
+STATE ResolveButton(int id);
+
 void MF_StateMachine(void);
 void MF_MouseEventPress(SDL_EventType type, int button, int buttonstate,  int x, int y);
 void MF_MouseEventRelease(SDL_EventType type, int button, int buttonstate,int x, int y);

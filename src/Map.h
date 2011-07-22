@@ -20,10 +20,11 @@ typedef struct {
 MAP Map[MAP_SIZE * MAP_SIZE];
 Vertexarray Map_VertexArray[MAP_SIZE * MAP_SIZE];
 
-void MAP_DrawFractalMap(void);
-void MAP_DrawTileMap();
-void MAP_GenerateMap();
+void MAP_SmoothTerrain(float k);
 void MAP_LoadMap(char keyword[]);
-void MAP_SetTile();
+void MAP_Draw3DTerrain(void);
+void MAP_Draw2DTerrain(void);
+void MAP_GenerateMap(void);
+
 
 #endif /*MAP_H*/

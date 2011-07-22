@@ -101,14 +101,3 @@ STATE ResolveState(int id)
     }
 }
 
-STATE ResolveButton(int id)
-{
-    switch(id)
-    {
-        case 0:  return BTN_RECT_BIG;     break;
-        case 1:  return BTN_RECT_SMALL; break;
-        case 2:  return RADIO_BUTTON;     break;
-        case 3:  return CHECKBOX;  break;
-        default: return STATE_NULL;     break;
-    }
-}

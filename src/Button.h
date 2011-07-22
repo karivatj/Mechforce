@@ -6,8 +6,15 @@
 #include "Mechforce.h"
 #include "SDL/SDL.h"
 
+typedef enum {
+    BIG_RECT,
+    SMALL_RECT,
+    RADIOBUTTON,
+    CHECKBOX
+} Buttontype;
+
 typedef struct {
-    int type;
+    Buttontype type;
     int size;
     int group;
     int enabled;
