@@ -19,20 +19,20 @@
 
 #include "SDL/SDL.h"
 
+/*State enum specifies in what state the user is in a given time so we can act as expected*/
 typedef enum {
-    STATE_NULL,
-    STATE_QUIT,
-    STATE_MAINMENU,
-    STATE_GAME,
-    STATE_OPTIONS
+    STATE_NULL,     /*Does nothing atm*/
+    STATE_QUIT,     /*State when user presses exit or closes the program*/
+    STATE_MAINMENU, /*As the name says, this is the state when the user idles in the main menu*/
+    STATE_GAME,     /*State when the user presses the New Game button*/
+    STATE_OPTIONS   /*State when the user presses the Options button*/
 } STATE;
 
 extern STATE state;
 
 STATE ResolveState(int id);
-STATE ResolveButton(int id);
 
-void MF_StateMachine(void);
+void MF_StateMachine(void); /*State machine where we check what state the user is in and act accordingly*/
 void MF_MouseEventPress(SDL_EventType type, int button, int buttonstate,  int x, int y);
 void MF_MouseEventRelease(SDL_EventType type, int button, int buttonstate,int x, int y);
 void MF_MouseEventMotion(SDL_EventType type, int button, int buttonstate, int x, int y);

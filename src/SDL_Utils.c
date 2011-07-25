@@ -3,7 +3,7 @@
 
 int SDL_ScreenShot(void)
 {
-#if 1
+#if 0
     SDL_Surface *temp = NULL;
     unsigned char *pixels;
     int i;
@@ -92,12 +92,12 @@ STATE ResolveState(int id)
 {
     switch(id)
     {
-        case 0:  return STATE_QUIT;     break;
-        case 1:  return STATE_MAINMENU; break;
-        case 2:  return STATE_GAME;     break;
-        case 3:  return STATE_OPTIONS;  break;
-        case -1: return STATE_NULL;     break;
-        default: return STATE_NULL;     break;
+        case    0:  return STATE_QUIT;
+        case    1:  return STATE_MAINMENU;
+        case    2:  return STATE_GAME;
+        case    3:  return STATE_OPTIONS;
+        case    -1: return STATE_NULL;
+        default:    return STATE_NULL;
     }
 }
 

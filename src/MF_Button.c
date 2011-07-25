@@ -81,14 +81,14 @@ void BTN_HandleButtonStateChanges(SDL_EventType eventtype, int button, int butto
 
     for(i = 0; i < MAX_BUTTONS; i++)
     {
-        if(Buttons[i].state == state)
+        if(Buttons[i].state == state)   /*Check if the button is located in the state the user is in*/
         {
-            if(Buttons[i].type == BIG_RECT)
+            if(Buttons[i].type == BIG_RECT_BTN)
             {
                 xstride = 25.8 * Buttons[i].size;
                 ystride = 4.2 * Buttons[i].size;
             }
-            else if(Buttons[i].type == SMALL_RECT)
+            else if(Buttons[i].type == SMALL_RECT_BTN)
             {
                 xstride = 12.8 * Buttons[i].size;
                 ystride = 4.2 * Buttons[i].size;
@@ -138,9 +138,9 @@ BUTTON BTN_HandlePresses(BUTTON b, int button)
 
     switch(b.type)
     {
-        case BIG_RECT:
-        case SMALL_RECT:
-            if(button == SDL_BUTTON_LEFT && b.enabled == 0)
+        case BIG_RECT_BTN:
+        case SMALL_RECT_BTN:
+            if(b.enabled == 0)
             {
                 SDL_PlaySound(1);
                 b.enabled = 1;
@@ -148,27 +148,19 @@ BUTTON BTN_HandlePresses(BUTTON b, int button)
         break;
 
         case RADIOBUTTON:
-            if(button == SDL_BUTTON_LEFT)
-            {
                 b.enabled = 1 - b.enabled;
                 SDL_PlaySound(3);
 
                 for(i = 0; i < MAX_BUTTONS; i++)
                 {
                     if(Buttons[i].state == state && Buttons[i].group == b.group)
-                    {
                         Buttons[i].enabled = 0;
-                    }
                 }
-            }
         break;
 
         case CHECKBOX:
-            if(button == SDL_BUTTON_LEFT)
-            {
                 b.enabled = 1 - b.enabled;
                 SDL_PlaySound(3);
-            }
         break;
 
         default:
@@ -180,11 +172,11 @@ BUTTON BTN_HandleReleases(BUTTON b)
 {
     switch(b.type)
     {
-        case BIG_RECT:
-        case SMALL_RECT:
+        case BIG_RECT_BTN:
+        case SMALL_RECT_BTN:
             state = b.targetstate;
             SDL_PlaySound(3);
-            SDL_Delay(500);
+            SDL_Delay(250);
             break;
 
         case RADIOBUTTON:
@@ -200,10 +192,10 @@ BUTTON BTN_HandleMouseOvers(BUTTON b, int button)
 {
     switch(b.type)
     {
-        case BIG_RECT:
-        case SMALL_RECT:
-        if(button == 1 && b.enabled == 0)
-        {  //Jos hiiren vasenta nappia painetaan ja nappi ei ole vielä aktivoitu
+        case BIG_RECT_BTN:
+        case SMALL_RECT_BTN:
+        if(b.enabled == 0)
+        {
             b.enabled = 1;
             b.mouseover = 1;
             SDL_PlaySound(1);

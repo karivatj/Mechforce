@@ -69,11 +69,12 @@ int MF_Event_Handler(void)
  */
 void MF_MouseEventPress(SDL_EventType type, int button, int buttonstate,  int x, int y)
 {
-    int cy = SCREEN_HEIGHT - y;
+    int cy = SCREEN_HEIGHT - y; /*Flip the coordinates.*/
+
     switch(button)
     {
         case SDL_BUTTON_LEFT:
-            BTN_HandleButtonStateChanges(type,button,buttonstate,x,cy);
+            BTN_HandleButtonStateChanges(type, button, buttonstate, x, cy);
         break;
 
         case SDL_BUTTON_RIGHT:
@@ -98,6 +99,7 @@ void MF_MouseEventRelease(SDL_EventType type, int button, int buttonstate,  int 
     lastx = x;
     lasty = y;
 
+    if(button == SDL_BUTTON_LEFT)
     BTN_HandleButtonStateChanges(type,button,buttonstate,x,cy);
 }
 
@@ -114,7 +116,7 @@ void MF_MouseEventMotion(SDL_EventType type, int button, int buttonstate,  int x
     lastx = x;
     lasty = y;
 
-    if(button == 1 && state == STATE_GAME)
+    if(button == SDL_BUTTON_LEFT && state == STATE_GAME)
     {/*
         rotx += (float) 0.5f * diffy;
         roty -= (float) 0.5f * diffx;

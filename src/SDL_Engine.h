@@ -6,26 +6,25 @@
 #include "SDL/SDL_opengl.h"
 #include "FTGL/ftgl.h"
 
-#define SCREEN_WIDTH 800
-#define SCREEN_HEIGHT 600
-#define BPP 16
+/*Few Defines*/
+#define SCREEN_WIDTH    800
+#define SCREEN_HEIGHT   600
+#define BPP             16
+#define FPS             60  //FPS Limit
+#define MAX_SOUNDS      3
+#define MAX_TILES       16
+#define MAX_TXT_EVENTS  1024
+#define MAX_FONTS       2
+#define TILEMAP_WIDTH   4
+#define TILEMAP_HEIGHT  4
+#define TILE_WIDTH      32
+#define TILE_HEIGHT     32
 
-#define FPS 60
-
-#define MAX_SOUNDS 3
-#define MAX_TILES 16
-
-#define TILEMAP_WIDTH 4
-#define TILEMAP_HEIGHT 4
-#define TILE_WIDTH 32
-#define TILE_HEIGHT 32
-
-#define MAX_TXT_EVENTS 1024
-
-SDL_Surface *screen;
-SDL_Event event;
-Mix_Chunk *sounds[MAX_SOUNDS];  //3 sounds
-FTGLfont *font[2];
+/*SDL Stuff*/
+SDL_Surface *screen;            /*The surface where the graphics will be drawn*/
+SDL_Event event;                /*Event structure*/
+Mix_Chunk *sounds[MAX_SOUNDS];
+FTGLfont *font[MAX_FONTS];
 
 typedef struct {
     int reserved;
@@ -49,7 +48,7 @@ GLfloat fps;
 GLfloat framestart;
 
 GLuint background;      //Displaylist variable for background and HUD
-GLuint tile;           //Displaylist variable for states
+GLuint tile;            //Displaylist variable for states
 
 GLuint tiletexture[MAX_TILES];  //Texture array for tile textures
 GLuint backgrounds[3];
@@ -70,10 +69,11 @@ void SDL_CountFPS(void);
 void SDL_DrawScene(void);
 void SDL_DrawText(int size, int x, int y, double r, double g, double b, int font, char *msg, ...);
 void SDL_DrawTile(int index, int x, int y);
+
 void SDL_GenerateTilemap(void);
 void SDL_LoadTextures(void);
 void SDL_LoadSounds(void);
 void SDL_PlaySound(int id);
-int  SDL_ScreenShot(void);
+int  SDL_ScreenShot(void); /*Inactive at the moment*/
 
 #endif  //SDL_ENGINE_H

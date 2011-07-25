@@ -29,7 +29,6 @@ void SDL_LoadTextures(void)
     backgrounds[2] = LoadImg("../Images/HUD.jpg", 1);
     backgrounds[3] = LoadImg("../Images/HUD_Mask.jpg", 1);
 
-
     buttontextures[0] = LoadImg("../Images/ButtonRect.png", 1);
     buttontextures[1] = LoadImg("../Images/ButtonRect_Mouseover.png", 1);
     buttontextures[2] = LoadImg("../Images/ButtonRect_Pressed.png", 1);
