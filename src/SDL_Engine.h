@@ -20,6 +20,9 @@
 #define TILE_WIDTH      32
 #define TILE_HEIGHT     32
 
+#define TRUE 1
+#define FALSE 0
+
 /*SDL Stuff*/
 SDL_Surface *screen;            /*The surface where the graphics will be drawn*/
 SDL_Event event;                /*Event structure*/
@@ -46,6 +49,7 @@ float rotx, roty, lastx, lasty;
 /*FPS Stuff*/
 GLfloat fps;
 GLfloat framestart;
+/***********/
 
 GLuint background;      //Displaylist variable for background and HUD
 GLuint tile;            //Displaylist variable for states

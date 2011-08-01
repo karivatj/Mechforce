@@ -28,10 +28,10 @@ typedef struct {
 
 BUTTON Buttons[MAX_BUTTONS];
 
+int BTN_ReadButtonData(void);
 void BTN_HandleButtonStateChanges(SDL_EventType eventtype, int button, int buttonstate, int x, int y);
 void BTN_DrawButtonScene(void);
 void BTN_DrawButton(BUTTON b);
-int BTN_ReadButtonData(void);
 BUTTON BTN_HandlePresses(BUTTON b, int button);
 BUTTON BTN_HandleReleases(BUTTON b);
 BUTTON BTN_HandleMouseOvers(BUTTON b, int button);

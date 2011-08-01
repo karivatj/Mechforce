@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "Mechforce.h"
 #include "Button.h"
+#include "SDL_Utils.h"
 #include "SDL_Engine.h"
 
 int BTN_ReadButtonData(void)
@@ -14,9 +15,9 @@ int BTN_ReadButtonData(void)
     int length;
     int temp;
 
-    if((file = fopen ("../Data/buttons.txt", "r")) == NULL)
+    if((file = fopen ("../Data/buttons.ini", "r")) == NULL)
     {
-        fprintf(stderr,"ERROR*** Couldn't open buttons datafile (./Data/Buttons.txt)\n");
+        fprintf(stderr,"ERROR*** Couldn't open buttons datafile (./Data/buttons.txt)\n");
         SDL_Close(-1);
     }
 
@@ -108,11 +109,11 @@ void BTN_HandleButtonStateChanges(SDL_EventType eventtype, int button, int butto
                 switch(eventtype)
                 {
                     case SDL_MOUSEMOTION:
-                        Buttons[i] = BTN_HandleMouseOvers(Buttons[i], button);
+                        Buttons[i] = BTN_HandleMouseOvers(Buttons[i], buttonstate);
                     break;
 
                     case SDL_MOUSEBUTTONDOWN:
-                        Buttons[i] = BTN_HandlePresses(Buttons[i], button);
+                        Buttons[i] = BTN_HandlePresses(Buttons[i], buttonstate);
                     break;
 
                     case SDL_MOUSEBUTTONUP:
@@ -123,88 +124,92 @@ void BTN_HandleButtonStateChanges(SDL_EventType eventtype, int button, int butto
                     break;
                 }
             }
-            else if(Buttons[i].type  == 0 || Buttons[i].type == 1)
+            else if(Buttons[i].type  == BIG_RECT_BTN || Buttons[i].type == SMALL_RECT_BTN)
             {
-                Buttons[i].enabled = 0;
-                Buttons[i].mouseover = 0;
+                Buttons[i].enabled = FALSE;
+                Buttons[i].mouseover = FALSE;
             }
         }
     }
 }
 
-BUTTON BTN_HandlePresses(BUTTON b, int button)
+BUTTON BTN_HandlePresses(BUTTON button, int buttonstate)
 {
     int i;
 
-    switch(b.type)
+    switch(button.type)
     {
         case BIG_RECT_BTN:
         case SMALL_RECT_BTN:
-            if(b.enabled == 0)
+            if(button.enabled == FALSE)
             {
+                button.enabled = TRUE;
                 SDL_PlaySound(1);
-                b.enabled = 1;
             }
         break;
 
         case RADIOBUTTON:
-                b.enabled = 1 - b.enabled;
-                SDL_PlaySound(3);
-
-                for(i = 0; i < MAX_BUTTONS; i++)
-                {
-                    if(Buttons[i].state == state && Buttons[i].group == b.group)
-                        Buttons[i].enabled = 0;
-                }
-        break;
-
-        case CHECKBOX:
-                b.enabled = 1 - b.enabled;
-                SDL_PlaySound(3);
-        break;
-
-        default:
-        break;
-    }
-    return b;
-}
-BUTTON BTN_HandleReleases(BUTTON b)
-{
-    switch(b.type)
-    {
-        case BIG_RECT_BTN:
-        case SMALL_RECT_BTN:
-            state = b.targetstate;
+            button.enabled = 1 - button.enabled;
             SDL_PlaySound(3);
-            SDL_Delay(250);
-            break;
 
-        case RADIOBUTTON:
+            for(i = 0; i < MAX_BUTTONS; i++)
+            {
+                if(Buttons[i].state == state && Buttons[i].group == button.group)
+                    Buttons[i].enabled = FALSE;
+            }
+        break;
+
         case CHECKBOX:
+            button.enabled = 1 - button.enabled;
+            SDL_PlaySound(3);
         break;
 
         default:
         break;
     }
-    return b;
+    return button;
 }
-BUTTON BTN_HandleMouseOvers(BUTTON b, int button)
+BUTTON BTN_HandleReleases(BUTTON button)
 {
-    switch(b.type)
+    switch(button.type)
     {
         case BIG_RECT_BTN:
         case SMALL_RECT_BTN:
-        if(b.enabled == 0)
-        {
-            b.enabled = 1;
-            b.mouseover = 1;
-            SDL_PlaySound(1);
-        }
-        else if(b.mouseover == 0)
-        {
-            b.mouseover = 1;
-            SDL_PlaySound(2);
-        }
+
+            if(strcmp(button.caption, "OK") == 0);
+                WriteConfigFile();
+
+            state = button.targetstate;
+            SDL_PlaySound(3);
+            SDL_Delay(100);
+        break;
+
+        case RADIOBUTTON:
+        case CHECKBOX:
+        break;
+
+        default:
+        break;
+    }
+    return button;
+}
+BUTTON BTN_HandleMouseOvers(BUTTON button, int buttonstate)
+{
+    switch(button.type)
+    {
+        case BIG_RECT_BTN:
+        case SMALL_RECT_BTN:
+            if(buttonstate == SDL_PRESSED && button.enabled == FALSE)
+            {
+                button.enabled = TRUE;
+                button.mouseover = TRUE;
+                SDL_PlaySound(1);
+            }
+            else if(button.mouseover == FALSE)
+            {
+                button.mouseover = TRUE;
+                SDL_PlaySound(2);
+            }
         break;
 
         case RADIOBUTTON:
@@ -216,7 +221,7 @@ BUTTON BTN_HandleMouseOvers(BUTTON b, int button)
         default:
         break;
     }
-    return b;
+    return button;
 }
 
 void BTN_DrawButtonScene(void)

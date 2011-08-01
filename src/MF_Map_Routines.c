@@ -14,7 +14,7 @@ void MAP_LoadMapFromFile(char keyword[])
     int done = 0;
     int x = 0, y = 0;
 
-    if((file = fopen ("../Data/map.txt", "r")) == NULL)
+    if((file = fopen ("../Data/map.ini", "r")) == NULL)
     {
         fprintf(stderr,"ERROR*** Couldn't open Map file! (./Data/map.txt)\n");
         SDL_Close(-1);

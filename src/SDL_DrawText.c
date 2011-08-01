@@ -22,9 +22,9 @@ void SDL_DrawText(int size, int x, int y, double r, double g, double b, int font
     int seek_textevent(void)
     {
         int i;
-        for (i=0; i<MAX_TXT_EVENTS; i++)
+        for (i = 0; i < MAX_TXT_EVENTS; i++)
         {
-            if (text_events[i].reserved == 0)
+            if (text_events[i].reserved == FALSE)
                 return(i);
         }
         return(-1);
@@ -44,7 +44,7 @@ void SDL_DrawText(int size, int x, int y, double r, double g, double b, int font
         int len;
         len = strlen(string);
         if (len >= 128) len = 127;
-        text_events[index].reserved = 1;
+        text_events[index].reserved = TRUE;
         text_events[index].x = x;
         text_events[index].y = y;
         text_events[index].r = r;

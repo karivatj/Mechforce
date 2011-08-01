@@ -51,7 +51,7 @@ int MF_Event_Handler(void)
             break;
 
             case SDL_MOUSEMOTION:
-                MF_MouseEventMotion(event.type, event.button.button, event.button.state, event.motion.x, event.motion.y);
+                MF_MouseEventMotion(event.type, event.button.button, event.motion.state, event.motion.x, event.motion.y);
             break;
 
             default:
@@ -113,6 +113,8 @@ void MF_MouseEventMotion(SDL_EventType type, int button, int buttonstate,  int x
     float diffx = x - lastx;
     float diffy = y - lasty;
 
+    printf("buttonstate = %d\n", buttonstate);
+
     lastx = x;
     lasty = y;
 
@@ -128,5 +130,5 @@ void MF_MouseEventMotion(SDL_EventType type, int button, int buttonstate,  int x
     }
 
     int cy = SCREEN_HEIGHT - y;
-    BTN_HandleButtonStateChanges(type,button,buttonstate,x,cy);
+    BTN_HandleButtonStateChanges(type, button, buttonstate, x, cy);
 }

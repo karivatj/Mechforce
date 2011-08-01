@@ -101,3 +101,24 @@ STATE ResolveState(int id)
     }
 }
 
+void WriteConfigFile(void)
+{
+#if 1
+    FILE *file;
+
+    printf("Writing configuration to file.\n");
+
+    if((file = fopen ("../Data/config.ini", "w")) == NULL)
+    {
+        fprintf(stderr,"ERROR*** Couldn't open config datafile (./Data/config.ini)\n");
+        SDL_Close(-1);
+    }
+
+    fprintf(file,"%s","This is just an example");
+#endif
+}
+
+void ReadConfigFile(void)
+{
+    printf("Reading configuration from file.\n");
+}
