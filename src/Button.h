@@ -8,12 +8,13 @@ typedef enum {
     BIG_RECT_BTN,
     SMALL_RECT_BTN,
     RADIOBUTTON,
-    CHECKBOX
-} Buttontype;
+    CHECKBOX,
+    TEXT
+} Widget;
 
 /*Button datatype*/
 typedef struct {
-    Buttontype type;
+    Widget type;
     int size;
     int group;
     int enabled;

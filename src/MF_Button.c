@@ -66,7 +66,7 @@ int BTN_ReadButtonData(void)
             break;
         }
 
-        printf("Button read succesfully. Type = %d and caption = %s. [%d/%d]\n", Buttons[counter1-1].type, Buttons[counter1-1].caption, counter1-1, MAX_BUTTONS);
+        printf("Widget data read succesfully. Type = %d caption = %s. [%d/%d]\n", Buttons[counter1-1].type, Buttons[counter1-1].caption, counter1-1, MAX_BUTTONS);
     }
 
     fclose (file);
@@ -329,6 +329,10 @@ void BTN_DrawButton(BUTTON b)
                 glTexCoord2d(0,0);        glVertex2d(0 , 10 * b.size);
             glEnd();
             SDL_DrawText(25 - (10-b.size),b.x + 2 + (10 * b.size) ,b.y + ((10 * b.size) / 2 - (height / 2)),1,1,1,0,b.caption);
+        break;
+
+        case 4:
+            SDL_DrawText(25 - (10 - b.size), b.x, b.y, 1,1,1,0, b.caption);
         break;
 
         default:
