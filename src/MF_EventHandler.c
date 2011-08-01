@@ -9,6 +9,7 @@
 #include "Mechforce.h"
 #include "Map.h"
 #include "Button.h"
+#include "SDL_Utils.h"
 #include "SDL_Engine.h"
 
 /**
@@ -35,6 +36,7 @@ int MF_Event_Handler(void)
                         return (4);
                         break;
                     case SDLK_7:
+                        Utils_ReadConfigFile();
                         MAP_GenerateMap();
                         break;
                     default:

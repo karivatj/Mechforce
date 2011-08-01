@@ -68,16 +68,17 @@ GLuint glGenerateTexture(SDL_Surface *surface, int type);
 
 void SDL_BuildDisplayLists(void);
 void SDL_Close(int code);
-void SDL_CountFPS(void);
+
 
 void SDL_DrawScene(void);
 void SDL_DrawText(int size, int x, int y, double r, double g, double b, int font, char *msg, ...);
 void SDL_DrawTile(int index, int x, int y);
+void SDL_DrawHUD(void);
 
 void SDL_GenerateTilemap(void);
 void SDL_LoadTextures(void);
 void SDL_LoadSounds(void);
 void SDL_PlaySound(int id);
-int  SDL_ScreenShot(void); /*Inactive at the moment*/
+
 
 #endif  //SDL_ENGINE_H

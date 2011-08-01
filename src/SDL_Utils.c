@@ -1,7 +1,8 @@
 #include "SDL_Engine.h"
 #include "Mechforce.h"
+#include "Button.h"
 
-int SDL_ScreenShot(void)
+int Utils_ScreenShot(void)
 {
 #if 0
     SDL_Surface *temp = NULL;
@@ -41,7 +42,7 @@ int SDL_ScreenShot(void)
     return 0;
 }
 
-void SDL_CountFPS(void)
+void Utils_CountFPS(void)
 {
     static GLint T0 = 0;
     static GLint Frames = 0;
@@ -63,32 +64,7 @@ void SDL_CountFPS(void)
         SDL_Delay((1000 / FPS) - deltatime);
 }
 
-void MF_DrawHUD(void)
-{
-    OrthogonalStart();
-
-    glEnable(GL_BLEND);
-    glDisable(GL_DEPTH_TEST );
-
-    glLoadIdentity();
-
-    glBlendFunc(GL_DST_COLOR, GL_ZERO);
-    glBindTexture(GL_TEXTURE_2D,backgrounds[3]);        //Mask
-    glCallList(background);
-
-    glLoadIdentity();
-
-    glBlendFunc( GL_ONE, GL_ONE );
-    glBindTexture(GL_TEXTURE_2D,backgrounds[2]);        //HUD
-    glCallList(background);
-
-    glDisable(GL_BLEND);
-    glEnable( GL_DEPTH_TEST );
-
-    OrthogonalEnd();
-}
-
-STATE ResolveState(int id)
+STATE Utils_ResolveState(int id)
 {
     switch(id)
     {
@@ -101,24 +77,57 @@ STATE ResolveState(int id)
     }
 }
 
-void WriteConfigFile(void)
+void Utils_WriteConfigFile(void)
 {
-#if 1
-    FILE *file;
+    FILE *file = NULL;
+    int i;
 
     printf("Writing configuration to file.\n");
 
     if((file = fopen ("../Data/config.ini", "w")) == NULL)
     {
-        fprintf(stderr,"ERROR*** Couldn't open config datafile (./Data/config.ini)\n");
+        fprintf(stderr,"ERROR*** Couldn't create config file for writing (./Data/config.ini)\n");
         SDL_Close(-1);
     }
 
-    fprintf(file,"%s","This is just an example");
-#endif
+    for(i = 0; i < MAX_BUTTONS; i++)
+    {
+        if(Buttons[i].state == STATE_OPTIONS)
+        {
+            if(strcmp(Buttons[i].caption, "Fullscreen") == 0)
+                fprintf(file, "Fullscreen=%d", Buttons[i].enabled);
+
+        }
+    }
+    fclose(file);
 }
 
-void ReadConfigFile(void)
+void Utils_ReadConfigFile(void)
 {
+    FILE *file;
+    char string[64];
+    char *token = NULL;
+
     printf("Reading configuration from file.\n");
+
+    if((file = fopen ("../Data/config.ini", "r")) == NULL)
+    {
+        fprintf(stderr,"ERROR*** Couldn't open config file! (./Data/config.ini)\n");
+        return;
+    }
+
+    while(!feof(file))
+    {
+        fgets(string,64,file);
+        token = strtok(string,"=");
+
+        while(token != NULL)
+        {
+            //if(strcmp(string, "Fullscreen") == 0)
+            printf("%s\n",token);
+            token = strtok (NULL, "=");
+        }
+    }
+
+    fclose (file);
 }

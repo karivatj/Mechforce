@@ -28,7 +28,7 @@ void MF_StateMachine(void)
             glLoadIdentity();
             MAP_Draw3DTerrain();
             //MAP_Draw2DTerrain();
-            MF_DrawHUD();
+            SDL_DrawHUD();
         break;
 
         default:

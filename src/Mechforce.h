@@ -30,13 +30,12 @@ typedef enum {
 
 extern STATE state;
 
-STATE ResolveState(int id);
+
 
 void MF_StateMachine(void); /*State machine where we check what state the user is in and act accordingly*/
 void MF_MouseEventPress(SDL_EventType type, int button, int buttonstate,  int x, int y);
 void MF_MouseEventRelease(SDL_EventType type, int button, int buttonstate,int x, int y);
 void MF_MouseEventMotion(SDL_EventType type, int button, int buttonstate, int x, int y);
-void MF_DrawHUD(void);
 int  MF_Event_Handler(void);
 
 #endif /* MECHFORCE_H */

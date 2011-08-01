@@ -14,6 +14,7 @@
 
 #include "Mechforce.h"
 #include "SDL_Engine.h"
+#include "SDL_Utils.h"
 #include "Map.h"
 #include "Button.h"
 
@@ -72,7 +73,7 @@ int main(int argc, char **argv)
 
         SDL_GL_SwapBuffers();
 
-        SDL_CountFPS();
+        Utils_CountFPS();
 
         if(value == 1)
         done = 1;
@@ -233,6 +234,31 @@ void SDL_DrawScene(void)
 
 }
 
+void SDL_DrawHUD(void)
+{
+    OrthogonalStart();
+
+    glEnable(GL_BLEND);
+    glDisable(GL_DEPTH_TEST );
+
+    glLoadIdentity();
+
+    glBlendFunc(GL_DST_COLOR, GL_ZERO);
+    glBindTexture(GL_TEXTURE_2D,backgrounds[3]);        //Mask
+    glCallList(background);
+
+    glLoadIdentity();
+
+    glBlendFunc( GL_ONE, GL_ONE );
+    glBindTexture(GL_TEXTURE_2D,backgrounds[2]);        //HUD
+    glCallList(background);
+
+    glDisable(GL_BLEND);
+    glEnable( GL_DEPTH_TEST );
+
+    OrthogonalEnd();
+}
+
 void SDL_DrawTile(int index, int x, int y)
 {
     glLoadIdentity();
@@ -279,7 +305,7 @@ void glEnable3D()
 
     gluLookAt(camerax, 200, 200, 0, 0, 0,0,1,0);
 
-    printf("Camera X %f Camera Y %f Camera Z %f Rotx %f Roty %f\n",camerax,cameray,cameraz, rotx, roty);
+   // printf("Camera X %f Camera Y %f Camera Z %f Rotx %f Roty %f\n",camerax,cameray,cameraz, rotx, roty);
 
     glMatrixMode (GL_MODELVIEW);
 

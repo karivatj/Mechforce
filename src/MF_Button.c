@@ -17,7 +17,7 @@ int BTN_ReadButtonData(void)
 
     if((file = fopen ("../Data/buttons.ini", "r")) == NULL)
     {
-        fprintf(stderr,"ERROR*** Couldn't open buttons datafile (./Data/buttons.txt)\n");
+        fprintf(stderr,"ERROR*** Couldn't open buttons datafile (./Data/buttons.ini)\n");
         SDL_Close(-1);
     }
 
@@ -47,8 +47,8 @@ int BTN_ReadButtonData(void)
                 case 2: Buttons[counter1].group = temp; break;
                 case 3: Buttons[counter1].x = temp; break;
                 case 4: Buttons[counter1].y = temp; break;
-                case 5: Buttons[counter1].state = ResolveState(temp); break;
-                case 6: Buttons[counter1].targetstate = ResolveState(temp); break;
+                case 5: Buttons[counter1].state = Utils_ResolveState(temp); break;
+                case 6: Buttons[counter1].targetstate = Utils_ResolveState(temp); break;
                 case 7: strncpy(Buttons[counter1].caption,token,length); break;
 
                 default:
@@ -177,7 +177,7 @@ BUTTON BTN_HandleReleases(BUTTON button)
         case SMALL_RECT_BTN:
 
             if(strcmp(button.caption, "OK") == 0);
-                WriteConfigFile();
+                Utils_WriteConfigFile();
 
             state = button.targetstate;
             SDL_PlaySound(3);
