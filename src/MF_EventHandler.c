@@ -36,7 +36,6 @@ int MF_Event_Handler(void)
                         return (4);
                         break;
                     case SDLK_7:
-                        Utils_ReadConfigFile();
                         MAP_GenerateMap();
                         break;
                     default:
@@ -114,8 +113,6 @@ void MF_MouseEventMotion(SDL_EventType type, int button, int buttonstate,  int x
 {
     float diffx = x - lastx;
     float diffy = y - lasty;
-
-    printf("buttonstate = %d\n", buttonstate);
 
     lastx = x;
     lasty = y;

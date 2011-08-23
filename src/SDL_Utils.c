@@ -1,4 +1,5 @@
 #include "SDL_Engine.h"
+#include "Prefs.h"
 #include "Mechforce.h"
 #include "Button.h"
 
@@ -95,8 +96,9 @@ void Utils_WriteConfigFile(void)
         if(Buttons[i].state == STATE_OPTIONS)
         {
             if(strcmp(Buttons[i].caption, "Fullscreen") == 0)
-                fprintf(file, "Fullscreen=%d", Buttons[i].enabled);
-
+                fprintf(file, "Fullscreen=%d\n", Buttons[i].enabled);
+            if(strcmp(Buttons[i].caption, "Mute Sounds") == 0)
+                fprintf(file, "Sound=%d", Buttons[i].enabled);
         }
     }
     fclose(file);
@@ -107,6 +109,7 @@ void Utils_ReadConfigFile(void)
     FILE *file;
     char string[64];
     char *token = NULL;
+    int i;
 
     printf("Reading configuration from file.\n");
 
@@ -118,14 +121,35 @@ void Utils_ReadConfigFile(void)
 
     while(!feof(file))
     {
-        fgets(string,64,file);
+        if((fgets(string,64,file)) == NULL)
+            break;
+
         token = strtok(string,"=");
 
         while(token != NULL)
         {
-            //if(strcmp(string, "Fullscreen") == 0)
-            printf("%s\n",token);
-            token = strtok (NULL, "=");
+            if(strcmp(token, "Fullscreen") == 0)
+            {
+                token = strtok (NULL, "=");
+                pref_fullscreen = atoi(token);
+            }
+            else if(strcmp(token, "Sound") == 0)
+            {
+                token = strtok (NULL, "=");
+                pref_soundsoff = atoi(token);
+            }
+            else token = strtok(NULL, "=");
+        }
+    }
+
+    for(i = 0; i < MAX_BUTTONS; i++)
+    {
+        if(Buttons[i].state == STATE_OPTIONS)
+        {
+            if(pref_fullscreen == 1 && (strcmp(Buttons[i].caption,"Fullscreen")) == 0)
+                Buttons[i].enabled = TRUE;
+            if(pref_soundsoff == 1 && (strcmp(Buttons[i].caption,"Mute Sounds")) == 0)
+                Buttons[i].enabled = TRUE;
         }
     }
 

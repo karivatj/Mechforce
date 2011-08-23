@@ -1,5 +1,6 @@
 #include "Mechforce.h"
 #include "SDL_Engine.h"
+#include "SDL_Utils.h"
 #include "Map.h"
 
 void MF_StateMachine(void)
@@ -12,8 +13,8 @@ void MF_StateMachine(void)
 
         case STATE_MAINMENU:
             OrthogonalStart();
-            glBindTexture(GL_TEXTURE_2D,backgrounds[0]);
-            glCallList(background);
+   //         glBindTexture(GL_TEXTURE_2D,backgrounds[0]);
+     //       glCallList(background);
             OrthogonalEnd();
         break;
 
@@ -25,10 +26,15 @@ void MF_StateMachine(void)
         break;
 
         case STATE_GAME:
-            glLoadIdentity();
             MAP_Draw3DTerrain();
-            //MAP_Draw2DTerrain();
-            SDL_DrawHUD();
+            //MAP_LoadMapFromFile("MAP1");
+            //SDL_DrawHUD();
+            MAP_Draw2DTerrain();
+        break;
+
+        case STATE_RELOAD_CONFIG:
+            Utils_ReadConfigFile();
+            state = STATE_MAINMENU;
         break;
 
         default:

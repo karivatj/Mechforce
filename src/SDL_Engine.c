@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
@@ -23,7 +22,7 @@ STATE state;
 int main(int argc, char **argv)
 {
     int done = 0, value = 0;
-    //srand (time(NULL));   //Initialize random seed
+    srand (time(NULL));   //Initialize random seed
 
     MAP_GenerateMap();
 
@@ -61,7 +60,7 @@ int main(int argc, char **argv)
     printf("\t../Fonts/cour.ttf OK\n\n");
     ftglSetFontCharMap(font[1], ft_encoding_unicode);
 
-    state = STATE_MAINMENU;
+    state = STATE_RELOAD_CONFIG;
 
     while(!done)			//Pää looppi missä kaikki taika tapahtuu
     {
@@ -214,9 +213,11 @@ void SDL_DrawScene(void)
     glEnable3D();
 
     MF_StateMachine();
-    OrthogonalStart();
-    BTN_DrawButtonScene();
 
+    OrthogonalStart();
+
+    //BTN_DrawButtonScene();
+    MAP_Draw2DTerrain();
     SDL_DrawText(25,760,570,1,1,0,0,"%.0f",fps);
 
     for (i=0; i<MAX_TXT_EVENTS; i++)
@@ -240,8 +241,6 @@ void SDL_DrawHUD(void)
 
     glEnable(GL_BLEND);
     glDisable(GL_DEPTH_TEST );
-
-    glLoadIdentity();
 
     glBlendFunc(GL_DST_COLOR, GL_ZERO);
     glBindTexture(GL_TEXTURE_2D,backgrounds[3]);        //Mask

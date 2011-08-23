@@ -25,7 +25,8 @@ typedef enum {
     STATE_QUIT,     /*State when user presses exit or closes the program*/
     STATE_MAINMENU, /*As the name says, this is the state when the user idles in the main menu*/
     STATE_GAME,     /*State when the user presses the New Game button*/
-    STATE_OPTIONS   /*State when the user presses the Options button*/
+    STATE_OPTIONS,   /*State when the user presses the Options button*/
+    STATE_RELOAD_CONFIG
 } STATE;
 
 extern STATE state;

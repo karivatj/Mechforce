@@ -40,29 +40,26 @@ void MAP_LoadMapFromFile(char keyword[])
                     {
                         case 'E':
                             done = 1;
-                            break;
+                        break;
 
                         default:
                             Map[POINT(x,y)].type = atoi(token);
                             Map[POINT(x,y)].height = 0;
                             x++;
-                            break;
+                        break;
                     }
 
-                    if(done)
-                    break;
+                    if(done) break;
 
                     token = strtok (NULL, " ");
                 }
 
                 y++; x=0;
 
-                if(done)
-                    break;
+                if(done) break;
             }
         }
-        if(done)
-            break;
+        if(done) break;
     }
 
     fclose (file);
@@ -71,24 +68,32 @@ void MAP_LoadMapFromFile(char keyword[])
 
 void MAP_Draw2DTerrain(void)
 {
-
     int x,y;
+
     OrthogonalStart();
+
     glEnable(GL_BLEND);
     glBlendFunc(GL_ONE, GL_ONE);
+    glDisable(GL_DEPTH_TEST);
+
+   //SDL_DrawTile(1,10,500);
+
+    //glTranslatef(0,0,-5);
 
     for(y = 0; y < MAP_SIZE; y++)
     {
         for(x = 0; x < MAP_SIZE; x++)
         {
             if(y % 2)
-                SDL_DrawTile(Map[POINT(x,y)].type, 68 + (x * 32), 500 - (y * 16) - (y * 8));
+                SDL_DrawTile(Map[POINT(x,y)].type, 25 + (x * 32), 550 - (y * 16) - (y * 8));
             else
-                SDL_DrawTile(Map[POINT(x,y)].type, 84 + (x * 32), 500 - (y * 16) - (y * 8));
+                SDL_DrawTile(Map[POINT(x,y)].type, 41 + (x * 32), 550 - (y * 16) - (y * 8));
         }
     }
 
     glDisable(GL_BLEND);
+    glEnable(GL_DEPTH_TEST);
+
     OrthogonalEnd();
 }
 
@@ -99,6 +104,8 @@ void MAP_Draw3DTerrain(void)
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_LINE_SMOOTH);
+
+    glLoadIdentity();
 
     Vertexarray temp[MAP_SIZE * MAP_SIZE];
 
@@ -137,7 +144,6 @@ void MAP_SmoothTerrain(float k)
 {
     int x,y;
 
-#if 1
     /* Rows, left to right */
     for(x = 1;x < MAP_SIZE; x++)
         for (y = 0;y < MAP_SIZE; y++)
@@ -169,7 +175,6 @@ void MAP_SmoothTerrain(float k)
             Map_VertexArray[POINT(x,y)].z = -200 + y * 5;
         }
     }
-#endif
 }
 
 //Generate the map using Diamond-Square Algorithm
@@ -216,7 +221,7 @@ void MAP_GenerateMap()
 
                 avg /= 4.0;
 
-                avg = avg + ((double)rand() / (double)RAND_MAX * 2 * h) - h;
+                avg += ((double)rand() / (double)RAND_MAX * 2 * h) - h;
 
                 Map[POINT(x,y)].height = avg;
 
@@ -230,6 +235,24 @@ void MAP_GenerateMap()
     MAP_SmoothTerrain(0.75);
     MAP_SmoothTerrain(0.75);
 
+    MAP_NormalizeValues();
+    MAP_SetTiles();
+
+#if 0
+static double min = 100000, max = -1;
+
+for(x = 0; x < MAP_SIZE; x++)
+{
+    for(y = 0; y < MAP_SIZE; y++)
+    {
+       if(Map[POINT(x,y)].height < min) min = Map[POINT(x,y)].height;
+       if(Map[POINT(x,y)].height > max) max = Map[POINT(x,y)].height;
+    }
+}
+
+printf("Min %f Max %f\n", min, max);
+
+#endif
 #if 0
     //Print out the Map
     for(x = 0; x < MAP_SIZE; x++)
@@ -242,4 +265,39 @@ void MAP_GenerateMap()
     }
     puts("");
 #endif
+}
+
+void MAP_SetTiles(void)
+{
+    int x, y;
+
+    for(x = 0; x < MAP_SIZE; x++)
+    {
+        for(y = 0; y < MAP_SIZE; y++)
+        {
+           if(Map[POINT(x,y)].height > 90) Map[POINT(x,y)].type = 15;
+           else if(Map[POINT(x,y)].height > 70) Map[POINT(x,y)].type = 14;
+           else if(Map[POINT(x,y)].height > 40) Map[POINT(x,y)].type = 13;
+           else if(Map[POINT(x,y)].height > 10) Map[POINT(x,y)].type = 12;
+           else if(Map[POINT(x,y)].height >  0) Map[POINT(x,y)].type = 0;
+           else if(Map[POINT(x,y)].height > -10) Map[POINT(x,y)].type = 8;
+           else if(Map[POINT(x,y)].height > -30) Map[POINT(x,y)].type = 9;
+           else if(Map[POINT(x,y)].height > -70) Map[POINT(x,y)].type = 10;
+           else if(Map[POINT(x,y)].height < -70) Map[POINT(x,y)].type = 11;
+        }
+    }
+}
+
+void MAP_NormalizeValues(void)
+{
+    int x, y;
+
+    for(x = 0; x < MAP_SIZE; x++)
+    {
+        for(y = 0; y < MAP_SIZE; y++)
+        {
+            Map[POINT(x,y)].height = round(Map[POINT(x,y)].height);
+        }
+    }
+
 }

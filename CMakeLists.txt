@@ -24,6 +24,7 @@ if(WIN32)
 
 INCLUDE_DIRECTORIES("C:/Program Files/Qt/mingw/include")
 INCLUDE_DIRECTORIES("C:/Program Files/Qt/mingw/include/freetype2")
+INCLUDE_DIRECTORIES("C:/Program Files/Qt/mingw/include/FTGL")
 endif()
 
 ADD_EXECUTABLE(Mechforce ${SourceFiles} ${HeaderFiles})
