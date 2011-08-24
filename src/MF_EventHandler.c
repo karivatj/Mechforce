@@ -35,6 +35,10 @@ int MF_Event_Handler(void)
                     case SDLK_F1:
                         return (4);
                         break;
+                    case SDLK_F12:
+                        if(Utils_ScreenShot() == -1)
+                            SDL_Close(-1);
+                        break;
                     case SDLK_7:
                         MAP_GenerateMap();
                         break;

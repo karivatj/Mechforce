@@ -1,3 +1,4 @@
+#include <FreeImage.h>
 #include "SDL_Engine.h"
 #include "Prefs.h"
 #include "Mechforce.h"
@@ -5,41 +6,24 @@
 
 int Utils_ScreenShot(void)
 {
-#if 0
-    SDL_Surface *temp = NULL;
-    unsigned char *pixels;
-    int i;
+    unsigned char pixels[3 * SCREEN_WIDTH * SCREEN_HEIGHT]; //Array which holds the pixel data of the OpenGL screen
 
-    temp = SDL_CreateRGBSurface(SDL_SWSURFACE, screen->w, screen->h, 24,
-    #if SDL_BYTEORDER == SDL_LIL_ENDIAN
-    0x000000FF, 0x0000FF00, 0x00FF0000, 0
-    #else
-    0x00FF0000, 0x0000FF00, 0x000000FF, 0
-    #endif
-    );
+    glReadPixels(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, GL_BGR, GL_UNSIGNED_BYTE, pixels);  //Read the pixels from the OpenGL buffer
 
-    if (temp == NULL)
-            return -1;
+    /* Convert the pixel data to FreeImage format */
+    FIBITMAP* image = FreeImage_ConvertFromRawBits(pixels, SCREEN_WIDTH, SCREEN_HEIGHT, 3 * SCREEN_WIDTH, 24,
+                                                   #if SDL_BYTEORDER == SDL_LIL_ENDIAN
+                                                   0x000000FF, 0x0000FF00, 0x00FF0000, 0
+                                                   #else
+                                                   0x00FF0000, 0x0000FF00, 0x000000FF, 0
+                                                   #endif
+                                                   );
 
-    pixels = malloc(4 * screen->w * screen->h);
+    /* Save the file in PNG format */
+    FreeImage_Save(FIF_PNG, image, "../Screenshots/Screenshot.png", 0);
 
-    if (pixels == NULL)
-    {
-            SDL_FreeSurface(temp);
-            return -1;
-    }
+    free(image);    // Lets free our image data we dont need it anymore
 
-    glReadPixels(0, 0, screen->w, screen->h, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
-
-    for (i=0; i<screen->h; i++)
-            memcpy(((char *) temp->pixels) + temp->pitch * i, pixels + 4*screen->w * (screen->h-i-1), screen->w*4);
-
-    free(pixels);
-
-    SDL_SaveBMP(temp, "../Screenshots/Screenshot.bmp");
-
-    SDL_FreeSurface(temp);
-#endif
     return 0;
 }
 

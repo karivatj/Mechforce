@@ -198,7 +198,7 @@ void SDL_Close(int code)
 
     SDL_QuitSubSystem(SDL_INIT_AUDIO|SDL_INIT_VIDEO);
 
-    printf("\nAll Done. Thank You for trying MF - Rearmed!\n");
+    printf("\nAll Done. Thank You for trying MF - Rearmed!\nExited with code %d\n", code);
 
     SDL_Quit();
 
