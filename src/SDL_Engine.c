@@ -26,9 +26,9 @@ int main(int argc, char **argv)
 
     MAP_GenerateMap();
 
-    camerax = -4.5;
-    cameray = 200;
-    cameraz = 200;
+    camerax = 45;
+    cameray = -15;
+    cameraz = -440;
 
     rotx = 45;
     roty = 0;
@@ -216,8 +216,8 @@ void SDL_DrawScene(void)
 
     OrthogonalStart();
 
-    //BTN_DrawButtonScene();
-    MAP_Draw2DTerrain();
+    BTN_DrawButtonScene();
+    //MAP_Draw2DTerrain();
     SDL_DrawText(25,760,570,1,1,0,0,"%.0f",fps);
 
     for (i=0; i<MAX_TXT_EVENTS; i++)
@@ -302,15 +302,17 @@ void glEnable3D()
 
     gluPerspective (45, (GLfloat)SCREEN_WIDTH / (GLfloat)SCREEN_HEIGHT, 0.1, 1000.0);
 
-    gluLookAt(camerax, 200, 200, 0, 0, 0,0,1,0);
+    glTranslatef(camerax, cameray, cameraz);
 
-   // printf("Camera X %f Camera Y %f Camera Z %f Rotx %f Roty %f\n",camerax,cameray,cameraz, rotx, roty);
+    glRotatef(rotx, 1, 0, 0);
+    glRotatef(roty, 0, 1, 0);
+    //gluLookAt(camerax, 200, 200, 0, 0, 0,0,1,0);
+
+    //printf("Camera X %f Camera Y %f Camera Z %f Rotx %f Roty %f\n",camerax,cameray,cameraz, rotx, roty);
 
     glMatrixMode (GL_MODELVIEW);
 
     glLoadIdentity();
-
-    glRotatef(rotx,1,0,0);
 }
 
 void OrthogonalStart()

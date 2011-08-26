@@ -42,6 +42,25 @@ int MF_Event_Handler(void)
                     case SDLK_7:
                         MAP_GenerateMap();
                         break;
+                    case SDLK_LEFT:
+                        camerax += 5;
+                        printf("camera x = %f camera y = %f camera z = %f\n", camerax, cameray, cameraz);
+                        break;
+                    case SDLK_RIGHT:
+                        camerax -= 5;
+                        break;
+                    case SDLK_DOWN:
+                        cameray += 5;
+                        break;
+                    case SDLK_UP:
+                        cameray -= 5;
+                        break;
+                    case SDLK_PLUS:
+                        cameraz += 5;
+                        break;
+                    case SDLK_MINUS:
+                        cameraz -= 5;
+                        break;
                     default:
                     break;
                 }
@@ -117,19 +136,23 @@ void MF_MouseEventMotion(SDL_EventType type, int button, int buttonstate,  int x
 {
     float diffx = x - lastx;
     float diffy = y - lasty;
+    float temp;
 
     lastx = x;
     lasty = y;
 
     if(button == SDL_BUTTON_LEFT && state == STATE_GAME)
-    {/*
-        rotx += (float) 0.5f * diffy;
-        roty -= (float) 0.5f * diffx;
-*/
-        camerax -= (float) 0.50f * diffx;
-        cameray += (float) 0.50f * diffy;
+    {
+        temp = rotx;
 
-        printf("Camera X: %f Camera Y: %f\n",camerax, cameray);
+        if((rotx += (float) 0.5f * diffy) < 0)
+            rotx = 0;
+        else if((rotx += (float) 0.5f * diffy) > 90)
+            rotx = 90;
+
+        roty -= (float) 0.5f * diffx;
+
+        printf("rotx = %f roty = %f\n", rotx, roty);
     }
 
     int cy = SCREEN_HEIGHT - y;

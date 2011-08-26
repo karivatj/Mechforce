@@ -13,8 +13,8 @@ void MF_StateMachine(void)
 
         case STATE_MAINMENU:
             OrthogonalStart();
-   //         glBindTexture(GL_TEXTURE_2D,backgrounds[0]);
-     //       glCallList(background);
+            glBindTexture(GL_TEXTURE_2D,backgrounds[0]);
+            glCallList(background);
             OrthogonalEnd();
         break;
 
