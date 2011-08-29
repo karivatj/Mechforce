@@ -22,12 +22,17 @@ STATE state;
 int main(int argc, char **argv)
 {
     int done = 0, value = 0;
+    orthogonalEnabled = 1;
+
+    SCREEN_WIDTH = 800;
+    SCREEN_HEIGHT = 600;
+
     srand (time(NULL));   //Initialize random seed
 
     MAP_GenerateMap();
 
-    camerax = 45;
-    cameray = -15;
+    camerax = 0;
+    cameray = 15;
     cameraz = -440;
 
     rotx = 45;
@@ -43,18 +48,20 @@ int main(int argc, char **argv)
     BTN_ReadButtonData();
     SDL_LoadSounds();
 
-    printf("Loading fonts.\nLoaded following fonts succesfully:\n");
-    if((font[0] = ftglCreatePixmapFont("../Fonts/kimberle.ttf")) == NULL) {
-    printf("ERROR*** Failed to load ../Fonts/kimberle.ttf.\n");
-    SDL_Close(-1);
+    if((font[0] = ftglCreatePixmapFont("../Fonts/kimberle.ttf")) == NULL)
+    {
+        printf("ERROR*** Failed to load ../Fonts/kimberle.ttf.\n");
+        SDL_Close(-1);
     }
 
     printf("\t../Fonts/kimberle.ttf OK\n");
+
     ftglSetFontCharMap(font[0], ft_encoding_unicode);
 
-    if((font[1] = ftglCreatePixmapFont("../Fonts/cour.ttf")) == NULL) {
-    printf("ERROR*** Failed to load ../Fonts/cour.ttf.\n");
-    SDL_Close(-1);
+    if((font[1] = ftglCreatePixmapFont("../Fonts/cour.ttf")) == NULL)
+    {
+        printf("ERROR*** Failed to load ../Fonts/cour.ttf.\n");
+        SDL_Close(-1);
     }
 
     printf("\t../Fonts/cour.ttf OK\n\n");
@@ -62,11 +69,11 @@ int main(int argc, char **argv)
 
     state = STATE_RELOAD_CONFIG;
 
-    while(!done)			//Pää looppi missä kaikki taika tapahtuu
+    while(!done)			//The main loop
     {
         framestart = SDL_GetTicks();
 
-        value = MF_Event_Handler();     //Käydään joka framella kattomassa onko eventtejä jonossa (hiiren klikkaukset, näppäimistö yms.)
+        value = MF_Event_Handler();
 
         SDL_DrawScene();
 
@@ -75,7 +82,7 @@ int main(int argc, char **argv)
         Utils_CountFPS();
 
         if(value == 1)
-        done = 1;
+            done = 1;
     }
 
     SDL_Close(0);
@@ -85,7 +92,6 @@ int main(int argc, char **argv)
 void Init_SDL(void)
 {
     const SDL_VideoInfo *videoInfo;
-    int flags;  //Variable that contains info about our videoflags.
 
     SDL_Surface* icon = SDL_LoadBMP("./Images/icon.bmp");
 
@@ -116,6 +122,7 @@ void Init_SDL(void)
     SDL_FreeSurface(icon);
 
     flags = SDL_OPENGL;
+    flags |= SDL_RESIZABLE;
 
     if (videoInfo->hw_available )
 	flags |= SDL_HWSURFACE;
@@ -306,9 +313,6 @@ void glEnable3D()
 
     glRotatef(rotx, 1, 0, 0);
     glRotatef(roty, 0, 1, 0);
-    //gluLookAt(camerax, 200, 200, 0, 0, 0,0,1,0);
-
-    //printf("Camera X %f Camera Y %f Camera Z %f Rotx %f Roty %f\n",camerax,cameray,cameraz, rotx, roty);
 
     glMatrixMode (GL_MODELVIEW);
 

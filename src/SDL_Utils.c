@@ -81,10 +81,12 @@ void Utils_WriteConfigFile(void)
         {
             if(strcmp(Buttons[i].caption, "Fullscreen") == 0)
                 fprintf(file, "Fullscreen=%d\n", Buttons[i].enabled);
+
             if(strcmp(Buttons[i].caption, "Mute Sounds") == 0)
-                fprintf(file, "Sound=%d", Buttons[i].enabled);
+                fprintf(file, "Sound=%d\n", Buttons[i].enabled);
         }
     }
+
     fclose(file);
 }
 

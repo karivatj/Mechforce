@@ -55,19 +55,27 @@ int MF_Event_Handler(void)
                     case SDLK_UP:
                         cameray -= 5;
                         break;
-                    case SDLK_PLUS:
-                        cameraz += 5;
-                        break;
-                    case SDLK_MINUS:
-                        cameraz -= 5;
-                        break;
                     default:
                     break;
                 }
             break;
 
             case SDL_MOUSEBUTTONDOWN:
-                  MF_MouseEventPress(event.type, event.button.button, event.button.state, event.button.x, event.button.y);
+                switch(event.button.button)
+                {
+                    case SDL_BUTTON_WHEELUP:
+                    if((cameraz += 10) > -180)
+                        cameraz = -180;
+                    break;
+
+                    case SDL_BUTTON_WHEELDOWN:
+                    if((cameraz -= 10) < -500)
+                        cameraz = -500;
+                    break;
+                    default:
+                        MF_MouseEventPress(event.type, event.button.button, event.button.state, event.button.x, event.button.y);
+                    break;
+                }
             break;
 
             case SDL_MOUSEBUTTONUP:
@@ -76,6 +84,21 @@ int MF_Event_Handler(void)
 
             case SDL_MOUSEMOTION:
                 MF_MouseEventMotion(event.type, event.button.button, event.motion.state, event.motion.x, event.motion.y);
+            break;
+
+            case SDL_VIDEORESIZE:
+                printf("Window Resize Event\n");
+#if 0
+                screen = SDL_SetVideoMode(event.resize.w, event.resize.h, 16, flags);
+
+                SCREEN_WIDTH = event.resize.w;
+                SCREEN_HEIGHT = event.resize.h;
+
+                if(orthogonalEnabled)
+                    OrthogonalStart();
+                else
+                    glEnable3D();
+#endif
             break;
 
             default:
@@ -145,14 +168,12 @@ void MF_MouseEventMotion(SDL_EventType type, int button, int buttonstate,  int x
     {
         temp = rotx;
 
-        if((rotx += (float) 0.5f * diffy) < 0)
+        if((rotx += (float) 0.1f * diffy) < 0)
             rotx = 0;
-        else if((rotx += (float) 0.5f * diffy) > 90)
+        else if((rotx += (float) 0.1f * diffy) > 90)
             rotx = 90;
 
-        roty -= (float) 0.5f * diffx;
-
-        printf("rotx = %f roty = %f\n", rotx, roty);
+        roty -= (float) 0.1f * diffx;
     }
 
     int cy = SCREEN_HEIGHT - y;

@@ -17,3 +17,5 @@ CMakeFiles/*
 
 bin/System/Mechforce
 bin/System/Mechforce.exe
+
+bin/Data/config.ini

@@ -19,6 +19,9 @@ void SDL_LoadTextures(void)
 
         texture = glGenerateTexture(btnSurface, type);
         printf("Loaded image %s\n", filename);
+
+        SDL_FreeSurface(btnSurface);
+
         return texture;
     }
 

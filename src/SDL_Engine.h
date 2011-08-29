@@ -7,10 +7,8 @@
 #include "FTGL/ftgl.h"
 
 /*Few Defines*/
-#define SCREEN_WIDTH    800
-#define SCREEN_HEIGHT   600
 #define BPP             16
-#define FPS             60  //FPS Limit
+#define FPS             60
 #define MAX_SOUNDS      3
 #define MAX_TILES       16
 #define MAX_TXT_EVENTS  1024
@@ -25,9 +23,9 @@
 
 /*SDL Stuff*/
 SDL_Surface *screen;            /*The surface where the graphics will be drawn*/
-SDL_Event event;                /*Event structure*/
-Mix_Chunk *sounds[MAX_SOUNDS];
-FTGLfont *font[MAX_FONTS];
+SDL_Event event;                /*Event Structure*/
+Mix_Chunk *sounds[MAX_SOUNDS];  /*Sound Array*/
+FTGLfont *font[MAX_FONTS];      /*FTGL Font Array*/
 
 typedef struct {
     int reserved;
@@ -57,6 +55,12 @@ GLuint tile;            //Displaylist variable for states
 GLuint tiletexture[MAX_TILES];  //Texture array for tile textures
 GLuint backgrounds[3];
 GLuint buttontextures[14];
+
+int flags;  //Variable that contains info about our videoflags.
+int orthogonalEnabled;
+
+int SCREEN_WIDTH;
+int SCREEN_HEIGHT;
 
 void Init_SDL(void);
 void Init_GL(void);

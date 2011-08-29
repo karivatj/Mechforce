@@ -168,11 +168,11 @@ void MAP_SmoothTerrain(float k)
     {
         for (y = 0; y < MAP_SIZE; y++)
         {
-            Map_VertexArray[POINT(x,y)].x = -200 + x * 5;
+            Map_VertexArray[POINT(x,y)].x = -160 + x * 5;
 
             Map_VertexArray[POINT(x,y)].y = Map[POINT(x,y)].height;
 
-            Map_VertexArray[POINT(x,y)].z = -200 + y * 5;
+            Map_VertexArray[POINT(x,y)].z = -160 + y * 5;
         }
     }
 }
