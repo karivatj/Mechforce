@@ -176,10 +176,14 @@ BUTTON BTN_HandleReleases(BUTTON button)
         case BIG_RECT_BTN:
         case SMALL_RECT_BTN:
 
-            if(strcmp(button.caption, "OK") == 0);
+            if(strcmp(button.caption, "OK") == 0)
+            {
                 Utils_WriteConfigFile();
+                state = STATE_RELOAD_CONFIG;
+            }
+            else
+                state = button.targetstate;
 
-            state = button.targetstate;
             SDL_PlaySound(3);
             SDL_Delay(100);
         break;

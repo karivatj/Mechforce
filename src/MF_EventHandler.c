@@ -32,8 +32,8 @@ int MF_Event_Handler(void)
             case SDL_KEYDOWN:	//If a button was pressed
                 switch(event.key.keysym.sym)	//What was the button pressed?
                 {
-                    case SDLK_F1:
-                        return (4);
+                    case SDLK_8:
+                        SDL_Toggle_Fullscreen();
                         break;
                     case SDLK_F12:
                         if(Utils_ScreenShot() == -1)
@@ -88,7 +88,7 @@ int MF_Event_Handler(void)
 
             case SDL_VIDEORESIZE:
                 printf("Window Resize Event\n");
-#if 0
+#if 1
                 screen = SDL_SetVideoMode(event.resize.w, event.resize.h, 16, flags);
 
                 SCREEN_WIDTH = event.resize.w;

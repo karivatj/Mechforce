@@ -1,5 +1,6 @@
 #include "Mechforce.h"
 #include "SDL_Engine.h"
+#include "Prefs.h"
 
 void SDL_LoadSounds(void)
 {
@@ -21,14 +22,17 @@ void SDL_PlaySound(int id)
 {
     int channel = 0;
 
-    switch(id)
+    if(pref_soundsoff != 1)
     {
-        case 1: channel = Mix_PlayChannel(-1, sounds[0], 0); break;
-        case 2: channel = Mix_PlayChannel(-1, sounds[1], 0); break;
-        case 3: channel = Mix_PlayChannel(-1, sounds[2], 0); break;
-        default: break;
-    }
+        switch(id)
+        {
+            case 1: channel = Mix_PlayChannel(-1, sounds[0], 0); break;
+            case 2: channel = Mix_PlayChannel(-1, sounds[1], 0); break;
+            case 3: channel = Mix_PlayChannel(-1, sounds[2], 0); break;
+            default: break;
+        }
 
-    if (channel == -1)
-        fprintf(stderr, "SDL_Mixer Error : %s ", Mix_GetError());
+        if (channel == -1)
+            fprintf(stderr, "SDL_Mixer Error : %s ", Mix_GetError());
+    }
 }

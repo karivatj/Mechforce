@@ -16,6 +16,7 @@
 #include "SDL_Utils.h"
 #include "Map.h"
 #include "Button.h"
+#include "Prefs.h"
 
 STATE state;
 
@@ -132,6 +133,9 @@ void Init_SDL(void)
     /* This checks if hardware blits can be done */
     if (videoInfo->blit_hw )
 	flags |= SDL_HWACCEL;
+
+    if(pref_fullscreen == 1)
+    flags |= SDL_FULLSCREEN;
 
     /* Sets up OpenGL double buffering */
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
@@ -251,13 +255,27 @@ void SDL_DrawHUD(void)
 
     glBlendFunc(GL_DST_COLOR, GL_ZERO);
     glBindTexture(GL_TEXTURE_2D,backgrounds[3]);        //Mask
-    glCallList(background);
+    glBegin(GL_QUADS);
+        glTexCoord2d(0,1);        glVertex2d(0 ,    0);
+        glTexCoord2d(1,1);        glVertex2d(SCREEN_WIDTH, 0);
+        glTexCoord2d(1,0);        glVertex2d(SCREEN_WIDTH, SCREEN_HEIGHT);
+        glTexCoord2d(0,0);        glVertex2d(0 ,    SCREEN_HEIGHT);
+    glEnd();
+    //glCallList(background);
 
     glLoadIdentity();
 
     glBlendFunc( GL_ONE, GL_ONE );
     glBindTexture(GL_TEXTURE_2D,backgrounds[2]);        //HUD
-    glCallList(background);
+
+    glBegin(GL_QUADS);
+        glTexCoord2d(0,1);        glVertex2d(0 ,    0);
+        glTexCoord2d(1,1);        glVertex2d(SCREEN_WIDTH, 0);
+        glTexCoord2d(1,0);        glVertex2d(SCREEN_WIDTH, SCREEN_HEIGHT);
+        glTexCoord2d(0,0);        glVertex2d(0 ,    SCREEN_HEIGHT);
+    glEnd();
+
+    //glCallList(background);
 
     glDisable(GL_BLEND);
     glEnable( GL_DEPTH_TEST );
@@ -337,4 +355,47 @@ void OrthogonalEnd()
     glMatrixMode(GL_PROJECTION);
     glPopMatrix();
     glMatrixMode(GL_MODELVIEW);
+}
+
+int SDL_Toggle_Fullscreen(void)
+{
+#if 0
+    static int fullscreen = 0;
+
+    if(fullscreen == 0)
+    {
+        flags |= SDL_FULLSCREEN;
+        fullscreen = 1;
+    }
+    else
+    {
+        flags = !SDL_FULLSCREEN;
+        fullscreen = 0;
+    }
+
+    /* get a SDL surface */
+    if ((screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 16, flags )) == NULL )
+    {
+        fprintf(stderr, "Unable to create OpenGL screen: %s\n", SDL_GetError());
+        SDL_Close(1);
+    }
+#endif
+
+    /*Reinitialize SDL*/
+    Init_SDL();
+
+    /*Reinitialize OpenGL*/
+    Init_GL();
+
+    if(orthogonalEnabled)
+        OrthogonalStart();
+    else
+        glEnable3D();
+
+    /*Reload Textures*/
+    SDL_LoadTextures();
+    SDL_GenerateTilemap();
+    BTN_ReadButtonData();
+
+    return 0;
 }
