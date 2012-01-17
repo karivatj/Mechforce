@@ -12,7 +12,7 @@ Mechforce.cbp
 
 cmake_install.cmake
 CMakeLists.txt.user
-CMakeCache
+CMakeCache.txt
 CMakeFiles/*
 
 bin/System/Mechforce
