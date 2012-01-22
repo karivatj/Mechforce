@@ -42,7 +42,7 @@ int main(int argc, char **argv)
     Init_SDL();
     Init_GL();
 
-    SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
+    SDL_EnableKeyRepeat(50, 10);
 
     SDL_LoadTextures();
     SDL_GenerateTilemap();
@@ -118,9 +118,6 @@ void Init_SDL(void)
         SDL_Close(1);
     }
 
-    SDL_WM_SetCaption("Mechforce","Mechforce");
-    SDL_WM_SetIcon(icon, NULL);
-    SDL_FreeSurface(icon);
 
     flags = SDL_OPENGL;
     flags |= SDL_RESIZABLE;
@@ -146,6 +143,10 @@ void Init_SDL(void)
         fprintf(stderr, "Unable to create OpenGL screen: %s\n", SDL_GetError());
         SDL_Close(1);
     }
+    SDL_WM_SetCaption("Mechforce","Mechforce");
+    SDL_WM_SetIcon(icon, NULL);
+
+    //SDL_FreeSurface(icon);
 }
 
 void Init_GL()	        // We call this right after our OpenGL window is created.
@@ -327,14 +328,16 @@ void glEnable3D()
 
     gluPerspective (45, (GLfloat)SCREEN_WIDTH / (GLfloat)SCREEN_HEIGHT, 0.1, 1000.0);
 
-    glTranslatef(camerax, cameray, cameraz);
 
-    glRotatef(rotx, 1, 0, 0);
-    glRotatef(roty, 0, 1, 0);
 
     glMatrixMode (GL_MODELVIEW);
 
     glLoadIdentity();
+
+    glTranslatef(camerax, cameray, cameraz);
+
+    glRotatef(rotx, 1, 0, 0);
+    glRotatef(roty, 0, 1, 0);
 }
 
 void OrthogonalStart()
@@ -359,28 +362,6 @@ void OrthogonalEnd()
 
 int SDL_Toggle_Fullscreen(void)
 {
-#if 0
-    static int fullscreen = 0;
-
-    if(fullscreen == 0)
-    {
-        flags |= SDL_FULLSCREEN;
-        fullscreen = 1;
-    }
-    else
-    {
-        flags = !SDL_FULLSCREEN;
-        fullscreen = 0;
-    }
-
-    /* get a SDL surface */
-    if ((screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 16, flags )) == NULL )
-    {
-        fprintf(stderr, "Unable to create OpenGL screen: %s\n", SDL_GetError());
-        SDL_Close(1);
-    }
-#endif
-
     /*Reinitialize SDL*/
     Init_SDL();
 

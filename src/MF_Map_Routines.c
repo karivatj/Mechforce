@@ -105,7 +105,7 @@ void MAP_Draw3DTerrain(void)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_LINE_SMOOTH);
 
-    glLoadIdentity();
+//    glLoadIdentity();
 
     Vertexarray temp[MAP_SIZE * MAP_SIZE];
 
