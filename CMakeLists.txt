@@ -41,10 +41,23 @@ ADD_DEFINITIONS(-Wall -g)
 file(GLOB SourceFiles ${CMAKE_SOURCE_DIR}/src/*.c)
 file(GLOB HeaderFiles ${CMAKE_SOURCE_DIR}/src/*.h)
 
-set(SourceFiles ${SourceFiles})
-set(HeadereFiles ${HeaderFiles})
+file(GLOB NetworkSourceFiles ${CMAKE_SOURCE_DIR}/src/Network/*.c)
+file(GLOB NetworkHeaderFiles ${CMAKE_SOURCE_DIR}/src/Network/*.h)
 
-INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src/)
+file(GLOB SoundSourceFiles ${CMAKE_SOURCE_DIR}/src/Sound/*.c)
+file(GLOB SoundHeaderFiles ${CMAKE_SOURCE_DIR}/src/Sound/*.h)
+
+file(GLOB UtilsSourceFiles ${CMAKE_SOURCE_DIR}/src/Utils/*.c)
+file(GLOB UtilsHeaderFiles ${CMAKE_SOURCE_DIR}/src/Utils/*.h)
+
+file(GLOB CoreSourceFiles ${CMAKE_SOURCE_DIR}/src/Core/*.c)
+file(GLOB CoreHeaderFiles ${CMAKE_SOURCE_DIR}/src/Core/*.h)
+
+file(GLOB PrefsSourceFiles ${CMAKE_SOURCE_DIR}/src/Prefs/*.c)
+file(GLOB PrefsHeaderFiles ${CMAKE_SOURCE_DIR}/src/Prefs/*.h)
+
+set(SourceFiles ${SourceFiles} ${NetworkSourceFiles} ${SoundSourceFiles} ${UtilsSourceFiles} ${CoreSourceFiles} ${PrefsSourceFiles})
+set(HeadereFiles ${HeaderFiles} ${NetworkHeaderFiles} ${SoundSourceFiles} ${UtilsSourceFiles} ${CoreSourceFiles} ${PrefsSourceFiles}) 
 
 ADD_EXECUTABLE(Mechforce ${SourceFiles} ${HeaderFiles})
 
