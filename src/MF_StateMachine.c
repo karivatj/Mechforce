@@ -1,8 +1,8 @@
 #include "Mechforce.h"
-#include "SDL_Engine.h"
-#include "SDL_Utils.h"
-#include "Map.h"
-#include "Prefs.h"
+#include "Core/SDL_Engine.h"
+#include "Utils/Utilities.h"
+#include "MF_MapRoutines.h"
+#include "Prefs/Preferences.h"
 
 void MF_StateMachine(void)
 {

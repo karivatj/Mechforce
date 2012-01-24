@@ -3,8 +3,8 @@
 #include <stdlib.h>
 #include <math.h>
 #include "Mechforce.h"
-#include "SDL_Engine.h"
-#include "Map.h"
+#include "Core/SDL_Engine.h"
+#include "MF_MapRoutines.h"
 
 void MAP_LoadMapFromFile(char keyword[])
 {

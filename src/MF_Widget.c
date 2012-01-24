@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include "Mechforce.h"
-#include "Button.h"
-#include "SDL_Utils.h"
-#include "SDL_Engine.h"
+#include "MF_Widget.h"
+#include "Utils/Utilities.h"
+#include "Core/SDL_Engine.h"
 
 int BTN_ReadButtonData(void)
 {

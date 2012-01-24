@@ -1,6 +1,6 @@
-#include "Mechforce.h"
-#include "SDL_Engine.h"
 #include "SDL/SDL_image.h"
+#include "../Mechforce.h"
+#include "SDL_Engine.h"
 
 void SDL_LoadTextures(void)
 {

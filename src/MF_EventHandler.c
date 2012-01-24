@@ -7,10 +7,10 @@
  *
  */
 #include "Mechforce.h"
-#include "Map.h"
-#include "Button.h"
-#include "SDL_Utils.h"
-#include "SDL_Engine.h"
+#include "MF_MapRoutines.h"
+#include "MF_Widget.h"
+#include "Utils/Utilities.h"
+#include "Core/SDL_Engine.h"
 
 /**
  * MF_Event_Handler is a function which

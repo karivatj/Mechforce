@@ -1,8 +1,9 @@
 #include <FreeImage.h>
-#include "SDL_Engine.h"
-#include "Prefs.h"
-#include "Mechforce.h"
-#include "Button.h"
+#include "Utilities.h"
+#include "../Core/SDL_Engine.h"
+#include "../Prefs/Preferences.h"
+#include "../Mechforce.h"
+#include "../MF_Widget.h"
 
 int Utils_ScreenShot(void)
 {

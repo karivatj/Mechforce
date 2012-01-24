@@ -1,6 +1,7 @@
-#include "Mechforce.h"
-#include "SDL_Engine.h"
-#include "Prefs.h"
+#include "Sound.h"
+#include "../Mechforce.h"
+#include "../Core/SDL_Engine.h"
+#include "../Prefs/Preferences.h"
 
 void SDL_LoadSounds(void)
 {
