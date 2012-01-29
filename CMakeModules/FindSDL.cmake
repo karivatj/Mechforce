@@ -80,7 +80,8 @@ FIND_PATH(SDL_INCLUDE_DIR SDL.h
   /opt/local # DarwinPorts
   /opt/csw # Blastwave
   /opt
-   C:\\QtSDK\\mingw\\
+  C:/Program Files (x86)/MinGW/
+  C:/MSVC/
 )
 #MESSAGE("SDL_INCLUDE_DIR is ${SDL_INCLUDE_DIR}")
 
@@ -96,7 +97,8 @@ FIND_LIBRARY(SDL_LIBRARY_TEMP
   /opt/local
   /opt/csw
   /opt
-   C:\\QtSDK\\mingw\\
+  C:/Program Files (x86)/MinGW/
+  C:/MSVC/
 )
 
 #MESSAGE("SDL_LIBRARY_TEMP is ${SDL_LIBRARY_TEMP}")
@@ -117,7 +119,8 @@ IF(NOT SDL_BUILDING_LIBRARY)
       /opt/local
       /opt/csw
       /opt
-       C:\\QtSDK\\mingw\\
+      C:/Program Files (x86)/MinGW/
+	  C:/MSVC/
     )
   ENDIF(NOT ${SDL_INCLUDE_DIR} MATCHES ".framework")
 ENDIF(NOT SDL_BUILDING_LIBRARY)

@@ -8,23 +8,29 @@
 # 
 
 IF (WIN32)
-	FIND_PATH( FREEIMAGE_INCLUDE_PATH FreeImage.h
+	FIND_PATH( FREEIMAGE_INCLUDE_PATH 
+		NAMES FreeImage.h
+		PATHS
+		C:/MSVC/include/
 		${PROJECT_SOURCE_DIR}/extern/FreeImage
 		DOC "The directory where FreeImage.h resides")
 	FIND_LIBRARY( FREEIMAGE_LIBRARY
-		NAMES FreeImage freeimage
+		NAMES freeimage FreeImage FreeImage.lib
 		PATHS
+		C:/MSVC/lib/
 		${PROJECT_SOURCE_DIR}/FreeImage
 		DOC "The FreeImage library")
 ELSE (WIN32)
 	FIND_PATH( FREEIMAGE_INCLUDE_PATH FreeImage.h
+		PATHS
 		/usr/include
 		/usr/local/include
 		/sw/include
 		/opt/local/include
+		C:/MSVC/include
 		DOC "The directory where FreeImage.h resides")
 	FIND_LIBRARY( FREEIMAGE_LIBRARY
-		NAMES FreeImage freeimage
+		NAMES FreeImage freeimage FreeImage.lib
 		PATHS
 		/usr/lib64
 		/usr/lib
@@ -32,6 +38,7 @@ ELSE (WIN32)
 		/usr/local/lib
 		/sw/lib
 		/opt/local/lib
+		C:/MSVC/lib/
 		DOC "The FreeImage library")
 ENDIF (WIN32)
 

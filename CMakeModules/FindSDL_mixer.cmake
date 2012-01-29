@@ -49,7 +49,8 @@ FIND_PATH(SDLMIXER_INCLUDE_DIR SDL_mixer.h
   /opt/csw/include 
   /opt/include/SDL
   /opt/include
-   C:\\QtSDK\\mingw\\
+  C:\\Program Files (x86)\\MinGW\\
+  C:/MSVC/include/SDL
 )
 
 FIND_LIBRARY(SDLMIXER_LIBRARY 
@@ -67,7 +68,8 @@ FIND_LIBRARY(SDLMIXER_LIBRARY
   /opt/local
   /opt/csw
   /opt
-   C:\\QtSDK\\mingw\\
+  C:\\Program Files (x86)\\MinGW\\
+  C:\\MSVC\\
 )
 
 SET(SDLMIXER_FOUND "NO")

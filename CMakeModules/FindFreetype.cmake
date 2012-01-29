@@ -48,18 +48,21 @@ FIND_PATH(FREETYPE_INCLUDE_DIR_ft2build ft2build.h
   /usr/local/X11R6/include
   /usr/local/X11/include
   /usr/freeware/include
-  C:\\QtSDK\\mingw\\include
+  C:/Program Files (x86)/MinGW/include
+  C:/MSVC/include
 )
 
 FIND_PATH(FREETYPE_INCLUDE_DIR_freetype2 freetype/config/ftheader.h
   HINTS
   $ENV{FREETYPE_DIR}/include/freetype2
+  PATH_SUFFIXES freetype
   PATHS
   /usr/local/X11R6/include
   /usr/local/X11/include
   /usr/freeware/include
-  C:\\QtSDK\\mingw\\include
-  PATH_SUFFIXES freetype
+  C:/Program Files (x86)/MinGW/include
+  C:/MSVC/include
+
 )
 
 FIND_LIBRARY(FREETYPE_LIBRARY
@@ -71,12 +74,15 @@ FIND_LIBRARY(FREETYPE_LIBRARY
   /usr/local/X11R6
   /usr/local/X11
   /usr/freeware
-  C:\\QtSDK\\mingw\\lib
+  C:/Program Files (x86)/MinGW/lib
+  C:/MSVC/lib
 )
 
 # set the user variables
 IF(FREETYPE_INCLUDE_DIR_ft2build AND FREETYPE_INCLUDE_DIR_freetype2)
   SET(FREETYPE_INCLUDE_DIRS "${FREETYPE_INCLUDE_DIR_ft2build};${FREETYPE_INCLUDE_DIR_freetype2}")
+ELSE(FREETYPE_INCLUDE_DIR_ft2build AND FREETYPE_INCLUDE_DIR_freetype2)
+  message( FATAL_ERROR "Freetype Includes not found!")
 ENDIF(FREETYPE_INCLUDE_DIR_ft2build AND FREETYPE_INCLUDE_DIR_freetype2)
 SET(FREETYPE_LIBRARIES "${FREETYPE_LIBRARY}")
 

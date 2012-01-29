@@ -12,11 +12,11 @@ find_package(SDL REQUIRED)
 find_package(SDL_image REQUIRED)
 find_package(SDL_mixer REQUIRED)
 
-if( NOT FREEIMAGE_FOUND )
-     message( FATAL_ERROR "ERROR: FreeImage not found" )
-else()
+if( FREEIMAGE_INCLUDE_PATH AND FREEIMAGE_LIBRARY )
      message( STATUS "FreeImage found" )
-endif( NOT FREEIMAGE_FOUND )
+else( FREEIMAGE_INCLUDE_PATH AND FREEIMAGE_LIBRARY )
+     message( FATAL_ERROR "ERROR: FreeImage not found" )
+endif( FREEIMAGE_INCLUDE_PATH AND FREEIMAGE_LIBRARY )
 
 if( NOT SDL_FOUND )
      message( FATAL_ERROR "ERROR: SDL not found" )
@@ -57,7 +57,7 @@ file(GLOB PrefsSourceFiles ${CMAKE_SOURCE_DIR}/src/Prefs/*.c)
 file(GLOB PrefsHeaderFiles ${CMAKE_SOURCE_DIR}/src/Prefs/*.h)
 
 set(SourceFiles ${SourceFiles} ${NetworkSourceFiles} ${SoundSourceFiles} ${UtilsSourceFiles} ${CoreSourceFiles} ${PrefsSourceFiles})
-set(HeadereFiles ${HeaderFiles} ${NetworkHeaderFiles} ${SoundSourceFiles} ${UtilsSourceFiles} ${CoreSourceFiles} ${PrefsSourceFiles}) 
+set(HeaderFiles ${HeaderFiles} ${NetworkHeaderFiles} ${SoundSourceFiles} ${UtilsSourceFiles} ${CoreSourceFiles} ${PrefsSourceFiles}) 
 
 ADD_EXECUTABLE(Mechforce ${SourceFiles} ${HeaderFiles})
 
