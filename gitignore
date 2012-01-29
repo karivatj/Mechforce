@@ -19,3 +19,6 @@ bin/System/Mechforce
 bin/System/Mechforce.exe
 
 bin/Data/config.ini
+
+bin/Screenshots/*
+bin/System/stdout.txt
