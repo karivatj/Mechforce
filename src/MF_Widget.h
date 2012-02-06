@@ -1,5 +1,10 @@
-#ifndef BUTTON_H
-#define BUTTON_H
+/*
+ * Mechforce.h 1.00 by Kari Vatjus-Anttila
+ *
+ */
+
+#ifndef WIDGET_H
+#define WIDGET_H
 
 #define MAX_BUTTONS 15
 
@@ -36,4 +41,4 @@ BUTTON BTN_HandlePresses(BUTTON b, int button);
 BUTTON BTN_HandleReleases(BUTTON b);
 BUTTON BTN_HandleMouseOvers(BUTTON b, int button);
 
-#endif /*BUTTON_H*/
+#endif /*WIDGET_H*/

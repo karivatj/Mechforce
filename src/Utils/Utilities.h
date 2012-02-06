@@ -1,7 +1,17 @@
+/*
+ * Mechforce.h 1.00 by Kari Vatjus-Anttila
+ *
+ */
+
 #ifndef UTILITIES_H
 #define UTILITIES_H
 
+#include "GL/gl.h"
 #include "../Mechforce.h"
+
+/*Variables used in calculating the FPS*/
+GLfloat fps;
+GLfloat framestart;
 
 int  Utils_ScreenShot(void); /*Inactive at the moment*/
 void Utils_CountFPS(void);

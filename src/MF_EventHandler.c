@@ -9,6 +9,7 @@
 #include "Mechforce.h"
 #include "MF_MapRoutines.h"
 #include "MF_Widget.h"
+#include "MF_EventHandler.h"
 #include "Utils/Utilities.h"
 #include "Core/SDL_Engine.h"
 
