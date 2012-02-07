@@ -2,6 +2,9 @@
 #include "Mechforce.h"
 #include "MF_Widget.h"
 #include "Utils/Utilities.h"
+#include "Sound/Sound.h"
+#include "Core/SDL_DrawText.h"
+#include "Core/SDL_Textures.h"
 #include "Core/SDL_Engine.h"
 
 int BTN_ReadButtonData(void)

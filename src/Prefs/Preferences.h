@@ -1,3 +1,8 @@
+/*
+ * Preferences.h 1.00 by Kari Vatjus-Anttila
+ *
+ */
+
 #ifndef PREFS_H
 #define PREFS_H
 

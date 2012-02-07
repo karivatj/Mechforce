@@ -9,6 +9,7 @@
 #include "Mechforce.h"
 #include "MF_MapRoutines.h"
 #include "MF_Widget.h"
+#include "MF_EventHandler.h"
 #include "Utils/Utilities.h"
 #include "Core/SDL_Engine.h"
 
@@ -143,15 +144,12 @@ void MF_MouseEventMotion(SDL_EventType type, int button, int buttonstate,  int x
 {
     float diffx = x - lastx;
     float diffy = y - lasty;
-    float temp;
 
     lastx = x;
     lasty = y;
 
     if(button == SDL_BUTTON_LEFT && state == STATE_GAME)
     {
-        temp = rotx;
-
         if((rotx += (float) 0.1f * diffy) < 0)
             rotx = 0;
         else if((rotx += (float) 0.1f * diffy) > 90)

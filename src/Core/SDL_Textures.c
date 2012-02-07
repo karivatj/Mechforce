@@ -1,53 +1,54 @@
 #include "SDL/SDL_image.h"
 #include "../Mechforce.h"
 #include "SDL_Engine.h"
+#include "SDL_Textures.h"
 
 void SDL_LoadTextures(void)
 {
-    GLuint LoadImg(char *filename, int type)
-    {
-        SDL_Surface *btnSurface;
-        GLuint texture;
-
-        btnSurface = IMG_Load(filename);
-
-        if(!btnSurface)
-        {
-            printf("ERROR*** SDL Image error: %s\n",IMG_GetError());
-            SDL_Close(-2);
-        }
-
-        texture = glGenerateTexture(btnSurface, type);
-        printf("Loaded image %s\n", filename);
-
-        SDL_FreeSurface(btnSurface);
-
-        return texture;
-    }
-
     printf("Loading textures.\n");
 
-    backgrounds[0] = LoadImg("../Images/MainMenu_BG.jpg", 1);
-    backgrounds[1] = LoadImg("../Images/Options_BG.jpg", 1);
-    backgrounds[2] = LoadImg("../Images/HUD.jpg", 1);
-    backgrounds[3] = LoadImg("../Images/HUD_Mask.jpg", 1);
+    backgrounds[0] = SDL_LoadImage("../Images/MainMenu_BG.jpg", 1);
+    backgrounds[1] = SDL_LoadImage("../Images/Options_BG.jpg", 1);
+    backgrounds[2] = SDL_LoadImage("../Images/HUD.jpg", 1);
+    backgrounds[3] = SDL_LoadImage("../Images/HUD_Mask.jpg", 1);
 
-    buttontextures[0] = LoadImg("../Images/ButtonRect.png", 1);
-    buttontextures[1] = LoadImg("../Images/ButtonRect_Mouseover.png", 1);
-    buttontextures[2] = LoadImg("../Images/ButtonRect_Pressed.png", 1);
-    buttontextures[3] = LoadImg("../Images/ButtonRect_Mask.png", 2);
-    buttontextures[4] = LoadImg("../Images/ButtonRectSmall.png", 1);
-    buttontextures[5] = LoadImg("../Images/ButtonRectSmall_Mouseover.png", 1);
-    buttontextures[6] = LoadImg("../Images/ButtonRectSmall_Pressed.png", 1);
-    buttontextures[7] = LoadImg("../Images/ButtonRectSmall_Mask.png", 1);
-    buttontextures[8] = LoadImg("../Images/ButtonRound_Red.png", 1);
-    buttontextures[9] = LoadImg("../Images/ButtonRound_Green.png", 1);
-    buttontextures[10]= LoadImg("../Images/ButtonRound_Mask.png", 1);
-    buttontextures[11]= LoadImg("../Images/CheckBox.png", 1);
-    buttontextures[12]= LoadImg("../Images/CheckBox_Enabled.png", 1);
-    buttontextures[13]= LoadImg("../Images/CheckBox_Mask.png", 1);
+    buttontextures[0] = SDL_LoadImage("../Images/ButtonRect.png", 1);
+    buttontextures[1] = SDL_LoadImage("../Images/ButtonRect_Mouseover.png", 1);
+    buttontextures[2] = SDL_LoadImage("../Images/ButtonRect_Pressed.png", 1);
+    buttontextures[3] = SDL_LoadImage("../Images/ButtonRect_Mask.png", 2);
+    buttontextures[4] = SDL_LoadImage("../Images/ButtonRectSmall.png", 1);
+    buttontextures[5] = SDL_LoadImage("../Images/ButtonRectSmall_Mouseover.png", 1);
+    buttontextures[6] = SDL_LoadImage("../Images/ButtonRectSmall_Pressed.png", 1);
+    buttontextures[7] = SDL_LoadImage("../Images/ButtonRectSmall_Mask.png", 1);
+    buttontextures[8] = SDL_LoadImage("../Images/ButtonRound_Red.png", 1);
+    buttontextures[9] = SDL_LoadImage("../Images/ButtonRound_Green.png", 1);
+    buttontextures[10]= SDL_LoadImage("../Images/ButtonRound_Mask.png", 1);
+    buttontextures[11]= SDL_LoadImage("../Images/CheckBox.png", 1);
+    buttontextures[12]= SDL_LoadImage("../Images/CheckBox_Enabled.png", 1);
+    buttontextures[13]= SDL_LoadImage("../Images/CheckBox_Mask.png", 1);
 
     printf("Finished loading textures.\n\n");
+}
+
+GLuint SDL_LoadImage(char *filename, int type)
+{
+    SDL_Surface *btnSurface;
+    GLuint texture;
+
+    btnSurface = IMG_Load(filename);
+
+    if(!btnSurface)
+    {
+        printf("ERROR*** SDL Image error: %s\n",IMG_GetError());
+        SDL_Close(-2);
+    }
+
+    texture = glGenerateTexture(btnSurface, type);
+    printf("Loaded image %s\n", filename);
+
+    SDL_FreeSurface(btnSurface);
+
+    return texture;
 }
 
 GLuint glGenerateTexture(SDL_Surface *surface, int type)

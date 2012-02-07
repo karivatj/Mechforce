@@ -1,6 +1,7 @@
 #include <math.h>
 #include "../Mechforce.h"
 #include "SDL_Engine.h"
+#include "SDL_DrawText.h"
 
 void Print(int size, double x, double y, double r, double g, double b, int fontindex, const char *msg)
 {

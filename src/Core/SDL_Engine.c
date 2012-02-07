@@ -11,11 +11,16 @@
 #include <windows.h>
 #endif
 
-#include "../Mechforce.h"
 #include "SDL_Engine.h"
-#include "../Utils/Utilities.h"
+#include "SDL_Textures.h"
+#include "SDL_DrawText.h"
+#include "../Mechforce.h"
 #include "../MF_MapRoutines.h"
+#include "../MF_EventHandler.h"
+#include "../MF_StateMachine.h"
 #include "../MF_Widget.h"
+#include "../Sound/Sound.h"
+#include "../Utils/Utilities.h"
 #include "../Prefs/Preferences.h"
 
 STATE state;
