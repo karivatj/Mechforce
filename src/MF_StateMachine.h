@@ -8,4 +8,4 @@
 
 void MF_StateMachine(void); /*State machine where we check what state the user is in and act accordingly*/
 
-endif /*STATEMACHINE_H*/
+#endif /*STATEMACHINE_H*/

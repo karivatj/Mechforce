@@ -15,6 +15,7 @@ GLuint background;      //Displaylist variable for background and HUD
 GLuint tile;            //Displaylist variable for states
 
 GLuint glGenerateTexture(SDL_Surface *surface, int type);
+GLuint SDL_LoadImage(char *filename, int type);
 void SDL_GenerateTilemap(void);
 void SDL_LoadTextures(void);
 
