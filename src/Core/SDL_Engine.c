@@ -39,7 +39,7 @@ int main(int argc, char **argv)
 
     camerax = 0;
     cameray = 15;
-    cameraz = -440;
+    cameraz = -200;
 
     rotx = 45;
     roty = 0;
@@ -182,40 +182,41 @@ void SDL_Close(int code)
 {
     int i;
 
-    printf("\nShutting down.\n");
+    printf("\nShutting down Mechforce!\n");
 
+    printf("Freeing Soundfiles");
     for(i = 0;i < MAX_SOUNDS; i++)
         Mix_FreeChunk(sounds[i]);
 
-    printf("Soundfiles freed.\n");
-
-    SDL_FreeSurface(screen);
-
     Mix_CloseAudio();
 
-    printf("Audio closed.\n");
+    printf("... OK\nFreeing fonts");
 
     if(font[0] != NULL && font[1] != NULL)
     {
         ftglDestroyFont(font[0]);
         ftglDestroyFont(font[1]);
-        printf("Fonts destroyed.\n");
+        printf("...OK\n");
     }
 
+    printf("Deleting textures");
+    SDL_FreeSurface(screen);
     glDeleteTextures(3,&backgrounds[0]);
     glDeleteTextures(11,&buttontextures[0]);
     glDeleteTextures(MAX_TILES,&tiletexture[0]);
 
-    printf("Textures deleted.\n");
-
     glDeleteLists(background,1);
     glDeleteLists(state,1);
 
-    printf("Shutting down SDL.\n");
+    printf("... OK\nDestroying Map Data");
+
+    free(MAP_HD);
+
+    printf("... OK\nShutting down SDL.");
 
     SDL_QuitSubSystem(SDL_INIT_AUDIO|SDL_INIT_VIDEO);
 
-    printf("\nAll Done. Thank You for trying MF - Rearmed!\nExited with code %d\n", code);
+    printf("... OK\nAll Done. Thank You for trying MF - Rearmed!\nExited with code %d\n", code);
 
     SDL_Quit();
 
@@ -333,16 +334,18 @@ void glEnable3D()
 
     gluPerspective (45, (GLfloat)SCREEN_WIDTH / (GLfloat)SCREEN_HEIGHT, 0.1, 1000.0);
 
-
-
     glMatrixMode (GL_MODELVIEW);
 
     glLoadIdentity();
+
+    //glTranslatef(0, 15, -440);
 
     glTranslatef(camerax, cameray, cameraz);
 
     glRotatef(rotx, 1, 0, 0);
     glRotatef(roty, 0, 1, 0);
+
+    //glTranslatef(-camerax, -cameray, -cameraz);
 }
 
 void OrthogonalStart()

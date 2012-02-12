@@ -99,32 +99,37 @@ void MAP_Draw2DTerrain(void)
 
 void MAP_Draw3DTerrain(void)
 {
-    int i,j;
-
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_LINE_SMOOTH);
+    glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
 
-//    glLoadIdentity();
-
-    Vertexarray temp[MAP_SIZE * MAP_SIZE];
+    //Vertexarray temp[MAP_SIZE * MAP_SIZE];
 
     glEnableClientState(GL_VERTEX_ARRAY);   //We want a vertex array
 
-    glVertexPointer(3, GL_FLOAT, 0, &Map_VertexArray[0]);   //All values are grouped to three Floats, we start at the beginning of the array (offset=0) and want to use as VertexArray
+    glVertexPointer(3, GL_FLOAT, 0, &MAP_HD[0]);   //All values are grouped to three Floats, we start at the beginning of the array (offset=0) and want to use as VertexArray
 
+    glDrawArrays(GL_TRIANGLES, 0, numberoftriangles * 3); //We draw the first three vertices in the array as a triangle
+
+#if 0
     for(i = 0; i<MAP_SIZE; i++)
     {
         glDrawArrays(GL_LINE_STRIP, MAP_SIZE * i, MAP_SIZE); //We draw the first three vertices in the array as a triangle
     }
 
+
     for(i = 0; i < MAP_SIZE; i++)
     {
         for(j = 0; j < MAP_SIZE; j++)
         {
-            temp[i * MAP_SIZE + j].x = Map_VertexArray[j * MAP_SIZE + i].x;
-            temp[i * MAP_SIZE + j].y = Map_VertexArray[j * MAP_SIZE + i].y;
-            temp[i * MAP_SIZE + j].z = Map_VertexArray[j * MAP_SIZE + i].z;
+            temp[POINT(i,j)].x = MAP_HD[POINT(j,i)].x;
+            temp[POINT(i,j)].y = MAP_HD[POINT(j,i)].y;
+            temp[POINT(i,j)].z = MAP_HD[POINT(j,i)].z;
+/*
+            temp[i * MAP_SIZE + j].x = MAP_HD[j * MAP_SIZE + i].x;
+            temp[i * MAP_SIZE + j].y = MAP_HD[j * MAP_SIZE + i].y;
+            temp[i * MAP_SIZE + j].z = MAP_HD[j * MAP_SIZE + i].z;*/
         }
     }
 
@@ -134,46 +139,40 @@ void MAP_Draw3DTerrain(void)
     {
         glDrawArrays(GL_LINE_STRIP, MAP_SIZE * i, MAP_SIZE);
     }
+#endif
 
+    glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisable(GL_BLEND);
     glDisable(GL_LINE_SMOOTH);
+
 }
 
-void MAP_SmoothTerrain(float k)
+void MAP_SmoothTerrain(float k, int passes)
 {
-    int x,y;
+    int i, x,y;
 
-    /* Rows, left to right */
-    for(x = 1;x < MAP_SIZE; x++)
-        for (y = 0;y < MAP_SIZE; y++)
-            Map[POINT(x,y)].height = Map[POINT(x-1,y)].height * (1-k) + Map[POINT(x,y)].height * k;
-
-    /* Rows, right to left*/
-    for(x = MAP_SIZE-2;x < -1; x--)
-        for (y = 0;y < MAP_SIZE; y++)
-            Map[POINT(x,y)].height = Map[POINT(x+1,y)].height * (1-k) + Map[POINT(x,y)].height * k;
-
-    /* Columns, bottom to top */
-    for(x = 0;x < MAP_SIZE; x++)
-        for (y = 1;y < MAP_SIZE; y++)
-           Map[POINT(x,y)].height = Map[POINT(x,y-1)].height * (1-k) + Map[POINT(x,y)].height * k;
-
-    /* Columns, top to bottom */
-    for(x = 0;x < MAP_SIZE; x++)
-        for (y = MAP_SIZE; y < -1; y--)
-            Map[POINT(x,y)].height = Map[POINT(x,y+1)].height * (1-k) + Map[POINT(x,y)].height * k;
-
-    for (x = 0; x < MAP_SIZE; x++)
+    for(i = 0; i < passes; i++)
     {
-        for (y = 0; y < MAP_SIZE; y++)
-        {
-            Map_VertexArray[POINT(x,y)].x = -160 + x * 5;
+        /* Rows, left to right */
+        for(x = 1;x < MAP_SIZE; x++)
+            for (y = 0;y < MAP_SIZE; y++)
+                Map[POINT(x,y)].height = Map[POINT(x-1,y)].height * (1-k) + Map[POINT(x,y)].height * k;
 
-            Map_VertexArray[POINT(x,y)].y = Map[POINT(x,y)].height;
+        /* Rows, right to left*/
+        for(x = MAP_SIZE-2;x < -1; x--)
+            for (y = 0;y < MAP_SIZE; y++)
+                Map[POINT(x,y)].height = Map[POINT(x+1,y)].height * (1-k) + Map[POINT(x,y)].height * k;
 
-            Map_VertexArray[POINT(x,y)].z = -160 + y * 5;
-        }
+        /* Columns, bottom to top */
+        for(x = 0;x < MAP_SIZE; x++)
+            for (y = 1;y < MAP_SIZE; y++)
+               Map[POINT(x,y)].height = Map[POINT(x,y-1)].height * (1-k) + Map[POINT(x,y)].height * k;
+
+        /* Columns, top to bottom */
+        for(x = 0;x < MAP_SIZE; x++)
+            for (y = MAP_SIZE; y < -1; y--)
+                Map[POINT(x,y)].height = Map[POINT(x,y+1)].height * (1-k) + Map[POINT(x,y)].height * k;
     }
 }
 
@@ -185,6 +184,8 @@ void MAP_GenerateMap()
     int x;
     int y;
     double h = 100;
+
+    numberoftriangles = 0;
 
     //Seed the data
     Map[POINT(0,0)].height = Map[POINT(0,MAP_SIZE-1)].height = Map[POINT(MAP_SIZE-1,0)].height = Map[POINT(MAP_SIZE-1,MAP_SIZE-1)].height = SEED;
@@ -231,35 +232,40 @@ void MAP_GenerateMap()
         }
     }
 
-    MAP_SmoothTerrain(0.75);
-    MAP_SmoothTerrain(0.75);
-    MAP_SmoothTerrain(0.75);
-
+    MAP_SmoothTerrain(0.75, 3);
     MAP_NormalizeValues();
     MAP_SetTiles();
 
-#if 0
-static double min = 100000, max = -1;
+    int size = MAP_CalculateElementCountFromArray(MAP_SIZE) * 6 * 3;
 
-for(x = 0; x < MAP_SIZE; x++)
-{
-    for(y = 0; y < MAP_SIZE; y++)
+    if((MAP_HD = calloc(size, sizeof(Vertexarray))) == NULL) //Allocate memory for the map data
     {
-       if(Map[POINT(x,y)].height < min) min = Map[POINT(x,y)].height;
-       if(Map[POINT(x,y)].height > max) max = Map[POINT(x,y)].height;
+        printf("Not enough memory for map data! Tried to allocate %d bytes but failed!\n", size * sizeof(Vertexarray));
+        SDL_Close(-1);
     }
-}
 
-printf("Min %f Max %f\n", min, max);
+    MAP_CreateTrianglesFromMapData(MAP_HD);
 
-#endif
-#if 0
+#if 0 /*Debug*/
+    static double min = 100000, max = -1;
+
+    for(x = 0; x < MAP_SIZE; x++)
+    {
+        for(y = 0; y < MAP_SIZE; y++)
+        {
+           if(Map[POINT(x,y)].height < min) min = Map[POINT(x,y)].height;
+           if(Map[POINT(x,y)].height > max) max = Map[POINT(x,y)].height;
+        }
+    }
+
+    printf("Min %f Max %f\n", min, max);
+
     //Print out the Map
     for(x = 0; x < MAP_SIZE; x++)
     {
         for(y = 0; y < MAP_SIZE; y++)
         {
-            printf("[%.3f]\t",Map[POINT(x,y)].height);
+            printf("[%.3f]\t",MAP_HD[POINT(x,y)].height);
         }
         printf("\n");
     }
@@ -301,3 +307,136 @@ void MAP_NormalizeValues(void)
     }
 
 }
+
+int MAP_CalculateElementCountFromArray(int MapSize)
+{
+    int numberofelements = 0;
+    int x, y;
+
+    for (x = 0; x < MapSize; x+=3)
+    {
+        for (y = 0; y < MapSize; y+=2)
+        {
+            if(x <= MapSize - 3)
+            {
+                if(y == MapSize -1) break;
+
+                numberofelements += 1;
+            }
+            if(x != 0)
+            {
+                if(y == MapSize - 3) break; /*If we are at the second last cell of the row, then stop*/
+
+                numberofelements += 1;
+            }
+        }
+    }
+
+    return numberofelements;
+}
+
+void MAP_CreateTrianglesFromMapData(Vertexarray *values)
+{
+    int x, y;
+    int numofvert = 0;
+
+    for (x = 0; x < MAP_SIZE; x+=3)
+    {
+        for (y = 0; y < MAP_SIZE; y+=2)
+        {
+            numofvert = numberoftriangles * 3;
+
+            if(x <= MAP_SIZE - 3)
+            {
+                if(y == MAP_SIZE -1) break;
+                /*Triangle type A*/
+
+                /*Triangle #1 */
+                values[numofvert].x = x * 5;           values[numofvert +1].x = (x-0.5) * 5;  values[numofvert +2].x = (x+0.5) * 5;
+                values[numofvert].y = 5;               values[numofvert +1].y = 5;            values[numofvert +2].y = 5;
+                values[numofvert].z = y * 5;           values[numofvert +1].z = (y+1) * 5;    values[numofvert +2].z = (y+1) * 5;
+
+                /*Triangle #2*/
+                values[numofvert +3].x = x * 5;        values[numofvert +4].x = (x+1) * 5;    values[numofvert +5].x = (x+0.5) * 5;
+                values[numofvert +3].y = 5;            values[numofvert +4].y = 5;            values[numofvert +5].y = 5;
+                values[numofvert +3].z = y * 5;        values[numofvert +4].z = y * 5;        values[numofvert +5].z = (y+1) * 5;
+
+                /*Triangle #3*/
+                values[numofvert +6].x = (x-0.5) * 5;  values[numofvert +7].x = x * 5;        values[numofvert +8].x = (x+0.5) * 5;
+                values[numofvert +6].y = 5;            values[numofvert +7].y = 5;            values[numofvert +8].y = 5;
+                values[numofvert +6].z = (y+1) * 5;    values[numofvert +7].z = (y+2) * 5;    values[numofvert +8].z = (y+1) * 5;
+
+                /*Triangle #4*/
+                values[numofvert+9].x = x * 5;         values[numofvert +10].x = (x+0.5) * 5; values[numofvert +11].x = (x+1) * 5;
+                values[numofvert+9].y = 5;             values[numofvert +10].y = 5;           values[numofvert +11].y = 5;
+                values[numofvert+9].z = (y+2) * 5;     values[numofvert +10].z = (y+1) * 5;   values[numofvert +11].z = (y+2) * 5;
+
+                /*Triangle #5*/
+                values[numofvert +12].x = (x+1) * 5;   values[numofvert +13].x = (x+0.5) * 5; values[numofvert +14].x = (x+1.5) * 5;
+                values[numofvert +12].y = 5;           values[numofvert +13].y = 5;           values[numofvert +14].y = 5;
+                values[numofvert +12].z = y * 5;       values[numofvert +13].z = (y+1) * 5;   values[numofvert +14].z = (y+1) * 5;
+
+                /*Triangle #6*/
+                values[numofvert +15].x = (x+0.5) * 5; values[numofvert +16].x = (x+1) * 5;   values[numofvert +17].x = (x+1.5) * 5;
+                values[numofvert +15].y = 5;           values[numofvert +16].y = 5;           values[numofvert +17].y = 5;
+                values[numofvert +15].z = (y+1) * 5;   values[numofvert +16].z = (y+2) * 5;   values[numofvert +17].z = (y+1) * 5;
+
+                numberoftriangles += 6;
+                numofvert = numberoftriangles * 3;
+            }
+            if(x != 0)
+            {
+                if(y == MAP_SIZE - 3) break; /*If we are at the second last cell of the row, then stop*/
+
+                /*Triangle #1 */
+                values[numofvert].x = (x-1.5) * 5;    values[numofvert +1].x = (x-2) * 5;    values[numofvert +2].x = (x-1) * 5;
+                values[numofvert].y = 5;              values[numofvert +1].y = 5;            values[numofvert +2].y = 5;
+                values[numofvert].z = (y+1) * 5;      values[numofvert +1].z = (y+2) * 5;    values[numofvert +2].z = (y+2) * 5;
+
+                /*Triangle #2*/
+                values[numofvert +3].x = (x-2) * 5;   values[numofvert +4].x = (x-1.5) * 5;  values[numofvert +5].x = (x-1) * 5;
+                values[numofvert +3].y = 5;           values[numofvert +4].y = 5;            values[numofvert +5].y = 5;
+                values[numofvert +3].z = (y+2) * 5;   values[numofvert +4].z = (y+3) * 5;    values[numofvert +5].z = (y+2) * 5;
+
+                /*Triangle #3*/
+                values[numofvert +6].x = (x-1.5) * 5; values[numofvert +7].x = (x-1) * 5;    values[numofvert +8].x = (x-0.5) * 5;
+                values[numofvert +6].y = 5;           values[numofvert +7].y = 5;            values[numofvert +8].y = 5;
+                values[numofvert +6].z = (y+1) * 5;   values[numofvert +7].z = (y+2) * 5;    values[numofvert +8].z = (y+1) * 5;
+
+                /*Triangle #4*/
+                values[numofvert +9].x = (x-1) * 5;   values[numofvert +10].x = (x-0.5) * 5; values[numofvert +11].x = x * 5;
+                values[numofvert +9].y = 5;           values[numofvert +10].y = 5;           values[numofvert +11].y = 5;
+                values[numofvert +9].z = (y+2) * 5;   values[numofvert +10].z = (y+1) * 5;   values[numofvert +11].z = (y+2) * 5;
+
+                /*Triangle #5*/
+                values[numofvert +12].x = (x-1) * 5;  values[numofvert +13].x = (x-1.5) * 5; values[numofvert +14].x = (x-0.5) * 5;
+                values[numofvert +12].y = 5;          values[numofvert +13].y = 5;           values[numofvert +14].y = 5;
+                values[numofvert +12].z = (y+2) * 5;  values[numofvert +13].z = (y+3) * 5;   values[numofvert +14].z = (y+3) * 5;
+
+                /*Triangle #6*/
+                values[numofvert +15].x = (x-1) * 5;  values[numofvert +16].x = x * 5;       values[numofvert +17].x = (x-0.5) * 5;
+                values[numofvert +15].y = 5;          values[numofvert +16].y = 5;           values[numofvert +17].y = 5;
+                values[numofvert +15].z = (y+2) * 5;  values[numofvert +16].z = (y+2) * 5;   values[numofvert +17].z = (y+3) * 5;
+
+                numberoftriangles += 6;
+            }
+#if 0
+            //values[POINT(x,y)].x = (x+1) * 5;
+            //else
+            values[POINT(x,y)].x = x * 5;
+
+            //values[POINT(x,y)].y = 7;//Map[POINT(x,y)].height;
+
+            values[POINT(x,y)].y = 5;//Map[POINT(x,y)].height;
+
+            if(x % 2 != 0)
+            values[POINT(x,y)].z = (y-1) * 5;
+
+            else
+            values[POINT(x,y)].z = y * 5;
+#endif
+
+        }
+    }
+}
+
