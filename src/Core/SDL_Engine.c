@@ -156,6 +156,8 @@ void Init_SDL(void)
 
 void Init_GL()	        // We call this right after our OpenGL window is created.
 {
+    GLfloat specular[]= { 1.0f, 1.0f, 1.0f, 1.0f };
+    GLfloat global_ambient[]=  { 0.5f, 0.5f, 0.5f, 1.0f };
     printf("Initializing OpenGL.\n\n");
 
     glShadeModel(GL_SMOOTH);			    // Enables Smooth Color Shading
@@ -163,6 +165,11 @@ void Init_GL()	        // We call this right after our OpenGL window is created.
     glClearDepth(1.0);                              // Enables Clearing Of The Depth Buffer
     glEnable(GL_DEPTH_TEST);			    // Enables Depth Testing
     glDepthFunc(GL_LEQUAL);                         // The Type Of Depth Testing To Do
+
+    //glEnable(GL_LIGHTING); //Enable lights
+    glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
+    glEnable(GL_LIGHT0);
+    glLightModelfv(GL_LIGHT_MODEL_AMBIENT, global_ambient);
 
     glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 
