@@ -23,78 +23,6 @@
 #include "../Utils/Utilities.h"
 #include "../Prefs/Preferences.h"
 
-STATE state;
-
-int main(int argc, char **argv)
-{
-    int done = 0, value = 0;
-    orthogonalEnabled = 1;
-
-    SCREEN_WIDTH = 800;
-    SCREEN_HEIGHT = 600;
-
-    srand (time(NULL));   //Initialize random seed
-
-    MAP_GenerateMap();
-
-    camerax = 0;
-    cameray = 15;
-    cameraz = -200;
-
-    rotx = 45;
-    roty = 0;
-
-    Init_SDL();
-    Init_GL();
-
-    SDL_EnableKeyRepeat(50, 10);
-
-    SDL_LoadTextures();
-    SDL_GenerateTilemap();
-    BTN_ReadButtonData();
-    SDL_LoadSounds();
-
-    if((font[0] = ftglCreatePixmapFont("../Fonts/kimberle.ttf")) == NULL)
-    {
-        printf("ERROR*** Failed to load ../Fonts/kimberle.ttf.\n");
-        SDL_Close(-1);
-    }
-
-    printf("\t../Fonts/kimberle.ttf OK\n");
-
-    ftglSetFontCharMap(font[0], ft_encoding_unicode);
-
-    if((font[1] = ftglCreatePixmapFont("../Fonts/cour.ttf")) == NULL)
-    {
-        printf("ERROR*** Failed to load ../Fonts/cour.ttf.\n");
-        SDL_Close(-1);
-    }
-
-    printf("\t../Fonts/cour.ttf OK\n\n");
-    ftglSetFontCharMap(font[1], ft_encoding_unicode);
-
-    state = STATE_RELOAD_CONFIG;
-
-    while(!done)			//The main loop
-    {
-        framestart = SDL_GetTicks();
-
-        value = MF_Event_Handler();
-
-        SDL_DrawScene();
-
-        SDL_GL_SwapBuffers();
-
-        Utils_CountFPS();
-
-        if(value == 1)
-            done = 1;
-    }
-
-    SDL_Close(0);
-    return(0);
-}
-
 void Init_SDL(void)
 {
     const SDL_VideoInfo *videoInfo;
@@ -218,6 +146,7 @@ void SDL_Close(int code)
     printf("... OK\nDestroying Map Data");
 
     free(MAP_HD);
+    free(MAP_Outlines);
 
     printf("... OK\nShutting down SDL.");
 
@@ -244,6 +173,29 @@ void SDL_DrawScene(void)
     BTN_DrawButtonScene();
     //MAP_Draw2DTerrain();
     SDL_DrawText(25,760,570,1,1,0,0,"%.0f",fps);
+
+
+    GLdouble dx, dy, dz;
+
+    // arrays to hold matrix information
+
+    GLdouble model_view[16];
+    glGetDoublev(GL_MODELVIEW_MATRIX, model_view);
+
+    GLdouble projection[16];
+    glGetDoublev(GL_PROJECTION_MATRIX, projection);
+
+    GLint viewport[4];
+    glGetIntegerv(GL_VIEWPORT, viewport);
+
+    // get 3D coordinates based on window coordinates
+
+    gluUnProject(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.01,
+            model_view, projection, viewport,
+            &dx, &dy, &dz);
+
+
+    SDL_DrawText(15, 100, 100, 1, 1, 0, 0, "3D X: %.2f 3D Y: %.2f 3D Z: %.2f", dx, dy, dz);
 
     for (i=0; i<MAX_TXT_EVENTS; i++)
     {
