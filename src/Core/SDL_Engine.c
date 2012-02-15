@@ -113,89 +113,65 @@ void Init_GL()	        // We call this right after our OpenGL window is created.
     glEnable(GL_TEXTURE_2D);
 }
 
-void SDL_Close(int code)
+void glEnable3D()
 {
-    int i;
+    glViewport (0, 0, (GLsizei)SCREEN_WIDTH, (GLsizei)SCREEN_HEIGHT);
 
-    printf("\nShutting down Mechforce!\n");
+    glMatrixMode (GL_PROJECTION);
+    glLoadIdentity ();
 
-    printf("Freeing Soundfiles");
-    for(i = 0;i < MAX_SOUNDS; i++)
-        Mix_FreeChunk(sounds[i]);
+    gluPerspective (45, (GLfloat)SCREEN_WIDTH / (GLfloat)SCREEN_HEIGHT, 0.1, 1000.0);
 
-    Mix_CloseAudio();
+    glMatrixMode (GL_MODELVIEW);
 
-    printf("... OK\nFreeing fonts");
+    glLoadIdentity();
 
-    if(font[0] != NULL && font[1] != NULL)
-    {
-        ftglDestroyFont(font[0]);
-        ftglDestroyFont(font[1]);
-        printf("...OK\n");
-    }
+    //glTranslatef(0, 15, -440);
 
-    printf("Deleting textures");
-    SDL_FreeSurface(screen);
-    glDeleteTextures(3,&backgrounds[0]);
-    glDeleteTextures(11,&buttontextures[0]);
-    glDeleteTextures(MAX_TILES,&tiletexture[0]);
+    glTranslatef(camerax, cameray, cameraz);
 
-    glDeleteLists(background,1);
-    glDeleteLists(state,1);
+    glRotatef(rotx, 1, 0, 0);
+    glRotatef(roty, 0, 1, 0);
 
-    printf("... OK\nDestroying Map Data");
-
-    free(MAP_HD);
-    free(MAP_Outlines);
-
-    printf("... OK\nShutting down SDL.");
-
-    SDL_QuitSubSystem(SDL_INIT_AUDIO|SDL_INIT_VIDEO);
-
-    printf("... OK\nAll Done. Thank You for trying MF - Rearmed!\nExited with code %d\n", code);
-
-    SDL_Quit();
-
-    exit(code);
+    //glTranslatef(-camerax, -cameray, -cameraz);
 }
+
+void OrthogonalStart()
+{
+    glMatrixMode(GL_PROJECTION);
+    glPushMatrix();
+    glLoadIdentity();
+
+    gluOrtho2D(0, SCREEN_WIDTH, 0, SCREEN_HEIGHT);
+
+    glMatrixMode(GL_MODELVIEW);
+    glPushMatrix();
+    glLoadIdentity();
+}
+
+void OrthogonalEnd()
+{
+    glMatrixMode(GL_PROJECTION);
+    glPopMatrix();
+    glMatrixMode(GL_MODELVIEW);
+}
+
 
 void SDL_DrawScene(void)
 {
     int i;
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// Clear The Screen And The Depth Buffer
+
     glEnable3D();
 
     MF_StateMachine();
 
-    OrthogonalStart();
+    OrthogonalStart(); //Start rendering in 2D
 
     BTN_DrawButtonScene();
     //MAP_Draw2DTerrain();
     SDL_DrawText(25,760,570,1,1,0,0,"%.0f",fps);
-
-
-    GLdouble dx, dy, dz;
-
-    // arrays to hold matrix information
-
-    GLdouble model_view[16];
-    glGetDoublev(GL_MODELVIEW_MATRIX, model_view);
-
-    GLdouble projection[16];
-    glGetDoublev(GL_PROJECTION_MATRIX, projection);
-
-    GLint viewport[4];
-    glGetIntegerv(GL_VIEWPORT, viewport);
-
-    // get 3D coordinates based on window coordinates
-
-    gluUnProject(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0.01,
-            model_view, projection, viewport,
-            &dx, &dy, &dz);
-
-
-    SDL_DrawText(15, 100, 100, 1, 1, 0, 0, "3D X: %.2f 3D Y: %.2f 3D Z: %.2f", dx, dy, dz);
 
     for (i=0; i<MAX_TXT_EVENTS; i++)
     {
@@ -284,47 +260,50 @@ void SDL_BuildDisplayLists(void)
     glEndList();
 }
 
-void glEnable3D()
+void SDL_Close(int code)
 {
-    glViewport (0, 0, (GLsizei)SCREEN_WIDTH, (GLsizei)SCREEN_HEIGHT);
+    int i;
 
-    glMatrixMode (GL_PROJECTION);
-    glLoadIdentity ();
+    printf("\nShutting down Mechforce!\n");
 
-    gluPerspective (45, (GLfloat)SCREEN_WIDTH / (GLfloat)SCREEN_HEIGHT, 0.1, 1000.0);
+    printf("Freeing Soundfiles");
+    for(i = 0;i < MAX_SOUNDS; i++)
+        Mix_FreeChunk(sounds[i]);
 
-    glMatrixMode (GL_MODELVIEW);
+    Mix_CloseAudio();
 
-    glLoadIdentity();
+    printf("... OK\nFreeing fonts");
 
-    //glTranslatef(0, 15, -440);
+    if(font[0] != NULL && font[1] != NULL)
+    {
+        ftglDestroyFont(font[0]);
+        ftglDestroyFont(font[1]);
+        printf("...OK\n");
+    }
 
-    glTranslatef(camerax, cameray, cameraz);
+    printf("Deleting textures");
+    SDL_FreeSurface(screen);
+    glDeleteTextures(3,&backgrounds[0]);
+    glDeleteTextures(11,&buttontextures[0]);
+    glDeleteTextures(MAX_TILES,&tiletexture[0]);
 
-    glRotatef(rotx, 1, 0, 0);
-    glRotatef(roty, 0, 1, 0);
+    glDeleteLists(background,1);
+    glDeleteLists(state,1);
 
-    //glTranslatef(-camerax, -cameray, -cameraz);
-}
+    printf("... OK\nDestroying Map Data");
 
-void OrthogonalStart()
-{
-    glMatrixMode(GL_PROJECTION);
-    glPushMatrix();
-    glLoadIdentity();
+    free(MAP_HD);
+    free(MAP_Outlines);
 
-    gluOrtho2D(0, SCREEN_WIDTH, 0, SCREEN_HEIGHT);
+    printf("... OK\nShutting down SDL.");
 
-    glMatrixMode(GL_MODELVIEW);
-    glPushMatrix();
-    glLoadIdentity();
-}
+    SDL_QuitSubSystem(SDL_INIT_AUDIO|SDL_INIT_VIDEO);
 
-void OrthogonalEnd()
-{
-    glMatrixMode(GL_PROJECTION);
-    glPopMatrix();
-    glMatrixMode(GL_MODELVIEW);
+    printf("... OK\nAll Done. Thank You for trying MF - Rearmed!\nExited with code %d\n", code);
+
+    SDL_Quit();
+
+    exit(code);
 }
 
 int SDL_Toggle_Fullscreen(void)

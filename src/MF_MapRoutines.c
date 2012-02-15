@@ -102,13 +102,13 @@ void MAP_Draw3DTerrain(void)
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_LINE_SMOOTH);
-    glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+    //glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
 
     glEnableClientState(GL_VERTEX_ARRAY);   //We want a vertex array
 
-    //glVertexPointer(3, GL_FLOAT, 0, &MAP_HD[0]);   //All values are grouped to three Floats, we start at the beginning of the array (offset=0) and want to use as VertexArray
+    glVertexPointer(3, GL_FLOAT, 0, &MAP_HD[0]);   //All values are grouped to three Floats, we start at the beginning of the array (offset=0) and want to use as VertexArray
 
-    //glDrawArrays(GL_TRIANGLES, 0, numberoftriangles * 3); //We draw the first three vertices in the array as a triangle//////8////
+    glDrawArrays(GL_TRIANGLES, 0, numberoftriangles * 3); //We draw the first three vertices in the array as a triangle//////8////
 
     glVertexPointer(3, GL_FLOAT, 0, &MAP_Outlines[0]);  //Draw outlines
 
