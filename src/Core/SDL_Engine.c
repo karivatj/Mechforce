@@ -294,6 +294,7 @@ void SDL_Close(int code)
 
     free(MAP_HD);
     free(MAP_Outlines);
+    free(MAP_Colors);
 
     printf("... OK\nShutting down SDL.");
 

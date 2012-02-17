@@ -22,8 +22,10 @@ typedef struct {
 int numberoftriangles;
 
 MAP Map[MAP_SIZE * MAP_SIZE];
-Vertexarray *MAP_HD;
-Vertexarray *MAP_Outlines;
+
+Vertexarray *MAP_HD;        //Vertexarray which holds the hexagon data
+Vertexarray *MAP_Outlines;  //Array which holds the outline data for the hexagons
+Vertexarray *MAP_Colors;         //Array which holds the color data for the hexagons
 
 void MAP_SmoothTerrain(float k, int passes);            /*Functions which smoothes the terrain by removing sharp edges*/
 void MAP_LoadMapFromFile(char keyword[]);   /*Loads a map into an array. used in 2D mode. Not sure if working*/
@@ -34,5 +36,6 @@ void MAP_SetTiles(void);
 void MAP_NormalizeValues(void);
 void MAP_CreateTrianglesFromMapData(Vertexarray *values, MAP *hdata, int MapSize);
 void MAP_CreateOutlinesFromMapData(Vertexarray *values, MAP *odata, int MapSize);
+void MAP_CreateColorData(Vertexarray *values, int MapSize);
 int MAP_CalculateElementCountFromArray(int MapSize);
 #endif /*MAP_H*/

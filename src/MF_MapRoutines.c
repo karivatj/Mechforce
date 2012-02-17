@@ -105,10 +105,14 @@ void MAP_Draw3DTerrain(void)
     //glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
 
     glEnableClientState(GL_VERTEX_ARRAY);   //We want a vertex array
+    glEnableClientState(GL_COLOR_ARRAY);   //We want a vertex array
 
     glVertexPointer(3, GL_FLOAT, 0, &MAP_HD[0]);   //All values are grouped to three Floats, we start at the beginning of the array (offset=0) and want to use as VertexArray
+    glColorPointer(3, GL_FLOAT, 0, &MAP_Colors[0]);
 
     glDrawArrays(GL_TRIANGLES, 0, numberoftriangles * 3); //We draw the first three vertices in the array as a triangle//////8////
+
+    glDisableClientState(GL_COLOR_ARRAY);
 
     glVertexPointer(3, GL_FLOAT, 0, &MAP_Outlines[0]);  //Draw outlines
 
@@ -245,6 +249,12 @@ void MAP_GenerateMap()
         SDL_Close(-1);
     }
 
+    if((MAP_Colors = calloc(size, sizeof(Vertexarray))) == NULL) //Allocate memory for the map data
+    {
+        printf("Not enough memory for map data! Tried to allocate %d bytes but failed!\n", size * sizeof(Vertexarray));
+        SDL_Close(-1);
+    }
+
     size = numofelem * 6 * 2;
 
     if((MAP_Outlines = calloc(size, sizeof(Vertexarray))) == NULL) //Allocate memory for the map data
@@ -254,6 +264,7 @@ void MAP_GenerateMap()
     }
 
     MAP_CreateTrianglesFromMapData(MAP_HD, Map, MAP_SIZE);
+    MAP_CreateColorData(MAP_Colors, MAP_SIZE);
     MAP_CreateOutlinesFromMapData(MAP_Outlines, Map, MAP_SIZE);
 
 #if 0 /*Debug*/
@@ -507,3 +518,89 @@ void MAP_CreateTrianglesFromMapData(Vertexarray *values, MAP *hdata, int MapSize
     }
 }
 
+void MAP_CreateColorData(Vertexarray *values, int MapSize)
+{
+    int x, y;
+    int numofvert = 0;
+    int numoftri = 0;
+
+    for (x = 0; x < MapSize; x+=3)
+    {
+        for (y = 0; y < MapSize; y+=2)
+        {
+            numofvert = numoftri * 3;
+
+            if(x <= MapSize - 3)
+            {
+                /*Triangle #1 */
+                values[numofvert].x = 1; values[numofvert +1].x = 1; values[numofvert +2].x = 1;
+                values[numofvert].y = 0; values[numofvert +1].y = 0; values[numofvert +2].y = 0;
+                values[numofvert].z = 0; values[numofvert +1].z = 0; values[numofvert +2].z = 0;
+
+                /*Triangle #2*/
+                values[numofvert+3].x = 1; values[numofvert +4].x = 1; values[numofvert +5].x = 1;
+                values[numofvert+3].y = 1; values[numofvert +4].y = 1; values[numofvert +5].y = 1;
+                values[numofvert+3].z = 1; values[numofvert +4].z = 1; values[numofvert +5].z = 1;
+
+                /*Triangle #3*/
+                values[numofvert+6].x = 1; values[numofvert +7].x = 1; values[numofvert +8].x = 1;
+                values[numofvert+6].y = 1; values[numofvert +7].y = 1; values[numofvert +8].y = 1;
+                values[numofvert+6].z = 1; values[numofvert +7].z = 1; values[numofvert +8].z = 1;
+
+                /*Triangle #4*/
+                values[numofvert+9].x = 1; values[numofvert +10].x = 1; values[numofvert +11].x = 1;
+                values[numofvert+9].y = 1; values[numofvert +10].y = 1; values[numofvert +11].y = 1;
+                values[numofvert+9].z = 1; values[numofvert +10].z = 1; values[numofvert +11].z = 1;
+
+                /*Triangle #5*/
+                values[numofvert+12].x = 1; values[numofvert +13].x = 1; values[numofvert +14].x = 1;
+                values[numofvert+12].y = 1; values[numofvert +13].y = 1; values[numofvert +14].y = 1;
+                values[numofvert+12].z = 1; values[numofvert +13].z = 1; values[numofvert +14].z = 1;
+
+                /*Triangle #6*/
+                values[numofvert+15].x = 1; values[numofvert +16].x = 1; values[numofvert +17].x = 1;
+                values[numofvert+15].y = 1; values[numofvert +16].y = 1; values[numofvert +17].y = 1;
+                values[numofvert+15].z = 1; values[numofvert +16].z = 1; values[numofvert +17].z = 1;
+
+                numoftri += 6;
+                numofvert = numoftri * 3;
+            }
+            if(x != 0)
+            {
+                if(y == MapSize - 3) break; /*If we are at the second last cell of the row, then stop*/
+
+                /*Triangle #1 */
+                values[numofvert].x = 0; values[numofvert +1].x = 0; values[numofvert +2].x = 0;
+                values[numofvert].y = 0; values[numofvert +1].y = 0; values[numofvert +2].y = 0;
+                values[numofvert].z = 0; values[numofvert +1].z = 0; values[numofvert +2].z = 0;
+
+                /*Triangle #2*/
+                values[numofvert+3].x = 1; values[numofvert +4].x = 1; values[numofvert +5].x = 1;
+                values[numofvert+3].y = 1; values[numofvert +4].y = 1; values[numofvert +5].y = 1;
+                values[numofvert+3].z = 1; values[numofvert +4].z = 1; values[numofvert +5].z = 1;
+
+                /*Triangle #3*/
+                values[numofvert+6].x = 1; values[numofvert +7].x = 1; values[numofvert +8].x = 1;
+                values[numofvert+6].y = 1; values[numofvert +7].y = 1; values[numofvert +8].y = 1;
+                values[numofvert+6].z = 1; values[numofvert +7].z = 1; values[numofvert +8].z = 1;
+
+                /*Triangle #4*/
+                values[numofvert+9].x = 1; values[numofvert +10].x = 1; values[numofvert +11].x = 1;
+                values[numofvert+9].y = 1; values[numofvert +10].y = 1; values[numofvert +11].y = 1;
+                values[numofvert+9].z = 1; values[numofvert +10].z = 1; values[numofvert +11].z = 1;
+
+                /*Triangle #5*/
+                values[numofvert+12].x = 1; values[numofvert +13].x = 1; values[numofvert +14].x = 1;
+                values[numofvert+12].y = 1; values[numofvert +13].y = 1; values[numofvert +14].y = 1;
+                values[numofvert+12].z = 1; values[numofvert +13].z = 1; values[numofvert +14].z = 1;
+
+                /*Triangle #6*/
+                values[numofvert+15].x = 1; values[numofvert +16].x = 1; values[numofvert +17].x = 1;
+                values[numofvert+15].y = 1; values[numofvert +16].y = 1; values[numofvert +17].y = 1;
+                values[numofvert+15].z = 1; values[numofvert +16].z = 1; values[numofvert +17].z = 1;
+
+                numoftri += 6;
+            }
+        }
+    }
+}
