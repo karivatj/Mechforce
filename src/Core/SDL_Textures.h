@@ -16,9 +16,10 @@ GLuint buttontextures[14];
 GLuint background;      //Displaylist variable for background and HUD
 GLuint tile;            //Displaylist variable for states
 
-GLuint glGenerateTexture(BYTE *bits, int type, GLuint width, GLuint height);
-GLuint SDL_LoadImage(char *filename, int type, int flag);
-void SDL_GenerateTilemap(void);
-void SDL_LoadTextures(void);
+GLuint Texture_GenerateGLTexture(BYTE *bits, int type, GLuint width, GLuint height);
+GLuint Texture_LoadImage(char *filename, int type, int flag);
+void Texture_GenerateTilemap(void);
+void Texture_LoadTextures(void);
+int Texture_Cleanup();
 
 #endif /* SDL_TEXTURES_H */

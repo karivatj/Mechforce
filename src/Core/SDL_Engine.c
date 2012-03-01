@@ -14,11 +14,11 @@
 #include "SDL_Engine.h"
 #include "SDL_Textures.h"
 #include "SDL_DrawText.h"
-#include "../Mechforce.h"
-#include "../MF_MapRoutines.h"
-#include "../MF_EventHandler.h"
-#include "../MF_StateMachine.h"
-#include "../MF_Widget.h"
+#include "../main.h"
+#include "../MapRoutines.h"
+#include "../EventHandler.h"
+#include "../StateMachine.h"
+#include "../Widget.h"
 #include "../Sound/Sound.h"
 #include "../Utils/Utilities.h"
 #include "../Prefs/Preferences.h"
@@ -262,48 +262,18 @@ void SDL_BuildDisplayLists(void)
 
 void SDL_Close(int code)
 {
-    int i;
+    printf("\nShutting down...\n");
 
-    printf("\nShutting down Mechforce!\n");
+    Sound_Cleanup();
+    Font_Cleanup();
+    Texture_Cleanup();
+    Map_Cleanup();
 
-    printf("Freeing Soundfiles");
-    for(i = 0;i < MAX_SOUNDS; i++)
-        Mix_FreeChunk(sounds[i]);
-
-    Mix_CloseAudio();
-
-    printf("... OK\nFreeing fonts");
-
-    if(font[0] != NULL && font[1] != NULL)
-    {
-        ftglDestroyFont(font[0]);
-        ftglDestroyFont(font[1]);
-        printf("...OK\n");
-    }
-
-    printf("Deleting textures");
-    SDL_FreeSurface(screen);
-    glDeleteTextures(3,&backgrounds[0]);
-    glDeleteTextures(11,&buttontextures[0]);
-    glDeleteTextures(MAX_TILES,&tiletexture[0]);
-
-    glDeleteLists(background,1);
-    glDeleteLists(state,1);
-
-    printf("... OK\nDestroying Map Data");
-
-    free(MAP_HD);
-    free(MAP_Outlines);
-    free(MAP_Colors);
-
-    printf("... OK\nShutting down SDL.");
-
+    printf("Shutting down SDL.");
     SDL_QuitSubSystem(SDL_INIT_AUDIO|SDL_INIT_VIDEO);
-
-    printf("... OK\nAll Done. Thank You for trying MF - Rearmed!\nExited with code %d\n", code);
+    printf("All Done. Thank You for trying MF - Rearmed!\nExited with code %d\n", code);
 
     SDL_Quit();
-
     exit(code);
 }
 
@@ -321,8 +291,8 @@ int SDL_Toggle_Fullscreen(void)
         glEnable3D();
 
     /*Reload Textures*/
-    SDL_LoadTextures();
-    SDL_GenerateTilemap();
+    Texture_LoadTextures();
+    Texture_GenerateTilemap();
     BTN_ReadButtonData();
 
     return 0;

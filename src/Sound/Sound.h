@@ -12,7 +12,8 @@
 
 Mix_Chunk *sounds[MAX_SOUNDS];  /*Sound Array*/
 
-void SDL_LoadSounds(void);
-void SDL_PlaySound(int id);
+void Sound_LoadSounds(void);
+void Sound_PlaySound(int id);
+int Sound_Cleanup();
 
 #endif /*SDL_SOUND_H*/

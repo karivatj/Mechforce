@@ -1,9 +1,9 @@
 #include "Sound.h"
-#include "../Mechforce.h"
+#include "../main.h"
 #include "../Core/SDL_Engine.h"
 #include "../Prefs/Preferences.h"
 
-void SDL_LoadSounds(void)
+void Sound_LoadSounds(void)
 {
     printf("Loading soundfiles.\n");
     sounds[0] = Mix_LoadWAV("../Sound/MouseClick.wav");
@@ -19,7 +19,7 @@ void SDL_LoadSounds(void)
     printf("Loaded soundfiles succesfully.\n\n");
 }
 
-void SDL_PlaySound(int id)
+void Sound_PlaySound(int id)
 {
     int channel = 0;
 
@@ -36,4 +36,15 @@ void SDL_PlaySound(int id)
         if (channel == -1)
             fprintf(stderr, "SDL_Mixer Error : %s ", Mix_GetError());
     }
+}
+
+int Sound_Cleanup()
+{
+    int i;
+    printf("Freeing Soundfiles");
+    for(i = 0;i < MAX_SOUNDS; i++)
+        Mix_FreeChunk(sounds[i]);
+
+    Mix_CloseAudio();
+    return 0;
 }

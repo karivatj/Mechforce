@@ -2,8 +2,8 @@
 #include "Utilities.h"
 #include "../Core/SDL_Engine.h"
 #include "../Prefs/Preferences.h"
-#include "../Mechforce.h"
-#include "../MF_Widget.h"
+#include "../main.h"
+#include "../Widget.h"
 
 int Utils_ScreenShot(void)
 {

@@ -24,6 +24,7 @@ TXT_EVENTS text_events[MAX_TXT_EVENTS];
 
 void SDL_DrawText(int size, int x, int y, double r, double g, double b, int font, char *msg, ...);
 void Print(int size, double x, double y, double r, double g, double b, int fontindex, const char *msg);
+int Font_Cleanup();
 
 #endif /* SDL_DRAWTEXT_H */
 

@@ -7,10 +7,10 @@
 #include "Core/SDL_Engine.h"
 #include "Core/SDL_Textures.h"
 #include "Core/SDL_DrawText.h"
-#include "Mechforce.h"
-#include "MF_MapRoutines.h"
-#include "MF_EventHandler.h"
-#include "MF_Widget.h"
+#include "main.h"
+#include "MapRoutines.h"
+#include "EventHandler.h"
+#include "Widget.h"
 #include "Sound/Sound.h"
 #include "Utils/Utilities.h"
 
@@ -26,7 +26,7 @@ int main(int argc, char **argv)
 
     srand (time(NULL));   //Initialize random seed
 
-    MAP_GenerateMap();
+    Map_GenerateMap();
 
     camerax = 0;
     cameray = 15;
@@ -40,10 +40,10 @@ int main(int argc, char **argv)
 
     SDL_EnableKeyRepeat(50, 10);
 
-    SDL_LoadTextures();
-    SDL_GenerateTilemap();
+    Texture_LoadTextures();
+    Texture_GenerateTilemap();
     BTN_ReadButtonData();
-    SDL_LoadSounds();
+    Sound_LoadSounds();
 
     if((font[0] = ftglCreatePixmapFont("../Fonts/kimberle.ttf")) == NULL)
     {

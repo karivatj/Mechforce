@@ -7,7 +7,7 @@
 #define UTILITIES_H
 
 #include "GL/gl.h"
-#include "../Mechforce.h"
+#include "../main.h"
 
 /*Variables used in calculating the FPS*/
 GLfloat fps;

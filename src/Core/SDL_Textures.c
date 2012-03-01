@@ -1,37 +1,37 @@
 #include "SDL/SDL_image.h"
-#include "../Mechforce.h"
+#include "../main.h"
 #include "SDL_Engine.h"
 #include "SDL_Textures.h"
 #include "FreeImage.h"
 
-void SDL_LoadTextures(void)
+void Texture_LoadTextures(void)
 {
     printf("Loading textures.\n");
 
-    backgrounds[0] = SDL_LoadImage("../Images/MainMenu_BG.jpg", 1, JPEG_DEFAULT);
-    backgrounds[1] = SDL_LoadImage("../Images/Options_BG.jpg", 1, JPEG_DEFAULT);
-    backgrounds[2] = SDL_LoadImage("../Images/HUD.jpg", 1, JPEG_DEFAULT);
-    backgrounds[3] = SDL_LoadImage("../Images/HUD_Mask.jpg", 1, JPEG_DEFAULT);
+    backgrounds[0] = Texture_LoadImage("../Images/MainMenu_BG.jpg", 1, JPEG_DEFAULT);
+    backgrounds[1] = Texture_LoadImage("../Images/Options_BG.jpg", 1, JPEG_DEFAULT);
+    backgrounds[2] = Texture_LoadImage("../Images/HUD.jpg", 1, JPEG_DEFAULT);
+    backgrounds[3] = Texture_LoadImage("../Images/HUD_Mask.jpg", 1, JPEG_DEFAULT);
 
-    buttontextures[0] = SDL_LoadImage("../Images/ButtonRect.png", 1, PNG_DEFAULT);
-    buttontextures[1] = SDL_LoadImage("../Images/ButtonRect_Mouseover.png", 1, PNG_DEFAULT);
-    buttontextures[2] = SDL_LoadImage("../Images/ButtonRect_Pressed.png", 1, PNG_DEFAULT);
-    buttontextures[3] = SDL_LoadImage("../Images/ButtonRect_Mask.png", 2, PNG_DEFAULT);
-    buttontextures[4] = SDL_LoadImage("../Images/ButtonRectSmall.png", 1, PNG_DEFAULT);
-    buttontextures[5] = SDL_LoadImage("../Images/ButtonRectSmall_Mouseover.png", 1, PNG_DEFAULT);
-    buttontextures[6] = SDL_LoadImage("../Images/ButtonRectSmall_Pressed.png", 1, PNG_DEFAULT);
-    buttontextures[7] = SDL_LoadImage("../Images/ButtonRectSmall_Mask.png", 1, PNG_DEFAULT);
-    buttontextures[8] = SDL_LoadImage("../Images/ButtonRound_Red.png", 1, PNG_DEFAULT);
-    buttontextures[9] = SDL_LoadImage("../Images/ButtonRound_Green.png", 1, PNG_DEFAULT);
-    buttontextures[10]= SDL_LoadImage("../Images/ButtonRound_Mask.png", 1, PNG_DEFAULT);
-    buttontextures[11]= SDL_LoadImage("../Images/CheckBox.png", 1, PNG_DEFAULT);
-    buttontextures[12]= SDL_LoadImage("../Images/CheckBox_Enabled.png", 1, PNG_DEFAULT);
-    buttontextures[13]= SDL_LoadImage("../Images/CheckBox_Mask.png", 1, PNG_DEFAULT);
+    buttontextures[0] = Texture_LoadImage("../Images/ButtonRect.png", 1, PNG_DEFAULT);
+    buttontextures[1] = Texture_LoadImage("../Images/ButtonRect_Mouseover.png", 1, PNG_DEFAULT);
+    buttontextures[2] = Texture_LoadImage("../Images/ButtonRect_Pressed.png", 1, PNG_DEFAULT);
+    buttontextures[3] = Texture_LoadImage("../Images/ButtonRect_Mask.png", 2, PNG_DEFAULT);
+    buttontextures[4] = Texture_LoadImage("../Images/ButtonRectSmall.png", 1, PNG_DEFAULT);
+    buttontextures[5] = Texture_LoadImage("../Images/ButtonRectSmall_Mouseover.png", 1, PNG_DEFAULT);
+    buttontextures[6] = Texture_LoadImage("../Images/ButtonRectSmall_Pressed.png", 1, PNG_DEFAULT);
+    buttontextures[7] = Texture_LoadImage("../Images/ButtonRectSmall_Mask.png", 1, PNG_DEFAULT);
+    buttontextures[8] = Texture_LoadImage("../Images/ButtonRound_Red.png", 1, PNG_DEFAULT);
+    buttontextures[9] = Texture_LoadImage("../Images/ButtonRound_Green.png", 1, PNG_DEFAULT);
+    buttontextures[10]= Texture_LoadImage("../Images/ButtonRound_Mask.png", 1, PNG_DEFAULT);
+    buttontextures[11]= Texture_LoadImage("../Images/CheckBox.png", 1, PNG_DEFAULT);
+    buttontextures[12]= Texture_LoadImage("../Images/CheckBox_Enabled.png", 1, PNG_DEFAULT);
+    buttontextures[13]= Texture_LoadImage("../Images/CheckBox_Mask.png", 1, PNG_DEFAULT);
 
     printf("Finished loading textures.\n\n");
 }
 
-GLuint SDL_LoadImage(char *filename, int type, int flag)
+GLuint Texture_LoadImage(char *filename, int type, int flag)
 {
     GLuint texture, width, height;
 
@@ -62,7 +62,7 @@ GLuint SDL_LoadImage(char *filename, int type, int flag)
     if((bits == 0) || (width == 0) || (height == 0)) //If something failed
         SDL_Close(-2);
 
-    texture = glGenerateTexture(bits, type, width, height); //Generate a GL texture from the freeimage data
+    texture = Texture_GenerateGLTexture(bits, type, width, height); //Generate a GL texture from the freeimage data
     printf("Loaded image %s\n", filename);
 
     FreeImage_Unload(bitmap);   //Free the memory
@@ -70,7 +70,7 @@ GLuint SDL_LoadImage(char *filename, int type, int flag)
     return texture;
 }
 
-GLuint glGenerateTexture(BYTE *bits, int type, GLuint width, GLuint height)
+GLuint Texture_GenerateGLTexture(BYTE *bits, int type, GLuint width, GLuint height)
 {
     GLuint texture;
 
@@ -108,7 +108,7 @@ GLuint glGenerateTexture(BYTE *bits, int type, GLuint width, GLuint height)
     return texture;
 }
 
-void SDL_GenerateTilemap()
+void Texture_GenerateTilemap()
 {
 #if 0
     int i;
@@ -183,3 +183,16 @@ void SDL_GenerateTilemap()
 #endif
 }
 
+int Texture_Cleanup()
+{
+    printf("Deleting textures");
+    SDL_FreeSurface(screen);
+    glDeleteTextures(3,&backgrounds[0]);
+    glDeleteTextures(11,&buttontextures[0]);
+    glDeleteTextures(MAX_TILES,&tiletexture[0]);
+
+    glDeleteLists(background,1);
+    glDeleteLists(state,1);
+
+    return 0;
+}
