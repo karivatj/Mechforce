@@ -7,7 +7,7 @@
 #define MAP_H
 
 #define SEED 0                          //Initial seed value of the corners of the map
-#define MAP_SIZE 65                       //Size of the map
+#define MAP_SIZE 9                       //Size of the map
 #define POINT(x,y) (MAP_SIZE*(x)+(y))   //Macro for mimicing the behaviour of a 2-dimensional array in 1-dimensional array.
 
 typedef struct{
@@ -16,8 +16,20 @@ typedef struct{
 }MAP;
 
 typedef struct {
-    float x,y,z;
-}Vertexarray;
+    float x;
+    float y;
+    float z;
+} Vector;
+
+typedef struct {
+    Vector v[3];
+} Triangle;
+
+typedef struct {
+    float x;
+    float y;
+    float z;
+} Vertexarray;
 
 int numberoftriangles;
 
@@ -25,7 +37,8 @@ MAP Map[MAP_SIZE * MAP_SIZE];
 
 Vertexarray *MAP_HD;        //Vertexarray which holds the hexagon data
 Vertexarray *MAP_Outlines;  //Array which holds the outline data for the hexagons
-Vertexarray *MAP_Colors;         //Array which holds the color data for the hexagons
+Vertexarray *MAP_Colors;   //Array which holds the color data for the hexagons
+Vertexarray *MAP_Normals;   //Array which holds the normal data for the hexagons. Used with lighting
 
 void Map_SmoothTerrain(float k, int passes);            /*Functions which smoothes the terrain by removing sharp edges*/
 void Map_LoadMapFromFile(char keyword[]);   /*Loads a map into an array. used in 2D mode. Not sure if working*/
@@ -34,9 +47,15 @@ void Map_Draw2DTerrain(void);               /*Draws a 2D tilebased terrain*/
 void Map_GenerateMap(void);                 /*Generates a 3D terrain*/
 void Map_SetTiles(void);
 void Map_NormalizeValues(void);
-void Map_CreateTrianglesFromMapData(Vertexarray *values, MAP *hdata, int MapSize);
-void Map_CreateOutlinesFromMapData(Vertexarray *values, MAP *odata, int MapSize);
-void Map_CreateColorData(Vertexarray *values, int MapSize);
+
+int Map_CreateTrianglesFromMapData(Vertexarray *values, MAP *hdata, int MapSize);
+int Map_CreateOutlinesFromMapData(Vertexarray *values, MAP *odata, int MapSize);
+int Map_CreateColorData(Vertexarray *values, int MapSize);
+int Map_CreateNormalData(Vertexarray *values, MAP *ndata, int MapSize);
 int Map_CalculateElementCountFromArray(int MapSize);
+Vector MAP_CalculateNormal(Triangle t);
+
 int Map_Cleanup();
+
+
 #endif /*MAP_H*/
