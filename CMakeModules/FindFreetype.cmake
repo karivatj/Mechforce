@@ -48,8 +48,7 @@ FIND_PATH(FREETYPE_INCLUDE_DIR_ft2build ft2build.h
   /usr/local/X11R6/include
   /usr/local/X11/include
   /usr/freeware/include
-  C:/Program Files (x86)/MinGW/include
-  C:/MSVC/include
+  "C:/Program Files (x86)/MinGW/include"
 )
 
 FIND_PATH(FREETYPE_INCLUDE_DIR_freetype2 freetype/config/ftheader.h
@@ -60,9 +59,7 @@ FIND_PATH(FREETYPE_INCLUDE_DIR_freetype2 freetype/config/ftheader.h
   /usr/local/X11R6/include
   /usr/local/X11/include
   /usr/freeware/include
-  C:/Program Files (x86)/MinGW/include
-  C:/MSVC/include
-
+  "C:/Program Files (x86)/MinGW/include/"
 )
 
 FIND_LIBRARY(FREETYPE_LIBRARY
@@ -74,8 +71,7 @@ FIND_LIBRARY(FREETYPE_LIBRARY
   /usr/local/X11R6
   /usr/local/X11
   /usr/freeware
-  C:/Program Files (x86)/MinGW/lib
-  C:/MSVC/lib
+  "C:/Program Files (x86)/MinGW/lib"
 )
 
 # set the user variables
@@ -90,6 +86,5 @@ SET(FREETYPE_LIBRARIES "${FREETYPE_LIBRARY}")
 # all listed variables are TRUE
 INCLUDE(${CMAKE_CURRENT_LIST_DIR}/FindPackageHandleStandardArgs.cmake)
 FIND_PACKAGE_HANDLE_STANDARD_ARGS(Freetype  DEFAULT_MSG  FREETYPE_LIBRARY  FREETYPE_INCLUDE_DIRS)
-
 
 MARK_AS_ADVANCED(FREETYPE_LIBRARY FREETYPE_INCLUDE_DIR_freetype2 FREETYPE_INCLUDE_DIR_ft2build)
