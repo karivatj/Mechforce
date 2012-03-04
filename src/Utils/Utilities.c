@@ -1,6 +1,7 @@
 #include <FreeImage.h>
 #include "Utilities.h"
 #include "../Core/SDL_Engine.h"
+#include "../Core/SDL_Textures.h"
 #include "../Prefs/Preferences.h"
 #include "../main.h"
 #include "../Widget.h"
@@ -141,4 +142,25 @@ void Utils_ReadConfigFile(void)
     }
 
     fclose (file);
+}
+
+int Utils_Toggle_Fullscreen(void)
+{
+    /*Reinitialize SDL*/
+    Init_SDL();
+
+    /*Reinitialize OpenGL*/
+    Init_GL();
+
+    if(orthogonalEnabled)
+        OrthogonalStart();
+    else
+        glEnable3D();
+
+    /*Reload Textures*/
+    Texture_LoadTextures();
+    Texture_GenerateTilemap();
+    BTN_ReadButtonData();
+
+    return 0;
 }

@@ -3,6 +3,7 @@
 #endif
 
 #include <time.h>
+#include "FreeImage.h"
 
 #include "Core/SDL_Engine.h"
 #include "Core/SDL_Textures.h"
@@ -25,6 +26,8 @@ int main(int argc, char **argv)
     SCREEN_HEIGHT = 600;
 
     srand (time(NULL));   //Initialize random seed
+
+    FreeImage_SetOutputMessage(Texture_HandleFreeImageError);
 
     Map_GenerateMap();
 

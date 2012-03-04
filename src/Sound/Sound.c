@@ -41,7 +41,7 @@ void Sound_PlaySound(int id)
 int Sound_Cleanup()
 {
     int i;
-    printf("Freeing Soundfiles");
+    printf("Freeing Soundfiles...\n");
     for(i = 0;i < MAX_SOUNDS; i++)
         Mix_FreeChunk(sounds[i]);
 

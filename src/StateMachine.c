@@ -59,7 +59,7 @@ void MF_StateMachine(void)
 	        if(pref_fullscreen != fullscreen_enabled)
             {
                 #ifdef WIN32
-                SDL_Toggle_Fullscreen();
+                Utils_Toggle_Fullscreen();
                 #endif
                 #ifdef unix
                 SDL_WM_ToggleFullScreen(screen);
