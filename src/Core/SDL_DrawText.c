@@ -60,12 +60,11 @@ void SDL_DrawText(int size, int x, int y, double r, double g, double b, int font
 
 int Font_Cleanup()
 {
-    printf("Freeing fonts");
+    printf("Freeing fonts...\n");
     if(font[0] != NULL && font[1] != NULL)
     {
         ftglDestroyFont(font[0]);
         ftglDestroyFont(font[1]);
-        printf("...OK\n");
         return 0;
     }
     else

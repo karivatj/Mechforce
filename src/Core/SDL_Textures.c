@@ -183,9 +183,20 @@ void Texture_GenerateTilemap()
 #endif
 }
 
+void Texture_HandleFreeImageError(FREE_IMAGE_FORMAT fif, const char *message)
+{
+    printf("\n*** ");
+    if(fif != FIF_UNKNOWN)
+    {
+        printf("%s Format\n", FreeImage_GetFormatFromFIF(fif));
+    }
+    printf(message);
+    printf(" ***\n");
+}
+
 int Texture_Cleanup()
 {
-    printf("Deleting textures");
+    printf("Deleting textures...\n");
     SDL_FreeSurface(screen);
     glDeleteTextures(3,&backgrounds[0]);
     glDeleteTextures(11,&buttontextures[0]);

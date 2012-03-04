@@ -269,31 +269,12 @@ void SDL_Close(int code)
     Texture_Cleanup();
     Map_Cleanup();
 
-    printf("Shutting down SDL.");
+    printf("Shutting down SDL...\n");
+
     SDL_QuitSubSystem(SDL_INIT_AUDIO|SDL_INIT_VIDEO);
+
     printf("All Done. Thank You for trying MF - Rearmed!\nExited with code %d\n", code);
 
     SDL_Quit();
     exit(code);
-}
-
-int SDL_Toggle_Fullscreen(void)
-{
-    /*Reinitialize SDL*/
-    Init_SDL();
-
-    /*Reinitialize OpenGL*/
-    Init_GL();
-
-    if(orthogonalEnabled)
-        OrthogonalStart();
-    else
-        glEnable3D();
-
-    /*Reload Textures*/
-    Texture_LoadTextures();
-    Texture_GenerateTilemap();
-    BTN_ReadButtonData();
-
-    return 0;
 }

@@ -20,6 +20,7 @@ GLuint Texture_GenerateGLTexture(BYTE *bits, int type, GLuint width, GLuint heig
 GLuint Texture_LoadImage(char *filename, int type, int flag);
 void Texture_GenerateTilemap(void);
 void Texture_LoadTextures(void);
+void Texture_HandleFreeImageError(FREE_IMAGE_FORMAT fif, const char *message);
 int Texture_Cleanup();
 
 #endif /* SDL_TEXTURES_H */

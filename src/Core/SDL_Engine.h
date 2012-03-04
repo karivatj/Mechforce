@@ -28,7 +28,6 @@ void OrthogonalStart(void);
 void OrthogonalEnd(void);
 void glEnable3D(void);
 
-int  SDL_Toggle_Fullscreen(void);
 void SDL_BuildDisplayLists(void);
 void SDL_Close(int code);
 
