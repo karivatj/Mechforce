@@ -94,7 +94,7 @@ void Init_GL()	        // We call this right after our OpenGL window is created.
     glEnable(GL_DEPTH_TEST);			    // Enables Depth Testing
     glDepthFunc(GL_LEQUAL);                         // The Type Of Depth Testing To Do
 
-    //glEnable(GL_LIGHTING); //Enable lights
+    glEnable(GL_LIGHTING); //Enable lights
     glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
     glEnable(GL_LIGHT0);
     glLightModelfv(GL_LIGHT_MODEL_AMBIENT, global_ambient);

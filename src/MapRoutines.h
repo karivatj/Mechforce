@@ -7,7 +7,7 @@
 #define MAP_H
 
 #define SEED 0                          //Initial seed value of the corners of the map
-#define MAP_SIZE 9                       //Size of the map
+#define MAP_SIZE 65                       //Size of the map
 #define POINT(x,y) (MAP_SIZE*(x)+(y))   //Macro for mimicing the behaviour of a 2-dimensional array in 1-dimensional array.
 
 typedef struct{
