@@ -9,6 +9,8 @@ gitignore
 
 Makefile
 Mechforce.cbp
+Mechforce.layout
+Mechforce.cbp.cbTemp
 
 cmake_install.cmake
 CMakeLists.txt.user
@@ -17,5 +19,6 @@ CMakeFiles/*
 
 bin/System/Mechforce
 bin/System/Mechforce.exe
+bin/System/stdout.txt
 
 bin/Data/config.ini
