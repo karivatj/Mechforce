@@ -552,6 +552,11 @@ void Map_SetColor(Vertexarray *v, int height, int index)
         printf("H = %d: Väri sininen\n",height);
         r = 0; g = 0; b = 1;
     }
+    else if(height < 3)
+    {
+        printf("H = %d: Väri sininen\n",height);
+        r = 1; g = 0.81; b = 0.48;
+    }
     else
     {
       //  printf("H = %d: Väri musta\n",height);

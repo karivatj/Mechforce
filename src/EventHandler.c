@@ -49,11 +49,11 @@ int MF_Event_Handler(void)
                         break;
                     case SDLK_DOWN:
                         cameray += 5;
-                        cameraz -= 5;
+                        //cameraz -= 5;
                         break;
                     case SDLK_UP:
                         cameray -= 5;
-                        cameraz += 5;
+                       // cameraz += 5;
                         break;
                     default:
                     break;
