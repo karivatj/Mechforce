@@ -64,8 +64,8 @@ int MF_Event_Handler(void)
                 switch(event.button.button)
                 {
                     case SDL_BUTTON_WHEELUP:
-                    if((cameraz += 10) > -180)
-                        cameraz = -180;
+                    if((cameraz += 10) > 200)
+                        cameraz = -200;
                     break;
 
                     case SDL_BUTTON_WHEELDOWN:

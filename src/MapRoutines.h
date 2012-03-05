@@ -47,13 +47,14 @@ void Map_Draw2DTerrain(void);               /*Draws a 2D tilebased terrain*/
 void Map_GenerateMap(void);                 /*Generates a 3D terrain*/
 void Map_SetTiles(void);
 void Map_NormalizeValues(void);
+void Map_SetColor(Vertexarray *v, int height, int index);
 
 int Map_CreateTrianglesFromMapData(Vertexarray *values, MAP *hdata, int MapSize);
 int Map_CreateOutlinesFromMapData(Vertexarray *values, MAP *odata, int MapSize);
-int Map_CreateColorData(Vertexarray *values, int MapSize);
+int Map_CreateColorData(Vertexarray *values, MAP *map, int MapSize);
 int Map_CreateNormalData(Vertexarray *values, MAP *ndata, int MapSize);
 int Map_CalculateElementCountFromArray(int MapSize);
-Vector MAP_CalculateNormal(Triangle t);
+Vector Map_CalculateNormal(Triangle t);
 
 int Map_Cleanup();
 
