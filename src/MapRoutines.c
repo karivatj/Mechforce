@@ -555,34 +555,34 @@ int Map_CreateColorData(Vertexarray *v, int MapSize)
                 if(y == MapSize -1) break;
 
                 /*Triangle #1 */
-                v[numofvert].x = 0; v[numofvert +1].x = 0; v[numofvert +2].x = 0;
-                v[numofvert].y = 0; v[numofvert +1].y = 0; v[numofvert +2].y = 0;
-                v[numofvert].z = 0; v[numofvert +1].z = 0; v[numofvert +2].z = 0;
+                v[numofvert].x = 1; v[numofvert +1].x = 1; v[numofvert +2].x = 1;
+                v[numofvert].y = 1; v[numofvert +1].y = 1; v[numofvert +2].y = 1;
+                v[numofvert].z = 1; v[numofvert +1].z = 1; v[numofvert +2].z = 1;
 
                 /*Triangle #2*/
-                v[numofvert+3].x = 0; v[numofvert +4].x = 0; v[numofvert +5].x = 0;
-                v[numofvert+3].y = 0; v[numofvert +4].y = 0; v[numofvert +5].y = 0;
-                v[numofvert+3].z = 0; v[numofvert +4].z = 0; v[numofvert +5].z = 0;
+                v[numofvert+3].x = 1; v[numofvert +4].x = 1; v[numofvert +5].x = 1;
+                v[numofvert+3].y = 1; v[numofvert +4].y = 1; v[numofvert +5].y = 1;
+                v[numofvert+3].z = 1; v[numofvert +4].z = 1; v[numofvert +5].z = 1;
 
                 /*Triangle #3*/
-                v[numofvert+6].x = 0; v[numofvert +7].x = 0; v[numofvert +8].x = 0;
-                v[numofvert+6].y = 0; v[numofvert +7].y = 0; v[numofvert +8].y = 0;
-                v[numofvert+6].z = 0; v[numofvert +7].z = 0; v[numofvert +8].z = 0;
+                v[numofvert+6].x = 1; v[numofvert +7].x = 1; v[numofvert +8].x = 1;
+                v[numofvert+6].y = 1; v[numofvert +7].y = 1; v[numofvert +8].y = 1;
+                v[numofvert+6].z = 1; v[numofvert +7].z = 1; v[numofvert +8].z = 1;
 
                 /*Triangle #4*/
-                v[numofvert+9].x = 0; v[numofvert +10].x = 0; v[numofvert +11].x = 0;
-                v[numofvert+9].y = 0; v[numofvert +10].y = 0; v[numofvert +11].y = 0;
-                v[numofvert+9].z = 0; v[numofvert +10].z = 0; v[numofvert +11].z = 0;
+                v[numofvert+9].x = 1; v[numofvert +11].x = 1; v[numofvert +11].x = 1;
+                v[numofvert+9].y = 1; v[numofvert +11].y = 1; v[numofvert +11].y = 1;
+                v[numofvert+9].z = 1; v[numofvert +11].z = 1; v[numofvert +11].z = 1;
 
                 /*Triangle #5*/
-                v[numofvert+12].x = 0; v[numofvert +13].x = 0; v[numofvert +14].x = 0;
-                v[numofvert+12].y = 0; v[numofvert +13].y = 0; v[numofvert +14].y = 0;
-                v[numofvert+12].z = 0; v[numofvert +13].z = 0; v[numofvert +14].z = 0;
+                v[numofvert+12].x = 1; v[numofvert +13].x = 1; v[numofvert +14].x = 1;
+                v[numofvert+12].y = 1; v[numofvert +13].y = 1; v[numofvert +14].y = 1;
+                v[numofvert+12].z = 1; v[numofvert +13].z = 1; v[numofvert +14].z = 1;
 
                 /*Triangle #6*/
-                v[numofvert+15].x = 0; v[numofvert +16].x = 0; v[numofvert +17].x = 0;
-                v[numofvert+15].y = 0; v[numofvert +16].y = 0; v[numofvert +17].y = 0;
-                v[numofvert+15].z = 0; v[numofvert +16].z = 0; v[numofvert +17].z = 0;
+                v[numofvert+15].x = 1; v[numofvert +16].x = 1; v[numofvert +17].x = 1;
+                v[numofvert+15].y = 1; v[numofvert +16].y = 1; v[numofvert +17].y = 1;
+                v[numofvert+15].z = 1; v[numofvert +16].z = 1; v[numofvert +17].z = 1;
 
                 numoftri += 6;
                 numofvert = numoftri * 3;
@@ -592,34 +592,34 @@ int Map_CreateColorData(Vertexarray *v, int MapSize)
                 if(y == MapSize - 3) break; /*If we are at the second last cell of the row, then stop*/
 
                 /*Triangle #1 */
-                v[numofvert].x = 0; v[numofvert +1].x = 0; v[numofvert +2].x = 0;
-                v[numofvert].y = 0; v[numofvert +1].y = 0; v[numofvert +2].y = 0;
-                v[numofvert].z = 0; v[numofvert +1].z = 0; v[numofvert +2].z = 0;
+                v[numofvert].x = 1; v[numofvert +1].x = 1; v[numofvert +2].x = 1;
+                v[numofvert].y = 1; v[numofvert +1].y = 1; v[numofvert +2].y = 1;
+                v[numofvert].z = 1; v[numofvert +1].z = 1; v[numofvert +2].z = 1;
 
                 /*Triangle #2*/
-                v[numofvert+3].x = 0; v[numofvert +4].x = 0; v[numofvert +5].x = 0;
-                v[numofvert+3].y = 0; v[numofvert +4].y = 0; v[numofvert +5].y = 0;
-                v[numofvert+3].z = 0; v[numofvert +4].z = 0; v[numofvert +5].z = 0;
+                v[numofvert+3].x = 1; v[numofvert +4].x = 1; v[numofvert +5].x = 1;
+                v[numofvert+3].y = 1; v[numofvert +4].y = 1; v[numofvert +5].y = 1;
+                v[numofvert+3].z = 1; v[numofvert +4].z = 1; v[numofvert +5].z = 1;
 
                 /*Triangle #3*/
-                v[numofvert+6].x = 0; v[numofvert +7].x = 0; v[numofvert +8].x = 0;
-                v[numofvert+6].y = 0; v[numofvert +7].y = 0; v[numofvert +8].y = 0;
-                v[numofvert+6].z = 0; v[numofvert +7].z = 0; v[numofvert +8].z = 0;
+                v[numofvert+6].x = 1; v[numofvert +7].x = 1; v[numofvert +8].x = 1;
+                v[numofvert+6].y = 1; v[numofvert +7].y = 1; v[numofvert +8].y = 1;
+                v[numofvert+6].z = 1; v[numofvert +7].z = 1; v[numofvert +8].z = 1;
 
                 /*Triangle #4*/
-                v[numofvert+9].x = 0; v[numofvert +10].x = 0; v[numofvert +11].x = 0;
-                v[numofvert+9].y = 0; v[numofvert +10].y = 0; v[numofvert +11].y = 0;
-                v[numofvert+9].z = 0; v[numofvert +10].z = 0; v[numofvert +11].z = 0;
+                v[numofvert+9].x = 1; v[numofvert +11].x = 1; v[numofvert +11].x = 1;
+                v[numofvert+9].y = 1; v[numofvert +11].y = 1; v[numofvert +11].y = 1;
+                v[numofvert+9].z = 1; v[numofvert +11].z = 1; v[numofvert +11].z = 1;
 
                 /*Triangle #5*/
-                v[numofvert+12].x = 0; v[numofvert +13].x = 0; v[numofvert +14].x = 0;
-                v[numofvert+12].y = 0; v[numofvert +13].y = 0; v[numofvert +14].y = 0;
-                v[numofvert+12].z = 0; v[numofvert +13].z = 0; v[numofvert +14].z = 0;
+                v[numofvert+12].x = 1; v[numofvert +13].x = 1; v[numofvert +14].x = 1;
+                v[numofvert+12].y = 1; v[numofvert +13].y = 1; v[numofvert +14].y = 1;
+                v[numofvert+12].z = 1; v[numofvert +13].z = 1; v[numofvert +14].z = 1;
 
                 /*Triangle #6*/
-                v[numofvert+15].x = 0; v[numofvert +16].x = 0; v[numofvert +17].x = 0;
-                v[numofvert+15].y = 0; v[numofvert +16].y = 0; v[numofvert +17].y = 0;
-                v[numofvert+15].z = 0; v[numofvert +16].z = 0; v[numofvert +17].z = 0;
+                v[numofvert+15].x = 1; v[numofvert +16].x = 1; v[numofvert +17].x = 1;
+                v[numofvert+15].y = 1; v[numofvert +16].y = 1; v[numofvert +17].y = 1;
+                v[numofvert+15].z = 1; v[numofvert +16].z = 1; v[numofvert +17].z = 1;
 
                 numoftri += 6;
                 numofvert = numoftri * 3;
@@ -634,6 +634,7 @@ Vector Map_CalculateNormal(Triangle t)
     Vector normal;
     Vector U;
     Vector V;
+    double magnitude;
 
     U.x = t.v[1].x - t.v[0].x;
     U.y = t.v[1].y - t.v[0].y;
@@ -646,6 +647,12 @@ Vector Map_CalculateNormal(Triangle t)
     normal.x = (U.y * V.z) - (U.z * V.y);
     normal.y = (U.z * V.x) - (U.x * V.z);
     normal.z = (U.x * V.y) - (U.y * V.x);
+
+    magnitude = sqrt((normal.x * normal.x) + (normal.y * normal.y) + (normal.z * normal.z));
+
+    normal.x = normal.x/magnitude;
+    normal.y = normal.y/magnitude;
+    normal.z = normal.z/magnitude;
 
     return normal;
 }
