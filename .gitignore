@@ -20,5 +20,6 @@ CMakeFiles/*
 bin/System/Mechforce
 bin/System/Mechforce.exe
 bin/System/stdout.txt
+bin/System/stderr.txt
 
 bin/Data/config.ini
