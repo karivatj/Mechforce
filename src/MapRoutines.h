@@ -54,7 +54,8 @@ void Map_SetTiles(void);
 void Map_NormalizeValues(void);
 void Map_SetColor(Vertexarray *v, int height, int index);
 void Map_CreateOutline(Vertexarray *v, int index, float x, float y, float height);
-void Map_CreateTriangle(Vertexarray *v, int index, Triangle t);
+void Map_CreateTriangle(Vertexarray *v, int index, float x1, float y1, float h1, float x2, float y2, float h2, float x3, float y3, float h3);
+void Map_GenerateMapData(void);
 
 int Map_CreateTrianglesFromMapData(Vertexarray *values, MAP *hdata, int MapSize);
 int Map_CreateOutlinesFromMapData(Vertexarray *values, MAP *odata, int MapSize);
