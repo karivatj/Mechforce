@@ -326,10 +326,6 @@ void Map_NormalizeValues(void)
     {
         for(y = 0; y < MAP_SIZE; y++)
         {
-            //Map[POINT(x,y)].h = round(Map[POINT(x,y)].h);
-
-            //Map[POINT(x,y)].h = ((int)(Map[POINT(x,y)].h / 3)) * 3; // Round up to nearest 3
-
             if(Map[POINT(x,y)].h < 0)
                 Map[POINT(x,y)].h = 0;
         }
@@ -363,6 +359,16 @@ int Map_CalculateElementCountFromArray(int MapSize)
     return numberofelements;
 }
 
+void Map_CreateOutline(Vertexarray *v, int index, float x, float y, float height)
+{
+    x = x * 5;
+    y = y * 5;
+
+    v[index].x = x;
+    v[index].y = height;
+    v[index].z = y;
+}
+
 int Map_CreateOutlinesFromMapData(Vertexarray *v, MAP *odata, int MapSize)
 {
     int numofvert = 0;
@@ -376,29 +382,18 @@ int Map_CreateOutlinesFromMapData(Vertexarray *v, MAP *odata, int MapSize)
             {
                 if(y == MapSize -1) break;
 
-                v[numofvert].x = x * 5;                       v[numofvert +1].x = (x-0.5) * 5;
-                v[numofvert].y = odata[POINT(x, y)].h;        v[numofvert +1].y = odata[POINT(x, y+1)].h;
-                v[numofvert].z = y * 5;                       v[numofvert +1].z = (y+1) * 5;
-
-                v[numofvert +2].x = (x-0.5) * 5;              v[numofvert +3].x = x * 5;
-                v[numofvert +2].y = odata[POINT(x, y+1)].h;   v[numofvert +3].y = odata[POINT(x, y+2)].h;
-                v[numofvert +2].z = (y+1) * 5;                v[numofvert +3].z = (y+2) * 5;
-
-                v[numofvert +4].x = x * 5;                    v[numofvert +5].x = (x+1) * 5;
-                v[numofvert +4].y = odata[POINT(x, y+2)].h;   v[numofvert +5].y = odata[POINT(x+1, y+2)].h;
-                v[numofvert +4].z = (y+2) * 5;                v[numofvert +5].z = (y+2) * 5;
-
-                v[numofvert +6].x = (x+1) * 5;                v[numofvert +7].x = (x+1.5) * 5;
-                v[numofvert +6].y = odata[POINT(x+1, y+2)].h; v[numofvert +7].y = odata[POINT(x+2, y+1)].h;
-                v[numofvert +6].z = (y+2) * 5;                v[numofvert +7].z = (y+1) * 5;
-
-                v[numofvert +8].x = (x+1.5) * 5;              v[numofvert +9].x = (x+1) * 5;
-                v[numofvert +8].y = odata[POINT(x+2, y+1)].h; v[numofvert +9].y = odata[POINT(x+1, y)].h;
-                v[numofvert +8].z = (y+1) * 5;                v[numofvert +9].z = y * 5;
-
-                v[numofvert +10].x = (x+1) * 5;               v[numofvert +11].x = x * 5;
-                v[numofvert +10].y = odata[POINT(x+1, y)].h;  v[numofvert +11].y = odata[POINT(x, y)].h;
-                v[numofvert +10].z = y * 5;                   v[numofvert +11].z = y * 5;
+                Map_CreateOutline(v, numofvert,    x,     y,   odata[POINT(x, y)].h);
+                Map_CreateOutline(v, numofvert+1,  x-0.5, y+1, odata[POINT(x, y+1)].h);
+                Map_CreateOutline(v, numofvert+2,  x-0.5, y+1, odata[POINT(x, y+1)].h);
+                Map_CreateOutline(v, numofvert+3,  x,     y+2, odata[POINT(x, y+2)].h);
+                Map_CreateOutline(v, numofvert+4,  x,     y+2, odata[POINT(x, y+2)].h);
+                Map_CreateOutline(v, numofvert+5,  x+1,   y+2, odata[POINT(x+1, y+2)].h);
+                Map_CreateOutline(v, numofvert+6,  x+1,   y+2, odata[POINT(x+1, y+2)].h);
+                Map_CreateOutline(v, numofvert+7,  x+1.5, y+1, odata[POINT(x+2, y+1)].h);
+                Map_CreateOutline(v, numofvert+8,  x+1.5, y+1, odata[POINT(x+2, y+1)].h);
+                Map_CreateOutline(v, numofvert+9,  x+1,   y,   odata[POINT(x+1, y)].h);
+                Map_CreateOutline(v, numofvert+10, x+1,   y,   odata[POINT(x+1, y)].h);
+                Map_CreateOutline(v, numofvert+11, x,     y,   odata[POINT(x, y)].h);
 
                 numofvert += 12;
             }
@@ -406,35 +401,29 @@ int Map_CreateOutlinesFromMapData(Vertexarray *v, MAP *odata, int MapSize)
             {
                 if(y == MapSize - 3) break; /*If we are at the second last cell of the row, then stop*/
 
-                v[numofvert].x = (x-0.5) * 5;                 v[numofvert +1].x = (x-1.5) * 5;
-                v[numofvert].y = odata[POINT(x, y+1)].h;      v[numofvert +1].y = odata[POINT(x-1, y+1)].h;
-                v[numofvert].z = (y+1) * 5;                   v[numofvert +1].z = (y+1) * 5;
-
-                v[numofvert +2].x = (x-1.5) * 5;              v[numofvert +3].x = (x-2) * 5;
-                v[numofvert +2].y = odata[POINT(x-1, y+1)].h; v[numofvert +3].y = odata[POINT(x-2, y+2)].h;
-                v[numofvert +2].z = (y+1) * 5;                v[numofvert +3].z = (y+2) * 5;
-
-                v[numofvert +4].x = (x-2) * 5;                v[numofvert +5].x = (x-1.5) * 5;
-                v[numofvert +4].y = odata[POINT(x-2, y+2)].h; v[numofvert +5].y = odata[POINT(x-1, y+3)].h;
-                v[numofvert +4].z = (y+2) * 5;                v[numofvert +5].z = (y+3) * 5;
-
-                v[numofvert +6].x = (x-1.5) * 5;              v[numofvert +7].x = (x-0.5) * 5;
-                v[numofvert +6].y = odata[POINT(x-1, y+3)].h; v[numofvert +7].y = odata[POINT(x, y+3)].h;
-                v[numofvert +6].z = (y+3) * 5;                v[numofvert +7].z = (y+3) * 5;
-
-                v[numofvert +8].x = (x-0.5) * 5;              v[numofvert +9].x = (x) * 5;
-                v[numofvert +8].y = odata[POINT(x, y+3)].h;   v[numofvert +9].y = odata[POINT(x, y+2)].h;
-                v[numofvert +8].z = (y+3) * 5;                v[numofvert +9].z = (y+2) * 5;
-
-                v[numofvert +10].x = (x) * 5;             v[numofvert +11].x = (x-0.5) * 5;
-                v[numofvert +10].y = odata[POINT(x, y+2)].h;  v[numofvert +11].y = odata[POINT(x, y+1)].h;
-                v[numofvert +10].z = (y+2) * 5;               v[numofvert +11].z = (y+1) * 5;
+                Map_CreateOutline(v, numofvert,    (x-0.5)*5, (y+1)*5,   odata[POINT(x, y+1)].h);
+                Map_CreateOutline(v, numofvert+1,  (x-1.5)*5, (y+1)*5,   odata[POINT(x, y+1)].h);
+                Map_CreateOutline(v, numofvert+2,  (x-1.5)*5, (y+1)*5,   odata[POINT(x-1, y+1)].h);
+                Map_CreateOutline(v, numofvert+3,  (x-2)*5,   (y+2)*5,   odata[POINT(x-2, y+2)].h);
+                Map_CreateOutline(v, numofvert+4,  (x-2)*5,   (y+2)*5,   odata[POINT(x-2, y+2)].h);
+                Map_CreateOutline(v, numofvert+5,  (x-1.5)*5, (y+3)*5,   odata[POINT(x-1, y+3)].h);
+                Map_CreateOutline(v, numofvert+6,  (x-1.5)*5, (y+3)*5,   odata[POINT(x-1, y+3)].h);
+                Map_CreateOutline(v, numofvert+7,  (x-0.5)*5, (y+3)*5,   odata[POINT(x, y+3)].h);
+                Map_CreateOutline(v, numofvert+8,  (x-0.5)*5, (y+3)*5,   odata[POINT(x, y+3)].h);
+                Map_CreateOutline(v, numofvert+9,  (x)*5,     (y+2)*5,   odata[POINT(x, y+2)].h);
+                Map_CreateOutline(v, numofvert+10, (x)*5,     (y+2)*5,   odata[POINT(x, y+2)].h);
+                Map_CreateOutline(v, numofvert+11, (x-0.5)*5, (y+1)*5,   odata[POINT(x, y+1)].h);
 
                 numofvert += 12;
             }
         }
     }
     return numofvert;
+}
+
+void Map_CreateTriangle(Vertexarray *v, int index, Triangle t)//float x1, float y1, int h1, float x2, float y2, int h2, float x3, float y3, int h3)
+{
+
 }
 
 int Map_CreateTrianglesFromMapData(Vertexarray *v, MAP *h, int MapSize)
@@ -450,8 +439,16 @@ int Map_CreateTrianglesFromMapData(Vertexarray *v, MAP *h, int MapSize)
 
             if(x <= MapSize - 3)
             {
+                //Triangle *t;
+
                 if(y == MapSize -1) break;
                 /*Triangle type A*/
+
+              //  t->v[] = {{0,0,0}, {0,0,0},{0,0,0}};
+
+                //Map_CreateTriangle(v, numofvert, t);
+
+                                   //x, y, h[POINT(x,y)].h, x-0.5, y+1,  h[POINT(x,y+1)].h, x+0.5, y+1,  h[POINT(x+1,y+1)].h);
 
                 /*Triangle #1 */
                 v[numofvert].x = x * 5;                v[numofvert +1].x = (x-0.5) * 5;            v[numofvert +2].x = (x+0.5) * 5;
