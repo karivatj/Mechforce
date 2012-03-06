@@ -130,7 +130,7 @@ void glEnable3D()
     glMatrixMode (GL_PROJECTION);
     glLoadIdentity ();
 
-    gluPerspective (45, (GLfloat)SCREEN_WIDTH / (GLfloat)SCREEN_HEIGHT, 0.1, 1000.0);
+    gluPerspective (45, (GLfloat)SCREEN_WIDTH / (GLfloat)SCREEN_HEIGHT, 0.1, 2000.0);
 
     glMatrixMode (GL_MODELVIEW);
 
