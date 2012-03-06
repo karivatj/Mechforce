@@ -1,3 +1,13 @@
+/* Mechforce
+ *
+ * @author Kari Vatjus-Anttila <karidaserious@gmail.com>
+ *
+ * For conditions of distribution and use, see copyright notice in LICENSE
+ *
+ * Utilities.c 1.00 by Kari Vatjus-Anttila
+ *
+ */
+
 #include <FreeImage.h>
 #include "Utilities.h"
 #include "../Core/SDL_Engine.h"

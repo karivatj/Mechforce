@@ -1,5 +1,10 @@
-/*
- * MF_EventHandler.h 1.00 by Kari Vatjus-Anttila
+/* Mechforce
+ *
+ * @author Kari Vatjus-Anttila <karidaserious@gmail.com>
+ *
+ * For conditions of distribution and use, see copyright notice in LICENSE
+ *
+ * EventHandler.h 1.00 by Kari Vatjus-Anttila
  *
  */
 

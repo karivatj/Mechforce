@@ -1,3 +1,13 @@
+/* Mechforce
+ *
+ * @author Kari Vatjus-Anttila <karidaserious@gmail.com>
+ *
+ * For conditions of distribution and use, see copyright notice in LICENSE
+ *
+ * SDL_Textures.c 1.00 by Kari Vatjus-Anttila
+ *
+ */
+
 #include "SDL/SDL_image.h"
 #include "../main.h"
 #include "SDL_Engine.h"
@@ -190,7 +200,7 @@ void Texture_HandleFreeImageError(FREE_IMAGE_FORMAT fif, const char *message)
     {
         printf("%s Format\n", FreeImage_GetFormatFromFIF(fif));
     }
-    printf(message);
+    printf("%s\n", message);
     printf(" ***\n");
 }
 

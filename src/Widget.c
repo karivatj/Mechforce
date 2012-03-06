@@ -1,3 +1,13 @@
+/* Mechforce
+ *
+ * @author Kari Vatjus-Anttila <karidaserious@gmail.com>
+ *
+ * For conditions of distribution and use, see copyright notice in LICENSE
+ *
+ * Widget.c 1.00 by Kari Vatjus-Anttila
+ *
+ */
+
 #include <stdio.h>
 #include "main.h"
 #include "Widget.h"

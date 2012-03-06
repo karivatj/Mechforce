@@ -4,15 +4,21 @@ So user can basically choose whether to play the game with the classic style Ami
 
 This project is my first which utilizes OpenGL and SDL so this project will be a learning experience for me also
 
-Mechforce will compile on Linux and Windows with cmake. On Windows systems one should just modify few paths inside 
-CMakeLists.txt to point to the right include directories so Windows platforms can locate Freetype and pals correctly. 
+Mechforce will compile on Linux and Windows with cmake. On Windows systems one should just modify few paths inside
+CMakeModules/*.cmake to point to the right include directories so Windows platforms can locate Freetype and pals correctly. 
 On Linux systems no modifications are needed. One should just install the dependencies necessary.
+
+[hint]
+One should make a symbolic link in /usr/include like this: ln -s /usr/include/freetype2/freetype /usr/include/freetype
+or Cmake will give you an error that Freetype is not found.
+[/hint]
 
 Dependencies:
 
 OpenGL
 Freetype
 FTGL
+FreeImage
 SDL
 SDL_image
 SDL_mixer

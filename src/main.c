@@ -1,3 +1,13 @@
+/* Mechforce
+ *
+ * @author Kari Vatjus-Anttila <karidaserious@gmail.com>
+ *
+ * For conditions of distribution and use, see copyright notice in LICENSE
+ *
+ * main.c 1.00 by Kari Vatjus-Anttila
+ *
+ */
+
 #ifdef WIN32
 #include <windows.h>
 #endif

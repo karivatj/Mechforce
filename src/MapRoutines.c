@@ -1,3 +1,13 @@
+/* Mechforce
+ *
+ * @author Kari Vatjus-Anttila <karidaserious@gmail.com>
+ *
+ * For conditions of distribution and use, see copyright notice in LICENSE
+ *
+ * MapRoutines.c 1.00 by Kari Vatjus-Anttila
+ *
+ */
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -125,29 +135,6 @@ void Map_Draw3DTerrain(void)
     glColor3f(1,1,1);
     glLineWidth(1.0);
 
-#if 0
-    for(i = 0; i < MAP_SIZE; i++)
-    {
-        for(j = 0; j < MAP_SIZE; j++)
-        {
-            temp[POINT(i,j)].x = MAP_HD[POINT(j,i)].x;
-            temp[POINT(i,j)].y = MAP_HD[POINT(j,i)].y;
-            temp[POINT(i,j)].z = MAP_HD[POINT(j,i)].z;
-/*
-            temp[i * MAP_SIZE + j].x = MAP_HD[j * MAP_SIZE + i].x;
-            temp[i * MAP_SIZE + j].y = MAP_HD[j * MAP_SIZE + i].y;
-            temp[i * MAP_SIZE + j].z = MAP_HD[j * MAP_SIZE + i].z;*/
-        }
-    }
-
-    glVertexPointer(3, GL_FLOAT, 0, &temp[0]);   //All v are grouped to three Floats, we start at the beginning of the array (offset=0) and want to use as VertexArray
-
-    for(i = 0; i<MAP_SIZE; i++)
-    {
-        glDrawArrays(GL_LINE_STRIP, MAP_SIZE * i, MAP_SIZE);
-    }
-#endif
-
     glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisable(GL_BLEND);
@@ -254,19 +241,19 @@ void Map_GenerateMap()
 
     if((MAP_HD = calloc(size, sizeof(Vertexarray))) == NULL) //Allocate memory for the map data
     {
-        printf("Not enough memory for map data! Tried to allocate %ud bytes but failed!\n", size * sizeof(Vertexarray));
+        printf("Not enough memory for map data! Tried to allocate %lu bytes but failed!\n", size * sizeof(Vertexarray));
         SDL_Close(-1);
     }
 
     if((MAP_Colors = calloc(size*2, sizeof(Vertexarray))) == NULL) //Allocate memory for the map data
     {
-        printf("Not enough memory for map data! Tried to allocate %ud bytes but failed!\n", size * sizeof(Vertexarray));
+        printf("Not enough memory for map data! Tried to allocate %lu bytes but failed!\n", size * sizeof(Vertexarray));
         SDL_Close(-1);
     }
 
     if((MAP_Normals = calloc(size, sizeof(Vertexarray))) == NULL) //Allocate memory for the map data
     {
-        printf("Not enough memory for map data! Tried to allocate %ud bytes but failed!\n", size * sizeof(Vertexarray));
+        printf("Not enough memory for map data! Tried to allocate %lu bytes but failed!\n", size * sizeof(Vertexarray));
         SDL_Close(-1);
     }
 
@@ -274,7 +261,7 @@ void Map_GenerateMap()
 
     if((MAP_Outlines = calloc(size, sizeof(Vertexarray))) == NULL) //Allocate memory for the map data
     {
-        printf("Not enough memory for map data! Tried to allocate %ud bytes but failed!\n", size * sizeof(Vertexarray));
+        printf("Not enough memory for map data! Tried to allocate %lu bytes but failed!\n", size * sizeof(Vertexarray));
         SDL_Close(-1);
     }
 
@@ -283,7 +270,7 @@ void Map_GenerateMap()
     size = Map_CreateOutlinesFromMapData(MAP_Outlines, Map, MAP_SIZE);
     size = Map_CreateNormalData(MAP_Normals, Map, MAP_SIZE);
 
-#if 1
+#if 0
     static double min = 100000, max = -1;
 
     for(x = 0; x < MAP_SIZE; x++)
@@ -549,17 +536,14 @@ void Map_SetColor(Vertexarray *v, int height, int index)
 
     if(height == 0)
     {
-        printf("H = %d: Väri sininen\n",height);
         r = 0; g = 0; b = 1;
     }
     else if(height < 3)
     {
-        printf("H = %d: Väri sininen\n",height);
         r = 1; g = 0.81; b = 0.48;
     }
     else
     {
-      //  printf("H = %d: Väri musta\n",height);
         r = 0; g = 1; b = 0;
     }
 

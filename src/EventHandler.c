@@ -1,11 +1,16 @@
-/* MF_EventHandler.c
+/* Mechforce
+ *
+ * @author Kari Vatjus-Anttila <karidaserious@gmail.com>
+ *
+ * For conditions of distribution and use, see copyright notice in LICENSE
+ *
+ * EventHandler.c by Kari Vatjus-Anttila
  *
  * Mechforce Event Handler where all of the keyboard and
  * mouse events are handled.
  *
- * @author Kari Vatjus-Anttila <kari.vatjus-anttila@cie.fi>
- *
  */
+
 #include "main.h"
 #include "MapRoutines.h"
 #include "Widget.h"

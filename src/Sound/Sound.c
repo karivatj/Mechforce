@@ -1,3 +1,13 @@
+/* Mechforce
+ *
+ * @author Kari Vatjus-Anttila <karidaserious@gmail.com>
+ *
+ * For conditions of distribution and use, see copyright notice in LICENSE
+ *
+ * Sound.c 1.00 by Kari Vatjus-Anttila
+ *
+ */
+
 #include "Sound.h"
 #include "../main.h"
 #include "../Core/SDL_Engine.h"

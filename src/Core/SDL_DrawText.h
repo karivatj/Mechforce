@@ -1,3 +1,13 @@
+/* Mechforce
+ *
+ * @author Kari Vatjus-Anttila <karidaserious@gmail.com>
+ *
+ * For conditions of distribution and use, see copyright notice in LICENSE
+ *
+ * SDL_DrawText.h 1.00 by Kari Vatjus-Anttila
+ *
+ */
+
 #ifndef SDL_DRAWTEXT_H
 #define SDL_DRAWTEXT_H
 
