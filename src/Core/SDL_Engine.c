@@ -63,7 +63,6 @@ void Init_SDL(void)
 
 
     flags = SDL_OPENGL;
-    flags |= SDL_RESIZABLE;
 
     if (videoInfo->hw_available )
 	flags |= SDL_HWSURFACE;
@@ -99,12 +98,12 @@ void Init_GL()	        // We call this right after our OpenGL window is created.
     printf("Initializing OpenGL.\n\n");
 
     glShadeModel(GL_SMOOTH);			    // Enables Smooth Color Shading
-    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);           // This Will Clear The Background Color To Black
+    glClearColor(0.0f, 0.0f, 1.0f, 0.0f);           // This Will Clear The Background Color To Black
     glClearDepth(1.0);                              // Enables Clearing Of The Depth Buffer
     glEnable(GL_DEPTH_TEST);			    // Enables Depth Testing
     glDepthFunc(GL_LEQUAL);                         // The Type Of Depth Testing To Do
 
-    //glEnable(GL_LIGHTING); //Enable lights
+    glEnable(GL_LIGHTING); //Enable lights
     glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
     glEnable(GL_LIGHT0);
     glLightModelfv(GL_LIGHT_MODEL_AMBIENT, global_ambient);
