@@ -11,6 +11,8 @@ Makefile
 Mechforce.cbp
 Mechforce.layout
 Mechforce.cbp.cbTemp
+Mechforce.layout.cbTemp
+bin/Screenshots/*
 
 cmake_install.cmake
 CMakeLists.txt.user

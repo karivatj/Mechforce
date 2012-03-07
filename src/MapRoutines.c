@@ -284,7 +284,7 @@ void Map_NormalizeValues(void)
     {
         for(y = 0; y < MAP_SIZE; y++)
         {
-            //if(Map[POINT(x,y)].h < 0)
+            if(Map[POINT(x,y)].h < 0)
                 Map[POINT(x,y)].h = 0;
         }
     }
@@ -454,29 +454,20 @@ int Map_CreateData(Vertexarray *v, Vertexarray *n, Vertexarray *o, Colorarray *c
                 }
 
                 /*Create the triangles fro the hexagon*/
-                Map_CreateTriangle(v, triangleindex,    x,     y,   h[POINT(x,y)].h,     x-0.5, y+1, h[POINT(x,y+1)].h,   x+0.5, y+1, h[POINT(x+1,y+1)].h);
-                Map_CreateTriangle(v, triangleindex+3,  x,     y,   h[POINT(x,y)].h,     x+1,   y,   h[POINT(x+1,y)].h,   x+0.5, y+1, h[POINT(x+1,y+1)].h);
-                Map_CreateTriangle(v, triangleindex+6,  x-0.5, y+1, h[POINT(x,y+1)].h,   x,     y+2, h[POINT(x,y+2)].h,   x+0.5, y+1, h[POINT(x+1,y+1)].h);
-                Map_CreateTriangle(v, triangleindex+9,  x,     y+2, h[POINT(x,y+2)].h,   x+0.5, y+1, h[POINT(x+1,y+1)].h, x+1,   y+2, h[POINT(x+1,y+2)].h);
-                Map_CreateTriangle(v, triangleindex+12, x+1,   y,   h[POINT(x+1,y)].h,   x+0.5, y+1, h[POINT(x+1,y+1)].h, x+1.5, y+1, h[POINT(x+2,y+1)].h);
-                Map_CreateTriangle(v, triangleindex+15, x+0.5, y+1, h[POINT(x+1,y+1)].h, x+1,   y+2, h[POINT(x+1,y+2)].h, x+1.5, y+1, h[POINT(x+2,y+1)].h);
+                Map_CreateTriangle(v, triangleindex,    x,     y,   h[POINT(x,y)].h,     x-0.5, y+1, h[POINT(x,y+1)].h,   x+0.5, y+1, h[POINT(x,y+1)].h);
+                Map_CreateTriangle(v, triangleindex+3,  x-0.5, y+1, h[POINT(x,y+1)].h,   x,     y+2, h[POINT(x,y+2)].h,   x+0.5, y+1, h[POINT(x,y+1)].h);
+                Map_CreateTriangle(v, triangleindex+6,  x,     y+2, h[POINT(x,y+2)].h,   x+1  , y+2, h[POINT(x+1,y+2)].h, x+0.5, y+1, h[POINT(x,y+1)].h);
+                Map_CreateTriangle(v, triangleindex+9,  x+1,   y+2, h[POINT(x+1,y+2)].h, x+1.5, y+1, h[POINT(x+2,y+1)].h, x+0.5, y+1, h[POINT(x,y+1)].h);
+                Map_CreateTriangle(v, triangleindex+12, x+1.5, y+1, h[POINT(x+2,y+1)].h, x+1,   y  , h[POINT(x+1,y)].h,   x+0.5, y+1, h[POINT(x,y+1)].h);
+                Map_CreateTriangle(v, triangleindex+15, x+1,   y,   h[POINT(x+1,y)].h,   x,     y,   h[POINT(x,y)].h,     x+0.5, y+1, h[POINT(x,y+1)].h);
 
-                Map_CreateNormal(n, normalindex,    x,     y,   h[POINT(x,y)].h,     x-0.5, y+1, h[POINT(x,y+1)].h,   x+0.5, y+1, h[POINT(x+1,y+1)].h);
-                Map_CreateNormal(n, normalindex+1,  x,     y,   h[POINT(x,y)].h,     x+1,   y,   h[POINT(x+1,y)].h,   x+0.5, y+1, h[POINT(x+1,y+1)].h);
-                Map_CreateNormal(n, normalindex+2,  x-0.5, y+1, h[POINT(x,y+1)].h,   x,     y+2, h[POINT(x,y+2)].h,   x+0.5, y+1, h[POINT(x+1,y+1)].h);
-                Map_CreateNormal(n, normalindex+3,  x,     y+2, h[POINT(x,y+2)].h,   x+0.5, y+1, h[POINT(x+1,y+1)].h, x+1,   y+2, h[POINT(x+1,y+2)].h);
-                Map_CreateNormal(n, normalindex+4, x+1,   y,   h[POINT(x+1,y)].h,   x+0.5, y+1, h[POINT(x+1,y+1)].h, x+1.5, y+1, h[POINT(x+2,y+1)].h);
-                Map_CreateNormal(n, normalindex+5, x+0.5, y+1, h[POINT(x+1,y+1)].h, x+1,   y+2, h[POINT(x+1,y+2)].h, x+1.5, y+1, h[POINT(x+2,y+1)].h);
+                Map_CreateNormal(n, normalindex,    x,     y,   h[POINT(x,y)].h,     x-0.5, y+1, h[POINT(x,y+1)].h,   x+0.5, y+1, h[POINT(x,y+1)].h);
+                Map_CreateNormal(n, normalindex+1,  x-0.5, y+1, h[POINT(x,y+1)].h,   x,     y+2, h[POINT(x,y+2)].h,   x+0.5, y+1, h[POINT(x,y+1)].h);
+                Map_CreateNormal(n, normalindex+2,  x,     y+2, h[POINT(x,y+2)].h,   x+1,   y+2, h[POINT(x+1,y+2)].h, x+0.5, y+1, h[POINT(x,y+1)].h);
+                Map_CreateNormal(n, normalindex+3,  x+1,   y+2, h[POINT(x+1,y+2)].h, x+1.5, y+1, h[POINT(x+2,y+1)].h, x+0.5, y+1, h[POINT(x,y+1)].h);
+                Map_CreateNormal(n, normalindex+4,  x+1.5, y+1, h[POINT(x+2,y+1)].h, x+1,   y,   h[POINT(x+1,y)].h,   x+0.5, y+1, h[POINT(x,y+1)].h);
+                Map_CreateNormal(n, normalindex+5,  x+1,   y,   h[POINT(x+1,y)].h,   x,     y,   h[POINT(x,y)].h,     x+0.5, y+1, h[POINT(x,y+1)].h);
 
-#if 0
-                /*Create normals*/
-                Map_CreateNormal(n, normalindex,   x,     y,   h[POINT(x,y)].h,     x-0.5, y+1, h[POINT(x,y+1)].h,   x+0.5, y+1, h[POINT(x+1,y+1)].h);
-                Map_CreateNormal(n, normalindex+1, x,     y,   h[POINT(x,y)].h,     x+1,   y,   h[POINT(x+1,y)].h,   x+0.5, y+1, h[POINT(x+1,y+1)].h);
-                Map_CreateNormal(n, normalindex+2, x-0.5, y+1, h[POINT(x,y+1)].h,   x,     y+2, h[POINT(x,y+2)].h,   x+0.5, y+1, h[POINT(x+1,y+1)].h);
-                Map_CreateNormal(n, normalindex+3, x,     y+2, h[POINT(x,y+2)].h,   x+0.5, y+1, h[POINT(x+1,y+1)].h, x+1,   y+2, h[POINT(x+1,y+2)].h);
-                Map_CreateNormal(n, normalindex+4, x+1,   y,   h[POINT(x+1,y)].h,   x+0.5, y+1, h[POINT(x+1,y+1)].h, x+1.5, y+1, h[POINT(x+2,y+1)].h);
-                Map_CreateNormal(n, normalindex+5, x+0.5, y+1, h[POINT(x+1,y+1)].h, x+1,   y+2, h[POINT(x+1,y+2)].h, x+1.5, y+1, h[POINT(x+2,y+1)].h);
-#endif
                 /*Create outlines for the hexagon*/
                 Map_CreateOutline(o, outlineindex,    x,     y,   h[POINT(x, y)].h);
                 Map_CreateOutline(o, outlineindex+1,  x-0.5, y+1, h[POINT(x, y+1)].h);
@@ -506,27 +497,20 @@ int Map_CreateData(Vertexarray *v, Vertexarray *n, Vertexarray *o, Colorarray *c
                     colorindex += 1;
                 }
 
-                Map_CreateTriangle(v, triangleindex,    x-1.5, y+1, h[POINT(x-1,y+1)].h, x-2,   y+2, h[POINT(x-2,y+2)].h, x-1,   y+2, h[POINT(x-1,y+2)].h);
-                Map_CreateTriangle(v, triangleindex+3,  x-2,   y+2, h[POINT(x-2,y+2)].h, x-1.5, y+3, h[POINT(x-1,y+3)].h, x-1,   y+2, h[POINT(x-1,y+2)].h);
-                Map_CreateTriangle(v, triangleindex+6,  x-1.5, y+1, h[POINT(x-1,y+1)].h, x-1,   y+2, h[POINT(x-1,y+2)].h, x-0.5, y+1, h[POINT(x,y+1)].h);
-                Map_CreateTriangle(v, triangleindex+9,  x-1,   y+2, h[POINT(x-1,y+2)].h, x-0.5, y+1, h[POINT(x,y+1)].h,   x,     y+2, h[POINT(x,y+2)].h);
-                Map_CreateTriangle(v, triangleindex+12, x-1,   y+2, h[POINT(x-1,y+2)].h, x-1.5, y+3, h[POINT(x-1,y+3)].h, x-0.5, y+3, h[POINT(x,y+3)].h);
-                Map_CreateTriangle(v, triangleindex+15, x-1,   y+2, h[POINT(x-1,y+2)].h, x,     y+2, h[POINT(x,y+2)].h,   x-0.5, y+3, h[POINT(x,y+3)].h);
+                Map_CreateTriangle(v, triangleindex,    x-1.5, y+1, h[POINT(x-1,y+1)].h, x-2,   y+2, h[POINT(x-2,y+2)].h, x-1, y+2, h[POINT(x-1,y+2)].h);
+                Map_CreateTriangle(v, triangleindex+3,  x-2,   y+2, h[POINT(x-2,y+2)].h, x-1.5, y+3, h[POINT(x-1,y+3)].h, x-1, y+2, h[POINT(x-1,y+2)].h);
+                Map_CreateTriangle(v, triangleindex+6,  x-1.5, y+3, h[POINT(x-1,y+3)].h, x-0.5, y+3, h[POINT(x,y+3)].h,   x-1, y+2, h[POINT(x-1,y+2)].h);
+                Map_CreateTriangle(v, triangleindex+9,  x-0.5, y+3, h[POINT(x,y+3)].h,   x,     y+2, h[POINT(x,y+2)].h,   x-1, y+2, h[POINT(x-1,y+2)].h);
+                Map_CreateTriangle(v, triangleindex+12, x,     y+2, h[POINT(x,y+2)].h,   x-0.5, y+1, h[POINT(x,y+1)].h,   x-1, y+2, h[POINT(x-1,y+2)].h);
+                Map_CreateTriangle(v, triangleindex+15, x-0.5, y+1, h[POINT(x,y+1)].h,   x-1.5, y+1, h[POINT(x-1,y+1)].h, x-1, y+2, h[POINT(x-1,y+2)].h);
 
-                Map_CreateNormal(n, normalindex,    x-1.5, y+1, h[POINT(x-1,y+1)].h, x-2,   y+2, h[POINT(x-2,y+2)].h, x-1,   y+2, h[POINT(x-1,y+2)].h);
-                Map_CreateNormal(n, normalindex+1,  x-2,   y+2, h[POINT(x-2,y+2)].h, x-1.5, y+3, h[POINT(x-1,y+3)].h, x-1,   y+2, h[POINT(x-1,y+2)].h);
-                Map_CreateNormal(n, normalindex+2,  x-1.5, y+1, h[POINT(x-1,y+1)].h, x-1,   y+2, h[POINT(x-1,y+2)].h, x-0.5, y+1, h[POINT(x,y+1)].h);
-                Map_CreateNormal(n, normalindex+3,  x-1,   y+2, h[POINT(x-1,y+2)].h, x-0.5, y+1, h[POINT(x,y+1)].h,   x,     y+2, h[POINT(x,y+2)].h);
-                Map_CreateNormal(n, normalindex+4, x-1,   y+2, h[POINT(x-1,y+2)].h, x-1.5, y+3, h[POINT(x-1,y+3)].h, x-0.5, y+3, h[POINT(x,y+3)].h);
-                Map_CreateNormal(n, normalindex+5, x-1,   y+2, h[POINT(x-1,y+2)].h, x,     y+2, h[POINT(x,y+2)].h,   x-0.5, y+3, h[POINT(x,y+3)].h);
-             /*
-                Map_CreateNormal(n, normalindex,   x,     y,   h[POINT(x,y)].h,     x-0.5, y+1, h[POINT(x,y+1)].h,   x+0.5, y+1, h[POINT(x+1,y+1)].h);
-                Map_CreateNormal(n, normalindex+1, x,     y,   h[POINT(x,y)].h,     x+1,   y,   h[POINT(x+1,y)].h,   x+0.5, y+1, h[POINT(x+1,y+1)].h);
-                Map_CreateNormal(n, normalindex+2, x-0.5, y+1, h[POINT(x,y+1)].h,   x,     y+2, h[POINT(x,y+2)].h,   x+0.5, y+1, h[POINT(x+1,y+1)].h);
-                Map_CreateNormal(n, normalindex+3, x,     y+2, h[POINT(x,y+2)].h,   x+0.5, y+1, h[POINT(x+1,y+1)].h, x+1,   y+2, h[POINT(x+1,y+2)].h);
-                Map_CreateNormal(n, normalindex+4, x+1,   y,   h[POINT(x+1,y)].h,   x+0.5, y+1, h[POINT(x+1,y+1)].h, x+1.5, y+1, h[POINT(x+2,y+1)].h);
-                Map_CreateNormal(n, normalindex+5, x+0.5, y+1, h[POINT(x+1,y+1)].h, x+1,   y+2, h[POINT(x+1,y+2)].h, x+1.5, y+1, h[POINT(x+2,y+1)].h);
-               */
+                Map_CreateNormal(n, normalindex,    x-1.5, y+1, h[POINT(x-1,y+1)].h, x-2,   y+2, h[POINT(x-2,y+2)].h, x-1, y+2, h[POINT(x-1,y+2)].h);
+                Map_CreateNormal(n, normalindex+1,  x-2,   y+2, h[POINT(x-2,y+2)].h, x-1.5, y+3, h[POINT(x-1,y+3)].h, x-1, y+2, h[POINT(x-1,y+2)].h);
+                Map_CreateNormal(n, normalindex+2,  x-1.5, y+3, h[POINT(x-1,y+3)].h, x-0.5, y+3, h[POINT(x,y+3)].h,   x-1, y+2, h[POINT(x-1,y+2)].h);
+                Map_CreateNormal(n, normalindex+3,  x-0.5, y+3, h[POINT(x,y+3)].h,   x,     y+2, h[POINT(x,y+2)].h,   x-1, y+2, h[POINT(x-1,y+2)].h);
+                Map_CreateNormal(n, normalindex+4,  x,     y+2, h[POINT(x,y+2)].h,   x-0.5, y+1, h[POINT(x,y+1)].h,   x-1, y+2, h[POINT(x-1,y+2)].h);
+                Map_CreateNormal(n, normalindex+5,  x-0.5, y+1, h[POINT(x,y+1)].h,   x-1.5, y+1, h[POINT(x-1,y+1)].h, x-1, y+2, h[POINT(x-1,y+2)].h);
+
                 Map_CreateOutline(o, outlineindex,    x-0.5, y+1, h[POINT(x, y+1)].h);
                 Map_CreateOutline(o, outlineindex+1,  x-1.5, y+1, h[POINT(x-1 , y+1)].h);
                 Map_CreateOutline(o, outlineindex+2,  x-1.5, y+1, h[POINT(x-1, y+1)].h);
