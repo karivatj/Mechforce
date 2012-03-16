@@ -24,7 +24,7 @@
 SDL_Surface *screen;            /*The surface where the graphics will be drawn*/
 
 float camerax, cameray, cameraz; /*Variables controlling the camera*/
-float rotx, roty, lastx, lasty;
+float rotx, roty;
 
 int flags;  //Variable that contains info about our videoflags.
 int orthogonalEnabled;

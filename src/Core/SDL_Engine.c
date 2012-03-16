@@ -93,21 +93,22 @@ void Init_SDL(void)
 
 void Init_GL()	        // We call this right after our OpenGL window is created.
 {
-    GLfloat specular[]= { 1.0f, 1.0f, 1.0f, 1.0f };
-    GLfloat global_ambient[]=  { 0.5f, 0.5f, 0.5f, 1.0f };
+    //GLfloat specular[]= { 1.0f, 1.0f, 1.0f, 1.0f };
+    //GLfloat global_ambient[]=  { 0.5f, 0.5f, 0.5f, 1.0f };
     printf("Initializing OpenGL.\n\n");
 
     glShadeModel(GL_SMOOTH);			    // Enables Smooth Color Shading
-    glClearColor(0.0f, 0.0f, 1.0f, 0.0f);           // This Will Clear The Background Color To Black
-    glClearDepth(1.0);                              // Enables Clearing Of The Depth Buffer
+    glClearColor(0.0f, 0.0f, 1.0f, 0.0f);   // This Will Clear The Background Color To Black
+    glClearDepth(1.0);                      // Enables Clearing Of The Depth Buffer
     glEnable(GL_DEPTH_TEST);			    // Enables Depth Testing
-    glDepthFunc(GL_LEQUAL);                         // The Type Of Depth Testing To Do
+    glDepthFunc(GL_LEQUAL);                 // The Type Of Depth Testing To Do
 
+#if 0
     glEnable(GL_LIGHTING); //Enable lights
     glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
     glEnable(GL_LIGHT0);
     glLightModelfv(GL_LIGHT_MODEL_AMBIENT, global_ambient);
-
+#endif
     glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 
     glLoadIdentity();
@@ -178,7 +179,7 @@ void SDL_DrawScene(void)
 
     OrthogonalStart(); //Start rendering in 2D
 
-    BTN_DrawButtonScene();
+    Widget_DrawButtonScene();
     //MAP_Draw2DTerrain();
     SDL_DrawText(25,760,570,1,1,0,0,"%.0f",fps);
 

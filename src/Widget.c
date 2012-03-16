@@ -17,7 +17,7 @@
 #include "Core/SDL_Textures.h"
 #include "Core/SDL_Engine.h"
 
-int BTN_ReadButtonData(void)
+int Widget_ReadButtonData(void)
 {
     FILE *file;
     char *token = NULL;
@@ -88,7 +88,7 @@ int BTN_ReadButtonData(void)
     return 0;   //OK
 }
 
-void BTN_HandleButtonStateChanges(SDL_EventType eventtype, int button, int buttonstate, int x, int y)
+void Widget_HandleButtonStateChanges(SDL_EventType eventtype, int button, int buttonstate, int x, int y)
 {
     int i;
     float xstride, ystride;
@@ -122,15 +122,15 @@ void BTN_HandleButtonStateChanges(SDL_EventType eventtype, int button, int butto
                 switch(eventtype)
                 {
                     case SDL_MOUSEMOTION:
-                        Buttons[i] = BTN_HandleMouseOvers(Buttons[i], buttonstate);
+                        Buttons[i] = Widget_HandleMouseOvers(Buttons[i], buttonstate);
                     break;
 
                     case SDL_MOUSEBUTTONDOWN:
-                        Buttons[i] = BTN_HandlePresses(Buttons[i], buttonstate);
+                        Buttons[i] = Widget_HandlePresses(Buttons[i], buttonstate);
                     break;
 
                     case SDL_MOUSEBUTTONUP:
-                        Buttons[i] = BTN_HandleReleases(Buttons[i]);
+                        Buttons[i] = Widget_HandleReleases(Buttons[i]);
                     break;
 
                     default:
@@ -146,7 +146,7 @@ void BTN_HandleButtonStateChanges(SDL_EventType eventtype, int button, int butto
     }
 }
 
-BUTTON BTN_HandlePresses(BUTTON button, int buttonstate)
+Widget Widget_HandlePresses(Widget button, int buttonstate)
 {
     int i;
 
@@ -182,7 +182,7 @@ BUTTON BTN_HandlePresses(BUTTON button, int buttonstate)
     }
     return button;
 }
-BUTTON BTN_HandleReleases(BUTTON button)
+Widget Widget_HandleReleases(Widget button)
 {
     switch(button.type)
     {
@@ -210,7 +210,7 @@ BUTTON BTN_HandleReleases(BUTTON button)
     }
     return button;
 }
-BUTTON BTN_HandleMouseOvers(BUTTON button, int buttonstate)
+Widget Widget_HandleMouseOvers(Widget button, int buttonstate)
 {
     switch(button.type)
     {
@@ -241,7 +241,7 @@ BUTTON BTN_HandleMouseOvers(BUTTON button, int buttonstate)
     return button;
 }
 
-void BTN_DrawButtonScene(void)
+void Widget_DrawButtonScene(void)
 {
     int i, stride;
 
@@ -271,7 +271,7 @@ void BTN_DrawButtonScene(void)
             else
             glBindTexture(GL_TEXTURE_2D,buttontextures[Buttons[i].type * 3 + stride + 3]);
 
-            BTN_DrawButton(Buttons[i]);
+            Widget_DrawButton(Buttons[i]);
 
             glBlendFunc( GL_ONE, GL_ONE );
 
@@ -283,18 +283,18 @@ void BTN_DrawButtonScene(void)
                 else
                 glBindTexture(GL_TEXTURE_2D,buttontextures[Buttons[i].type * 3 + stride + 2]);
 
-                BTN_DrawButton(Buttons[i]);
+                Widget_DrawButton(Buttons[i]);
             }
 
             else if(Buttons[i].mouseover == 1 && (Buttons[i].type == 0 || Buttons[i].type == 1))
             {
                 glBindTexture(GL_TEXTURE_2D,buttontextures[Buttons[i].type * 3 + stride + 1]);
-                BTN_DrawButton(Buttons[i]);
+                Widget_DrawButton(Buttons[i]);
             }
             else
             {
                 glBindTexture(GL_TEXTURE_2D,buttontextures[Buttons[i].type * 3 + stride]);
-                BTN_DrawButton(Buttons[i]);
+                Widget_DrawButton(Buttons[i]);
             }
         }
     }
@@ -303,7 +303,7 @@ void BTN_DrawButtonScene(void)
     glEnable( GL_DEPTH_TEST );
 }
 
-void BTN_DrawButton(BUTTON b)
+void Widget_DrawButton(Widget b)
 {
     float height, length;
 

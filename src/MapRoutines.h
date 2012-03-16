@@ -64,10 +64,10 @@ void Map_CreateOutline(Vertexarray *v, int index, float x, float y, float height
 void Map_CreateTriangle(Vertexarray *v, int index, float x1, float y1, float h1, float x2, float y2, float h2, float x3, float y3, float h3);
 void Map_CreateNormal(Vertexarray *v, int index, float x1, float y1, float h1, float x2, float y2, float h2, float x3, float y3, float h3);
 
-void Map_GenerateMapData(void);
+void Map_GenerateMapData(Vertexarray *v, Vertexarray *n, Vertexarray *o, Colorarray *c, MAP *h, int MapSize);
 
-int Map_CreateData(Vertexarray *v, Vertexarray *n, Vertexarray *o, Colorarray *c, MAP *hdata, int MapSize);
 int Map_CalculateElementCountFromArray(int MapSize);
+void Map_AllocateMemoryForMapData(void);
 
 int Map_Cleanup();
 

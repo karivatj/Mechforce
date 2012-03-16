@@ -20,11 +20,11 @@ typedef enum {
     RADIOBUTTON,
     CHECKBOX,
     TEXT
-} Widget;
+} WidgetType;
 
 /*Button datatype*/
 typedef struct {
-    Widget type;
+    WidgetType type;
     int size;
     int group;
     int enabled;
@@ -34,16 +34,16 @@ typedef struct {
     char caption[32];
     STATE state;
     STATE targetstate;
-} BUTTON;
+} Widget;
 
-BUTTON Buttons[MAX_BUTTONS];
+Widget Buttons[MAX_BUTTONS];
 
-int BTN_ReadButtonData(void);
-void BTN_HandleButtonStateChanges(SDL_EventType eventtype, int button, int buttonstate, int x, int y);
-void BTN_DrawButtonScene(void);
-void BTN_DrawButton(BUTTON b);
-BUTTON BTN_HandlePresses(BUTTON b, int button);
-BUTTON BTN_HandleReleases(BUTTON b);
-BUTTON BTN_HandleMouseOvers(BUTTON b, int button);
+int Widget_ReadButtonData(void);
+void Widget_HandleButtonStateChanges(SDL_EventType eventtype, int button, int buttonstate, int x, int y);
+void Widget_DrawButtonScene(void);
+void Widget_DrawButton(Widget b);
+Widget Widget_HandlePresses(Widget b, int button);
+Widget Widget_HandleReleases(Widget b);
+Widget Widget_HandleMouseOvers(Widget b, int button);
 
 #endif /*WIDGET_H*/

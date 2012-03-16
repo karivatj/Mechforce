@@ -39,8 +39,6 @@ int main(int argc, char **argv)
 
     FreeImage_SetOutputMessage(Texture_HandleFreeImageError);
 
-    Map_GenerateMap();
-
     camerax = 0;
     cameray = 15;
     cameraz = -200;
@@ -55,8 +53,10 @@ int main(int argc, char **argv)
 
     Texture_LoadTextures();
     Texture_GenerateTilemap();
-    BTN_ReadButtonData();
+    Widget_ReadButtonData();
     Sound_LoadSounds();
+    Map_AllocateMemoryForMapData();
+    Map_GenerateMap();
 
     if((font[0] = ftglCreatePixmapFont("../Fonts/kimberle.ttf")) == NULL)
     {

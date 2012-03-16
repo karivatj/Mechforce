@@ -170,7 +170,7 @@ int Utils_Toggle_Fullscreen(void)
     /*Reload Textures*/
     Texture_LoadTextures();
     Texture_GenerateTilemap();
-    BTN_ReadButtonData();
+    Widget_ReadButtonData();
 
     return 0;
 }
