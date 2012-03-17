@@ -88,7 +88,7 @@ int MF_Event_Handler(void)
             break;
 
             case SDL_MOUSEMOTION:
-                MF_MouseEventMotion(event.type, event.button.button, event.motion.state, event.motion.xrel, event.motion.yrel);
+                MF_MouseEventMotion(event.type, event.button.button, event.motion.state, event.motion.x, event.motion.y);
             break;
 
             default:
@@ -139,7 +139,14 @@ void MF_MouseEventRelease(SDL_EventType type, int button, int buttonstate,  int 
  */
 void MF_MouseEventMotion(SDL_EventType type, int button, int buttonstate,  int x, int y)
 {
+    float diffx = x - lastx;
+    float diffy = y - lasty;
+
+    lastx = x;
+    lasty = y;
+
     /*EXPERIMENTAL*/
+
     GLint viewport[4];
     GLdouble modelview[16];
     GLdouble projection[16];
@@ -158,18 +165,20 @@ void MF_MouseEventMotion(SDL_EventType type, int button, int buttonstate,  int x
     gluUnProject( winX, winY, winZ, modelview, projection, viewport, &posX, &posY, &posZ);
 
     printf("X: %d Y: %d Z: %d\n", (int)posX, (int)posY, (int)posZ);
+
     /*EXPERIMENTAL END*/
 
     if(button == SDL_BUTTON_LEFT && state == STATE_GAME)
     {
-        if((rotx += (float) 0.1f * y) < 0)
+        if((rotx += (float) 0.1f * diffy) < 0)
             rotx = 0;
-        else if((rotx += (float) 0.1f * y) > 90)
+        else if((rotx += (float) 0.1f * diffy) > 90)
             rotx = 90;
 
-        roty -= (float) 0.1f * x;
+        roty -= (float) 0.1f * diffx;
     }
 
     int cy = SCREEN_HEIGHT - y;
+
     Widget_HandleButtonStateChanges(type, button, buttonstate, x, cy);
 }
