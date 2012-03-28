@@ -18,10 +18,10 @@ or Cmake will give you an error that Freetype is not found.
 Dependencies:
 
 OpenGL
-Freetype
-FTGL
-FreeImage
 SDL
 SDL_mixer
+Freetype
+FreeImage
+FTGL
 
 Lets hope that I dont encounter too many problems on the way! Perhaps some day there will be a working Battletech simulator up and running. Stay tuned!
