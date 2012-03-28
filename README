@@ -22,7 +22,6 @@ Freetype
 FTGL
 FreeImage
 SDL
-SDL_image
 SDL_mixer
 
 Lets hope that I dont encounter too many problems on the way! Perhaps some day there will be a working Battletech simulator up and running. Stay tuned!
