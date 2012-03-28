@@ -28,6 +28,7 @@ GLuint tile;            //Displaylist variable for states
 
 GLuint Texture_GenerateGLTexture(BYTE *bits, int type, GLuint width, GLuint height);
 GLuint Texture_LoadImage(char *filename, int type, int flag);
+SDL_Surface* Texture_getSDLSurfaceFromImage(const char *file, int flag);
 void Texture_GenerateTilemap(void);
 void Texture_LoadTextures(void);
 void Texture_HandleFreeImageError(FREE_IMAGE_FORMAT fif, const char *message);

@@ -118,9 +118,51 @@ GLuint Texture_GenerateGLTexture(BYTE *bits, int type, GLuint width, GLuint heig
     return texture;
 }
 
+SDL_Surface* Texture_getSDLSurfaceFromImage(const char *file, int flag)
+{
+    FREE_IMAGE_FORMAT fif = FIF_UNKNOWN; //Variable used in determining the imageformat
+    FIBITMAP *image;                     //Pointer to the image
+
+    fif = FreeImage_GetFileType(file, 0);
+
+    if(fif == FIF_UNKNOWN)  //If filetype is still unknown
+        fif = FreeImage_GetFIFFromFilename(file);
+
+    if(fif == FIF_UNKNOWN)  //If all failed then quit
+        SDL_Close(-2);
+
+    if(FreeImage_FIFSupportsReading(fif))   //Does freeimage support reading this image type
+        image = FreeImage_Load(fif, file, flag);
+
+    if (image)
+    {
+        image = FreeImage_ConvertTo32Bits(image);
+
+        // Get the image dimensions
+        int w = FreeImage_GetWidth(image);
+        int h = FreeImage_GetHeight(image);
+
+        // Allocate memory for image pixel data
+        char *imageData = malloc(sizeof(char) * w * h * 4);
+
+        // Convert image to RGB-data and fill imageData
+        FreeImage_ConvertToRawBits((BYTE*)imageData, image, FreeImage_GetPitch(image), 32, FI_RGBA_RED, FI_RGBA_GREEN, FI_RGBA_BLUE, TRUE);
+
+        SDL_Surface* imageSurface = SDL_CreateRGBSurfaceFrom(imageData, w, h, 4, FreeImage_GetPitch(image), FI_RGBA_RED, FI_RGBA_GREEN, FI_RGBA_BLUE, FI_RGBA_ALPHA_MASK);
+
+        free(imageData);
+        FreeImage_Unload(image);   //Free the memory
+
+        return imageSurface;
+    }
+
+    FreeImage_Unload(image);   //Free the memory
+
+    return NULL;
+}
+
 void Texture_GenerateTilemap()
 {
-#if 0
     int i;
     int x,y;
     int slice_x, slice_y;
@@ -143,7 +185,7 @@ void Texture_GenerateTilemap()
 
     printf("Generating tilemap.\n");
 
-    if((tilemap = IMG_Load("../Images/tilemap.png")) == NULL)
+    if((tilemap = Texture_getSDLSurfaceFromImage("../Images/tilemap.png", PNG_DEFAULT)) == NULL)
     {
         fprintf(stderr,"ERROR*** Error while opening tilemap.png: %s\n", SDL_GetError());
         SDL_Close(-1);
@@ -184,13 +226,12 @@ void Texture_GenerateTilemap()
     for(i = 0; i < MAX_TILES; i++)
     {
         if(tiles[i]->pixels != NULL)
-            tiletexture[i] = glGenerateTexture(tiles[i], 2);
+            tiletexture[i] = Texture_GenerateGLTexture(tiles[i]->pixels, 2, TILE_WIDTH, TILE_HEIGHT);
 
         SDL_FreeSurface(tiles[i]);
     }
 
     printf("Generated tilemap succesfully.\n\n");
-#endif
 }
 
 void Texture_HandleFreeImageError(FREE_IMAGE_FORMAT fif, const char *message)

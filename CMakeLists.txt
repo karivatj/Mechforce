@@ -66,5 +66,5 @@ set_target_properties(Mechforce PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINA
 if(WIN32)
         TARGET_LINK_LIBRARIES(Mechforce mingw32 ftgl freetype freeimage SDLmain SDL SDL_mixer SDL_image opengl32 glu32 stdc++)
 elseif (UNIX)
-        TARGET_LINK_LIBRARIES(Mechforce GL GLU SDL SDL_mixer SDL_image ftgl freetype freeimage)
+        TARGET_LINK_LIBRARIES(Mechforce GL GLU SDL SDL_mixer ftgl freetype freeimage)
 endif()
