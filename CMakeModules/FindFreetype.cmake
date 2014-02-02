@@ -49,6 +49,7 @@ FIND_PATH(FREETYPE_INCLUDE_DIR_ft2build ft2build.h
   /usr/local/X11/include
   /usr/freeware/include
   "C:/Program Files (x86)/MinGW/include"
+  "C:/Qt/Qt5.0.2/5.0.2/mingw47_32/include"
 )
 
 FIND_PATH(FREETYPE_INCLUDE_DIR_freetype2 freetype/config/ftheader.h
@@ -60,6 +61,7 @@ FIND_PATH(FREETYPE_INCLUDE_DIR_freetype2 freetype/config/ftheader.h
   /usr/local/X11/include
   /usr/freeware/include
   "C:/Program Files (x86)/MinGW/include/"
+  "C:/Qt/Qt5.0.2/5.0.2/mingw47_32/include"
 )
 
 FIND_LIBRARY(FREETYPE_LIBRARY
@@ -72,6 +74,7 @@ FIND_LIBRARY(FREETYPE_LIBRARY
   /usr/local/X11
   /usr/freeware
   "C:/Program Files (x86)/MinGW/lib"
+  "C:/Qt/Qt5.0.2/5.0.2/mingw47_32/lib"
 )
 
 # set the user variables
