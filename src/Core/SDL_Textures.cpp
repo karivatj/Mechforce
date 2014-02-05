@@ -8,11 +8,9 @@
  *
  */
 
-#include "SDL/SDL_image.h"
 #include "../main.h"
 #include "SDL_Engine.h"
 #include "SDL_Textures.h"
-#include "FreeImage.h"
 
 void Texture_LoadTextures(void)
 {
@@ -41,7 +39,7 @@ void Texture_LoadTextures(void)
     printf("Finished loading textures.\n\n");
 }
 
-GLuint Texture_LoadImage(char *filename, int type, int flag)
+GLuint Texture_LoadImage(std::string filename, int type, int flag)
 {
     GLuint texture, width, height;
 
@@ -49,16 +47,16 @@ GLuint Texture_LoadImage(char *filename, int type, int flag)
     FIBITMAP *bitmap;                    //Pointer to the image
     BYTE* bits;                          //Pointer to the image data
 
-    fif = FreeImage_GetFileType(filename, 0);
+    fif = FreeImage_GetFileType(filename.c_str(), 0);
 
     if(fif == FIF_UNKNOWN)  //If filetype is still unknown
-        fif = FreeImage_GetFIFFromFilename(filename);
+        fif = FreeImage_GetFIFFromFilename(filename.c_str());
 
     if(fif == FIF_UNKNOWN)  //If all failed then quit
         SDL_Close(-2);
 
     if(FreeImage_FIFSupportsReading(fif))   //Does freeimage support reading this image type
-        bitmap = FreeImage_Load(fif, filename, flag);
+        bitmap = FreeImage_Load(fif, filename.c_str(), flag);
 
     if(!bitmap)
         SDL_Close(-2);
@@ -73,14 +71,14 @@ GLuint Texture_LoadImage(char *filename, int type, int flag)
         SDL_Close(-2);
 
     texture = Texture_GenerateGLTexture(bits, type, width, height); //Generate a GL texture from the freeimage data
-    printf("Loaded image %s\n", filename);
+    printf("Loaded image %s\n", filename.c_str());
 
     FreeImage_Unload(bitmap);   //Free the memory
 
     return texture;
 }
 
-GLuint Texture_GenerateGLTexture(BYTE *bits, int type, GLuint width, GLuint height)
+GLuint Texture_GenerateGLTexture(void *bits, int type, GLuint width, GLuint height)
 {
     GLuint texture;
 
@@ -143,7 +141,7 @@ SDL_Surface* Texture_getSDLSurfaceFromImage(const char *file, int flag)
         int h = FreeImage_GetHeight(image);
 
         // Allocate memory for image pixel data
-        char *imageData = malloc(sizeof(char) * w * h * 4);
+        char *imageData = static_cast<char*>(malloc(sizeof(char) * w * h * 4));
 
         // Convert image to RGB-data and fill imageData
         FreeImage_ConvertToRawBits((BYTE*)imageData, image, FreeImage_GetPitch(image), 32, FI_RGBA_RED, FI_RGBA_GREEN, FI_RGBA_BLUE, TRUE);

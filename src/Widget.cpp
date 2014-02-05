@@ -10,12 +10,12 @@
 
 #include <stdio.h>
 #include "main.h"
-#include "Widget.h"
-#include "Utils/Utilities.h"
-#include "Sound/Sound.h"
 #include "Core/SDL_DrawText.h"
 #include "Core/SDL_Textures.h"
 #include "Core/SDL_Engine.h"
+#include "Utils/Utilities.h"
+#include "Sound/Sound.h"
+#include "Widget.h"
 
 int Widget_ReadButtonData(void)
 {
@@ -55,7 +55,7 @@ int Widget_ReadButtonData(void)
 
             switch(counter2)
             {
-                case 0: Buttons[counter1].type = temp; break;
+                case 0: Buttons[counter1].type = (WidgetType)temp; break;
                 case 1: Buttons[counter1].size = temp; break;
                 case 2: Buttons[counter1].group = temp; break;
                 case 3: Buttons[counter1].x = temp; break;

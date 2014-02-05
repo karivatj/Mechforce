@@ -11,6 +11,8 @@
 #ifndef SDL_EVENTS_H
 #define SDL_EVENTS_H
 
+#include <SDL/SDL.h>
+
 SDL_Event event;                /*Event Structure*/
 
 int  MF_Event_Handler(void);

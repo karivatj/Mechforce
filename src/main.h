@@ -11,7 +11,12 @@
 #ifndef MECHFORCE_H
 #define MECHFORCE_H
 
-#include "SDL/SDL.h"
+#include <GL/gl.h>
+#include <GL/glu.h>
+#include <FreeImage.h>
+#include <SDL/SDL.h>
+#include <SDL/SDL_opengl.h>
+#include <SDL/SDL_image.h>
 
 /*State enum specifies in what state the user is in a given time so we can act as expected*/
 typedef enum {

@@ -13,17 +13,16 @@
 #endif
 
 #include <time.h>
-#include "FreeImage.h"
 
+#include "main.h"
 #include "Core/SDL_Engine.h"
 #include "Core/SDL_Textures.h"
 #include "Core/SDL_DrawText.h"
-#include "main.h"
+#include "Sound/Sound.h"
+#include "Utils/Utilities.h"
 #include "MapRoutines.h"
 #include "EventHandler.h"
 #include "Widget.h"
-#include "Sound/Sound.h"
-#include "Utils/Utilities.h"
 
 STATE state;
 
@@ -58,7 +57,7 @@ int main(int argc, char **argv)
     Map_AllocateMemoryForMapData();
     Map_GenerateMap();
 
-    if((font[0] = ftglCreatePixmapFont("../Fonts/kimberle.ttf")) == NULL)
+    if((font[0] = FTGL::ftglCreatePixmapFont("../Fonts/kimberle.ttf")) == NULL)
     {
         printf("ERROR*** Failed to load ../Fonts/kimberle.ttf.\n");
         SDL_Close(-1);
@@ -66,16 +65,16 @@ int main(int argc, char **argv)
 
     printf("\t../Fonts/kimberle.ttf OK\n");
 
-    ftglSetFontCharMap(font[0], ft_encoding_unicode);
+    FTGL::ftglSetFontCharMap(font[0], ft_encoding_unicode);
 
-    if((font[1] = ftglCreatePixmapFont("../Fonts/cour.ttf")) == NULL)
+    if((font[1] = FTGL::ftglCreatePixmapFont("../Fonts/cour.ttf")) == NULL)
     {
         printf("ERROR*** Failed to load ../Fonts/cour.ttf.\n");
         SDL_Close(-1);
     }
 
     printf("\t../Fonts/cour.ttf OK\n\n");
-    ftglSetFontCharMap(font[1], ft_encoding_unicode);
+    FTGL::ftglSetFontCharMap(font[1], ft_encoding_unicode);
 
     state = STATE_RELOAD_CONFIG;
 

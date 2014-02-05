@@ -13,39 +13,39 @@
 #include "SDL_Engine.h"
 #include "SDL_DrawText.h"
 
-void Print(int size, double x, double y, double r, double g, double b, int fontindex, const char *msg)
+void Print(int size, double x, double y, double r, double g, double b, int fontindex, std::string msg)
 {
     glColor3d(r,g,b);
-    glBindTexture(GL_TEXTURE_2D,0);
+    glBindTexture(GL_TEXTURE_2D, 0);
     glDisable(GL_DEPTH_TEST);	// Turn Depth Testing Off
     glLoadIdentity();
     glRasterPos2d(x,y);
     glPushAttrib(GL_LIST_BIT);
     ftglSetFontFaceSize(font[fontindex], size, 72);
-    ftglRenderFont(font[fontindex], msg, FTGL_RENDER_ALL);
-    glEnable(GL_DEPTH_TEST);
+    ftglRenderFont(font[fontindex], msg.c_str(), FTGL::RENDER_ALL);
     glPopAttrib();
+    glEnable(GL_DEPTH_TEST);
     glColor3d(1,1,1);
 }
 
-void SDL_DrawText(int size, int x, int y, double r, double g, double b, int font, char *msg, ...)
+int seek_textevent(void)
 {
-    int seek_textevent(void)
+    int i;
+    for (i = 0; i < MAX_TXT_EVENTS; i++)
     {
-        int i;
-        for (i = 0; i < MAX_TXT_EVENTS; i++)
-        {
-            if (text_events[i].reserved == FALSE)
-                return(i);
-        }
-        return(-1);
+        if (text_events[i].reserved == FALSE)
+            return(i);
     }
+    return(-1);
+}
 
+void SDL_DrawText(int size, int x, int y, double r, double g, double b, int font, std::string msg, ...)
+{
     char string[128];
     va_list ap;
 
     va_start(ap, msg);                       // Parses The String For Variables
-    vsprintf(string, msg, ap);               // And Converts Symbols To Actual Numbers
+    vsprintf(string, msg.c_str(), ap);               // And Converts Symbols To Actual Numbers
     va_end(ap);
 
     int index = seek_textevent();

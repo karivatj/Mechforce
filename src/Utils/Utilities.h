@@ -11,8 +11,11 @@
 #ifndef UTILITIES_H
 #define UTILITIES_H
 
-#include "GL/gl.h"
 #include "../main.h"
+#include "../Core/SDL_Engine.h"
+#include "../Core/SDL_Textures.h"
+#include "../Prefs/Preferences.h"
+#include "../Widget.h"
 
 /*Variables used in calculating the FPS*/
 GLfloat fps;

@@ -11,7 +11,7 @@
 #ifndef SDL_SOUND_H
 #define SDL_SOUND_H
 
-#include "SDL/SDL_mixer.h"
+#include <SDL/SDL_mixer.h>
 
 #define MAX_SOUNDS      3
 

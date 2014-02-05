@@ -12,7 +12,7 @@
 #define SDL_ENGINE_H
 
 #include "SDL/SDL.h"
-#include "SDL/SDL_opengl.h"
+
 
 /*Few Defines*/
 #define BPP             16

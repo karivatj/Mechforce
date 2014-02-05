@@ -14,9 +14,10 @@
 #define MAX_TXT_EVENTS  1024
 #define MAX_FONTS       2
 
-#include "FTGL/ftgl.h"
+#include <string>
+#include <FTGL/ftgl.h>
 
-FTGLfont *font[MAX_FONTS];      /*FTGL Font Array*/
+FTGL::FTGLfont *font[MAX_FONTS];      /*FTGL Font Array*/
 
 typedef struct {
     int reserved;
@@ -32,9 +33,9 @@ typedef struct {
 
 TXT_EVENTS text_events[MAX_TXT_EVENTS];
 
-void SDL_DrawText(int size, int x, int y, double r, double g, double b, int font, char *msg, ...);
-void Print(int size, double x, double y, double r, double g, double b, int fontindex, const char *msg);
-int Font_Cleanup();
+void SDL_DrawText(int size, int x, int y, double r, double g, double b, int font, std::string msg, ...);
+void Print(int size, double x, double y, double r, double g, double b, int fontindex, const std::string msg);
+int  Font_Cleanup();
 
 #endif /* SDL_DRAWTEXT_H */
 

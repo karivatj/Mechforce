@@ -7,6 +7,7 @@
  * StructHelper.c 1.00 by Kari Vatjus-Anttila
  *
  */
+
 #include "main.h"
 #include "StructHelper.h"
 #include "MapRoutines.h"

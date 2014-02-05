@@ -8,10 +8,10 @@
  *
  */
 
-#include "Sound.h"
 #include "../main.h"
 #include "../Core/SDL_Engine.h"
 #include "../Prefs/Preferences.h"
+#include "Sound.h"
 
 void Sound_LoadSounds(void)
 {

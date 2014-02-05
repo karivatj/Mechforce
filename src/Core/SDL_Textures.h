@@ -11,7 +11,9 @@
 #ifndef SDL_TEXTURES_H
 #define SDL_TEXTURES_H
 
-#include "FreeImage.h"
+#include <string>
+#include <FreeImage.h>
+#include <GL/gl.h>
 
 #define TILEMAP_WIDTH   4
 #define TILEMAP_HEIGHT  4
@@ -26,8 +28,8 @@ GLuint buttontextures[14];
 GLuint background;      //Displaylist variable for background and HUD
 GLuint tile;            //Displaylist variable for states
 
-GLuint Texture_GenerateGLTexture(BYTE *bits, int type, GLuint width, GLuint height);
-GLuint Texture_LoadImage(char *filename, int type, int flag);
+GLuint Texture_GenerateGLTexture(void *bits, int type, GLuint width, GLuint height);
+GLuint Texture_LoadImage(std::string, int type, int flag);
 SDL_Surface* Texture_getSDLSurfaceFromImage(const char *file, int flag);
 void Texture_GenerateTilemap(void);
 void Texture_LoadTextures(void);
