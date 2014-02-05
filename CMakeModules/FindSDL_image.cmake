@@ -50,6 +50,7 @@ FIND_PATH(SDLIMAGE_INCLUDE_DIR SDL_image.h
   /opt/include/SDL
   /opt/include
   "C:/Program Files (x86)/MinGW"
+  "C:/Qt/Qt5.0.2/5.0.2/mingw47_32/include/SDL"
 )
 
 FIND_LIBRARY(SDLIMAGE_LIBRARY 
@@ -68,6 +69,7 @@ FIND_LIBRARY(SDLIMAGE_LIBRARY
   /opt/csw
   /opt
   "C:/Program Files (x86)/MinGW"
+  "C:/Qt/Qt5.0.2/5.0.2/mingw47_32/lib"
 )
 
 SET(SDLIMAGE_FOUND "NO")

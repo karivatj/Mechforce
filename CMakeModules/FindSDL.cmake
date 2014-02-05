@@ -68,7 +68,7 @@
 FIND_PATH(SDL_INCLUDE_DIR SDL.h
   HINTS
   $ENV{SDLDIR}
-  PATH_SUFFIXES include/SDL include
+  PATH_SUFFIXES include
   PATHS
   ~/Library/Frameworks
   /Library/Frameworks
@@ -81,7 +81,9 @@ FIND_PATH(SDL_INCLUDE_DIR SDL.h
   /opt/csw # Blastwave
   /opt
   "C:/Program Files (x86)/MinGW"
+  "C:/Qt/Qt5.0.2/5.0.2/mingw47_32/include/SDL"
 )
+
 #MESSAGE("SDL_INCLUDE_DIR is ${SDL_INCLUDE_DIR}")
 
 # SDL-1.1 is the name used by FreeBSD ports...
@@ -97,6 +99,7 @@ FIND_LIBRARY(SDL_LIBRARY_TEMP
   /opt/csw
   /opt
   "C:/Program Files (x86)/MinGW"/
+  "C:/Qt/Qt5.0.2/5.0.2/mingw47_32/lib"
 )
 
 #MESSAGE("SDL_LIBRARY_TEMP is ${SDL_LIBRARY_TEMP}")
@@ -118,6 +121,7 @@ IF(NOT SDL_BUILDING_LIBRARY)
       /opt/csw
       /opt
       "C:/Program Files (x86)/MinGW"
+	  "C:/Qt/Qt5.0.2/5.0.2/mingw47_32/lib"
     )
   ENDIF(NOT ${SDL_INCLUDE_DIR} MATCHES ".framework")
 ENDIF(NOT SDL_BUILDING_LIBRARY)
@@ -176,5 +180,5 @@ IF(SDL_LIBRARY_TEMP)
   SET(SDL_FOUND "YES")
 ENDIF(SDL_LIBRARY_TEMP)
 
-#MESSAGE("SDL_LIBRARY is ${SDL_LIBRARY}")
+#MESSAGE("SDL_LIBRARY is ${SDL_LIBRARY")
 

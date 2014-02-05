@@ -12,12 +12,14 @@ IF (WIN32)
 		NAMES FreeImage.h
 		PATHS
 		"C:/Program Files (x86)/MinGW/include"
+           "C:/Qt/Qt5.0.2/5.0.2/mingw47_32/include"
 		${PROJECT_SOURCE_DIR}/extern/FreeImage
 		DOC "The directory where FreeImage.h resides")
 	FIND_LIBRARY( FREEIMAGE_LIBRARY
 		NAMES freeimage FreeImage FreeImage.lib
 		PATHS
 		"C:/Program Files (x86)/MinGW/lib"
+           "C:/Qt/Qt5.0.2/5.0.2/mingw47_32/lib"
 		${PROJECT_SOURCE_DIR}/FreeImage
 		DOC "The FreeImage library")
 ELSE (WIN32)
@@ -28,6 +30,7 @@ ELSE (WIN32)
 		/sw/include
 		/opt/local/include
 		"C:/Program Files (x86)/MinGW/include"
+           "C:/Qt/Qt5.0.2/5.0.2/mingw47_32/include"
 		DOC "The directory where FreeImage.h resides")
 	FIND_LIBRARY( FREEIMAGE_LIBRARY
 		NAMES FreeImage freeimage FreeImage.lib
@@ -39,6 +42,7 @@ ELSE (WIN32)
 		/sw/lib
 		/opt/local/lib
 		"C:/Program Files (x86)/MinGW/lib"
+           "C:/Qt/Qt5.0.2/5.0.2/mingw47_32/lib"
 		DOC "The FreeImage library")
 ENDIF (WIN32)
 
