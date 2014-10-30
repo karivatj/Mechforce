@@ -63,6 +63,8 @@ file(GLOB HeaderFiles ${CMAKE_SOURCE_DIR}/src/*.h)
 set(SourceFiles ${SourceFiles}) # ${NetworkSourceFiles} ${SoundSourceFiles} ${UtilsSourceFiles} ${CoreSourceFiles} ${PrefsSourceFiles})
 set(HeaderFiles ${HeaderFiles}) # ${NetworkHeaderFiles} ${SoundSourceFiles} ${UtilsSourceFiles} ${CoreSourceFiles} ${PrefsSourceFiles}) 
 
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+
 ADD_EXECUTABLE(Mechforce ${SourceFiles} ${HeaderFiles})
 
 set_target_properties(Mechforce PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/System)
