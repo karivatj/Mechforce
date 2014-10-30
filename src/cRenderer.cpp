@@ -60,7 +60,7 @@ Renderer::Renderer() : screen_width_(800), screen_height_(600)
         SDL_Quit();
     }
 
-    if((window_icon_ = SDL_LoadBMP("./Images/icon.bmp")) == NULL)
+    if((window_icon_ = SDL_LoadBMP("../Images/icon.bmp")) == NULL)
     {
         std::cout << "Error occured while loading window icon: " << SDL_GetError() << std::endl;
     }
@@ -129,7 +129,7 @@ GLuint Renderer::loadShaders()
 
     // Read the Vertex Shader code from the file
     std::string VertexShaderCode;
-    std::ifstream VertexShaderStream("./Data/vshader.glsl", std::ios::in);
+    std::ifstream VertexShaderStream("../Data/vshader.glsl", std::ios::in);
 
     if(VertexShaderStream.is_open())
     {
@@ -142,7 +142,7 @@ GLuint Renderer::loadShaders()
 
     // Read the Fragment Shader code from the file
     std::string FragmentShaderCode;
-    std::ifstream FragmentShaderStream("./Data/fshader.glsl", std::ios::in);
+    std::ifstream FragmentShaderStream("../Data/fshader.glsl", std::ios::in);
 
     if(FragmentShaderStream.is_open())
     {
@@ -157,7 +157,7 @@ GLuint Renderer::loadShaders()
     int InfoLogLength;
 
     // Compile Vertex Shader
-    std::cout << "Renderer: Compiling vertex shader" << std::endl;
+    std::cout << "Renderer: Compiling vertex shader...";
     char const *VertexSourcePointer = VertexShaderCode.c_str();
     glShaderSource(VertexShaderID, 1, &VertexSourcePointer , NULL);
     glCompileShader(VertexShaderID);
@@ -170,7 +170,7 @@ GLuint Renderer::loadShaders()
     std::cout << &VertexShaderErrorMessage[0] << std::endl;
 
     // Compile Fragment Shader
-    std::cout << "Renderer: Compiling fragment shader" << std::endl;
+    std::cout << "Renderer: Compiling fragment shader..." << std::endl;
     char const *FragmentSourcePointer = FragmentShaderCode.c_str();
     glShaderSource(FragmentShaderID, 1, &FragmentSourcePointer , NULL);
     glCompileShader(FragmentShaderID);
@@ -183,7 +183,7 @@ GLuint Renderer::loadShaders()
     std::cout << &FragmentShaderErrorMessage[0];
 
     // Link the program
-    std::cout << "Linking program" << std::endl;
+    std::cout << "Linking program..." << std::endl;
     GLuint ProgramID = glCreateProgram();
     glAttachShader(ProgramID, VertexShaderID);
     glAttachShader(ProgramID, FragmentShaderID);
@@ -199,11 +199,15 @@ GLuint Renderer::loadShaders()
     glDeleteShader(VertexShaderID);
     glDeleteShader(FragmentShaderID);
 
+    std::cout << "Shaders compiled and OK" << std::endl;
+
     return ProgramID;
 }
 
 void Renderer::update(float frametime)
 {
+    glClearColor(0,0,0,0);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 #if 0
     AssetManager    *am     = owner_->getAssetManager();
     Map             *map    = am->getMap();
@@ -273,6 +277,8 @@ void Renderer::update(float frametime)
 */
 #endif
 #if 0
+
+    ///Move this to entity initialize
     // GL-code start for triangle
     glUseProgram(shaderProgramID_);
 
@@ -289,6 +295,7 @@ void Renderer::update(float frametime)
     glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
     //////////
 
+    ///Move rest of this stuff to entity draw()
     // 1rst attribute buffer : vertices
     glEnableVertexAttribArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);

@@ -104,5 +104,5 @@ void Map::generateMap()
         }
     }
 
-    delete verts;
+    delete[] verts;
 }

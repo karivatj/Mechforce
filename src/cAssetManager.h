@@ -21,11 +21,9 @@ public:
 
     Map* getMap() { return map_data_; }
 
-    std::vector<GLuint> getTileMap() { return tilemap_textures_; }
+    std::vector<GLuint> getTileMap() { return tileTextures_; }
 
     bool loadAssets();
-
-    GLuint loadBMP();
 
     void setOwner(Game *g);
 
@@ -40,7 +38,7 @@ private:
     Game                        *owner_;
 
     //Tilemap
-    std::vector<GLuint>         tilemap_textures_;
+    std::vector<GLuint>         tileTextures_;
 
     Map                         *map_data_;
 };

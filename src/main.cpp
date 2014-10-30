@@ -15,8 +15,6 @@ float rotX, rotY, rotZ;
 
 int main(int argc, char **argv)
 {
-    std::cout << "Mechforce v. 0.0" << std::endl;
-
     camX = 0;
     camY = 0;
     camZ = -45;

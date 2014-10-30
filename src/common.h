@@ -26,6 +26,11 @@ struct Vector3
 
 };
 
+//Enum classes to differentiate between shaders and entities
+enum class VertexShaderType { DEFAULT };
+enum class FragmentShaderType { DEFAULT };
+enum class EntityType { MAP };
+
 struct Surface
 {
     int A;

@@ -1,11 +1,13 @@
-#ifndef CRENDERER_H
-#define CRENDERER_H
+#ifndef RENDERER_H
+#define RENDERER_H
 
 #include <GL/gl.h>
-#include "SDL2/SDL.h"
+#include <SDL2/SDL.h>
 
+#include <map>
+
+#include "common.h"
 #include "cGame.h"
-#include "cFPSCamera.h"
 
 class Game;
 class FPSCamera;
@@ -20,19 +22,33 @@ public:
 
     void update(float frametime);
 
-    SDL_Renderer* getRenderer();
-
     void setOwner(Game *g);
 
     void enable3D();
 
     void enable2D();
 
+    SDL_Renderer* getRenderer();
+
 private:
 
     Renderer();
 
     GLuint          loadShaders();
+
+    GLuint          shaderProgramID_;
+
+    GLuint          vertexArrayID_;
+
+    SDL_Window      *screen_;
+
+    SDL_Renderer    *renderer_;
+
+    SDL_GLContext   glcontext_;
+
+    SDL_Surface     *window_icon_;
+
+    Game            *owner_;
 
     float           frametime_;
 
@@ -44,22 +60,9 @@ private:
 
     static Renderer *thisPointer_;
 
-    SDL_Window      *screen_;
-
-    SDL_Renderer    *renderer_;
-
-    SDL_GLContext   glcontext_;
-
-    GLuint          shaderProgramID_;
-
-    GLuint          vertexArrayID_;
-
-    //Icon for the window
-    SDL_Surface     *window_icon_;
-
-    Game            *owner_;
-
-    FPSCamera       *camera;
+    ///TODO: Make this better. I guess key cant be of type V/FShaderTypeku
+    std::map<VertexShaderType, GLuint> vertexShaders_;
+    std::map<FragmentShaderType, GLuint> fragmentShaders_;
 };
 
-#endif // CRENDERER_H
+#endif // RENDERER_H

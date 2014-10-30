@@ -13,7 +13,7 @@ Game::Game() :  frametime_(0),
 
     appRunning = true;
 
-    framebudget_ = 1.f/framerate_;
+    framebudget_ = 1000.f/framerate_;
 
     try
     {
@@ -25,16 +25,17 @@ Game::Game() :  frametime_(0),
 
         assetmanager_ = AssetManager::getInstance();
         assetmanager_->setOwner(this);
-    } catch(std::bad_alloc &e)
+
+        if(!assetmanager_->loadAssets())    //Assetmanager failed to load assets
+        {
+            appRunning = false;
+            return;
+        }
+    }
+    catch(std::bad_alloc &e)
     {
         std::cout << "Error: " << e.what() << " while trying to allocate memory." << std::endl;
         appRunning = false;
-    }
-
-    if(!assetmanager_->loadAssets())    //Assetmanager failed to load assets
-    {
-        appRunning = false;
-        return;
     }
 }
 
@@ -71,6 +72,6 @@ void Game::Start()
         framedelta_ = SDL_GetTicks() - frametime_;
 
         if(framedelta_ < framebudget_)
-            SDL_Delay(framebudget_ - framedelta_);
+            SDL_Delay((int)framebudget_ - (int)framedelta_);
     }
 }
