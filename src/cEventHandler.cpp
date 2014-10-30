@@ -22,7 +22,6 @@ EventHandler* EventHandler::getInstance()
 
 EventHandler::EventHandler() : mouse_lastx(0), mouse_lasty(0)
 {
-    std::cout << "EventHandler: Created" << std::endl;
 }
 
 EventHandler::~EventHandler()

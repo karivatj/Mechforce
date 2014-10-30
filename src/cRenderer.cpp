@@ -1,7 +1,11 @@
 #include <iostream>
+#include <fstream>
 
+#define GLEW_STATIC
+#include <GL/glew.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
+#include <glm/glm.hpp>
 
 #include <vector>
 
@@ -33,33 +37,45 @@ Renderer::Renderer() : screen_width_(800), screen_height_(600)
         SDL_Quit();
     }
 
-    // set the opengl context version
-    //SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-    //SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
-    //SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG); //Disable deprecated function calls
+    // After we succesfully initialized SDL lets ask SDL for specific OpenGL version: 3.0
+    // SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
 
     if(SDL_CreateWindowAndRenderer(800, 600, SDL_WINDOW_OPENGL|SDL_WINDOW_RESIZABLE, &screen_, &renderer_) != 0)
     {
-        fprintf(stderr, "Error occured while creating window and renderer: %s", SDL_GetError());
+        std::cout << "Error occured while creating window and renderer: " << SDL_GetError() << std::endl;;
         SDL_Quit();
     }
 
     if((glcontext_ = SDL_GL_CreateContext(screen_)) == NULL)
     {
-        fprintf(stderr, "Error occured while creating GL context: %s", SDL_GetError());
+        std::cout << "Error occured while creating GL context: " << SDL_GetError() << std::endl;
         SDL_Quit();
     }
 
-    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");   //Make the scaled rendering look smoother.
-    SDL_RenderSetLogicalSize(renderer_, 800, 600);           //Make resolution of the screen device independent
-
-    //Loading of window icon
-    if((window_icon_ = SDL_LoadBMP("./Images/icon.bmp")) == NULL)
+    if (glewInit() != GLEW_OK)
     {
-        fprintf(stderr, "Error occured while loading window icon: %s", SDL_GetError());
+        std::cout << "GLEW Init Error!" << std::endl;
+        SDL_Quit();
     }
 
-    /*Finally set window title and icon*/
+    if((window_icon_ = SDL_LoadBMP("./Images/icon.bmp")) == NULL)
+    {
+        std::cout << "Error occured while loading window icon: " << SDL_GetError() << std::endl;
+    }
+
+    //Load and compile shaders
+    shaderProgramID_ = loadShaders();
+
+    //Create the VAO object
+    glGenVertexArrays(1, &vertexArrayID_);
+    glBindVertexArray(vertexArrayID_);
+
+    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");   //Make the scaled rendering look smoother.
+    SDL_RenderSetLogicalSize(renderer_, 800, 600);          //Make resolution of the screen device independent
+
+    //Finally set window title and icon
     SDL_SetWindowTitle(screen_, "Mechforce v.0.0");
     SDL_SetWindowIcon(screen_, window_icon_);
 }
@@ -86,6 +102,8 @@ void Renderer::setOwner(Game *g)
 
 void Renderer::enable3D()
 {
+///TODO: Add proper implementation for viewport etc.
+#if 0
     int w, h;
 
     glMatrixMode (GL_PROJECTION);
@@ -95,20 +113,104 @@ void Renderer::enable3D()
 
     glViewport(0, 0, w, h);
     gluPerspective (45, (GLfloat)w / (GLfloat)h, 0.1, 2000.0);
+#endif
 }
 
 void Renderer::enable2D()
 {
+///TODO: Add implementation for switching to orthographic view
+}
 
+GLuint Renderer::loadShaders()
+{
+    // Create the shaders
+    GLuint VertexShaderID = glCreateShader(GL_VERTEX_SHADER);
+    GLuint FragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
+
+    // Read the Vertex Shader code from the file
+    std::string VertexShaderCode;
+    std::ifstream VertexShaderStream("./Data/vshader.glsl", std::ios::in);
+
+    if(VertexShaderStream.is_open())
+    {
+        std::string line = "";
+        while(getline(VertexShaderStream, line))
+            VertexShaderCode += "\n" + line;
+
+        VertexShaderStream.close();
+    }
+
+    // Read the Fragment Shader code from the file
+    std::string FragmentShaderCode;
+    std::ifstream FragmentShaderStream("./Data/fshader.glsl", std::ios::in);
+
+    if(FragmentShaderStream.is_open())
+    {
+        std::string line = "";
+        while(getline(FragmentShaderStream, line))
+            FragmentShaderCode += "\n" + line;
+
+        FragmentShaderStream.close();
+    }
+
+    GLint Result = GL_FALSE;
+    int InfoLogLength;
+
+    // Compile Vertex Shader
+    std::cout << "Renderer: Compiling vertex shader" << std::endl;
+    char const *VertexSourcePointer = VertexShaderCode.c_str();
+    glShaderSource(VertexShaderID, 1, &VertexSourcePointer , NULL);
+    glCompileShader(VertexShaderID);
+
+    // Check Vertex Shader
+    glGetShaderiv(VertexShaderID, GL_COMPILE_STATUS, &Result);
+    glGetShaderiv(VertexShaderID, GL_INFO_LOG_LENGTH, &InfoLogLength);
+    std::vector<char> VertexShaderErrorMessage(InfoLogLength);
+    glGetShaderInfoLog(VertexShaderID, InfoLogLength, NULL, &VertexShaderErrorMessage[0]);
+    std::cout << &VertexShaderErrorMessage[0] << std::endl;
+
+    // Compile Fragment Shader
+    std::cout << "Renderer: Compiling fragment shader" << std::endl;
+    char const *FragmentSourcePointer = FragmentShaderCode.c_str();
+    glShaderSource(FragmentShaderID, 1, &FragmentSourcePointer , NULL);
+    glCompileShader(FragmentShaderID);
+
+    // Check Fragment Shader
+    glGetShaderiv(FragmentShaderID, GL_COMPILE_STATUS, &Result);
+    glGetShaderiv(FragmentShaderID, GL_INFO_LOG_LENGTH, &InfoLogLength);
+    std::vector<char> FragmentShaderErrorMessage(InfoLogLength);
+    glGetShaderInfoLog(FragmentShaderID, InfoLogLength, NULL, &FragmentShaderErrorMessage[0]);
+    std::cout << &FragmentShaderErrorMessage[0];
+
+    // Link the program
+    std::cout << "Linking program" << std::endl;
+    GLuint ProgramID = glCreateProgram();
+    glAttachShader(ProgramID, VertexShaderID);
+    glAttachShader(ProgramID, FragmentShaderID);
+    glLinkProgram(ProgramID);
+
+    // Check the program
+    glGetProgramiv(ProgramID, GL_LINK_STATUS, &Result);
+    glGetProgramiv(ProgramID, GL_INFO_LOG_LENGTH, &InfoLogLength);
+    std::vector<char> ProgramErrorMessage(std::max(InfoLogLength, int(1)) );
+    glGetProgramInfoLog(ProgramID, InfoLogLength, NULL, &ProgramErrorMessage[0]);
+    std::cout << &ProgramErrorMessage[0];
+
+    glDeleteShader(VertexShaderID);
+    glDeleteShader(FragmentShaderID);
+
+    return ProgramID;
 }
 
 void Renderer::update(float frametime)
 {
+#if 0
     AssetManager    *am     = owner_->getAssetManager();
     Map             *map    = am->getMap();
 
     std::vector<Vector3> map_data = map->getMapData();
     std::vector<GLuint>  tile_textures = am->getTileMap();
+
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -169,5 +271,42 @@ void Renderer::update(float frametime)
     glDisable(GL_BLEND);
     glDisable(GL_LINE_SMOOTH);
 */
+#endif
+#if 0
+    // GL-code start for triangle
+    glUseProgram(shaderProgramID_);
+
+    ///TODO: This should be defined per entity basis. Atm here just for testing.
+    // An array of 3 vectors which represents 3 vertices
+    static const GLfloat g_vertex_buffer_data[] = {
+       -1.0f, -1.0f, 0.0f,
+       1.0f, -1.0f, 0.0f,
+       0.0f,  1.0f, 0.0f,
+    };
+    GLuint vertexbuffer;
+    glGenBuffers(1, &vertexbuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
+    //////////
+
+    // 1rst attribute buffer : vertices
+    glEnableVertexAttribArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+    glVertexAttribPointer(
+       0,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
+       3,                  // size
+       GL_FLOAT,           // type
+       GL_FALSE,           // normalized?
+       0,                  // stride
+       (void*)0            // array buffer offset
+    );
+
+    // Draw the triangle !
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    glDrawArrays(GL_TRIANGLES, 0, 3);
+
+    glDisableVertexAttribArray(0);
+#endif
     SDL_GL_SwapWindow(screen_);  //Refresh the screen
 }

@@ -5,14 +5,12 @@
 
 Map::Map()
 {
-    std::cout << "Map: Created" << std::endl;
     width_ = 32;
     heigth_ = 32;
 }
 
 Map::Map(int w, int h)
 {
-    std::cout << "Map: Created" << std::endl;
     width_ = w;
     heigth_ = h;
 }
@@ -60,20 +58,11 @@ void Map::generateMap()
 {
     Vector3 *verts = new Vector3[width_ * heigth_];
 
+    memset(verts, 0, sizeof(Vector3) * width_ * heigth_);
+
     int stepsize = 32;
 
     float scale = 1;
-
-    /*Initialize array*/
-    for(int i = 0; i < width_; i++)
-    {
-        for(int j = 0; j < heigth_; j++)
-        {
-            verts[width_* i + j].x = j;
-            verts[width_* i + j].y = 0;
-            verts[width_* i + j].z = i;
-        }
-    }
 
     /*Generate map using Diamond-Square algorithm*/
     while (stepsize > 1)

@@ -23,7 +23,6 @@ AssetManager* AssetManager::getInstance()
 AssetManager::AssetManager()
 {
     map_data_ = new Map(32,32);
-    std::cout << "AssetManager: Created" << std::endl;
 }
 
 AssetManager::~AssetManager()

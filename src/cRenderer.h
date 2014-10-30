@@ -32,6 +32,8 @@ private:
 
     Renderer();
 
+    GLuint          loadShaders();
+
     float           frametime_;
 
     const int       screen_width_;
@@ -47,6 +49,10 @@ private:
     SDL_Renderer    *renderer_;
 
     SDL_GLContext   glcontext_;
+
+    GLuint          shaderProgramID_;
+
+    GLuint          vertexArrayID_;
 
     //Icon for the window
     SDL_Surface     *window_icon_;

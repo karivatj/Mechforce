@@ -44,7 +44,6 @@ private:
     float frametime_;
     float framedelta_;
     float framebudget_;
-    float framesleeptime_;
     float framerate_;
 };
 

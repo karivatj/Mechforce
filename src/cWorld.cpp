@@ -20,7 +20,6 @@ World* World::getInstance()
 
 World::World()
 {
-    std::cout << "World: Created" << std::endl;
 }
 
 World::~World()
@@ -35,5 +34,4 @@ void World::setOwner(Game *g)
 
 void World::update(float frametime)
 {
-    //std::cout << "World: Update" << std::endl;
 }

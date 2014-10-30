@@ -6,22 +6,30 @@
 
 Game::Game() :  frametime_(0),
                 framedelta_(0),
-                framebudget_(1.f/framerate_),
-                framesleeptime_ (0),
+                framebudget_(0),
                 framerate_(60.f)
 {
     std::cout << "Mechforce: Starting up" << std::endl;
 
     appRunning = true;
 
-    world_ = World::getInstance();
-    eventhandler_ = EventHandler::getInstance();
+    framebudget_ = 1.f/framerate_;
 
-    renderer_ = Renderer::getInstance();
-    renderer_->setOwner(this);
+    try
+    {
+        world_ = World::getInstance();
+        eventhandler_ = EventHandler::getInstance();
 
-    assetmanager_ = AssetManager::getInstance();
-    assetmanager_->setOwner(this);
+        renderer_ = Renderer::getInstance();
+        renderer_->setOwner(this);
+
+        assetmanager_ = AssetManager::getInstance();
+        assetmanager_->setOwner(this);
+    } catch(std::bad_alloc &e)
+    {
+        std::cout << "Error: " << e.what() << " while trying to allocate memory." << std::endl;
+        appRunning = false;
+    }
 
     if(!assetmanager_->loadAssets())    //Assetmanager failed to load assets
     {
@@ -52,7 +60,7 @@ AssetManager* Game::getAssetManager()
 
 void Game::Start()
 {
-    while(1)
+    while(appRunning)
     {
         frametime_ = SDL_GetTicks();
 
@@ -63,12 +71,6 @@ void Game::Start()
         framedelta_ = SDL_GetTicks() - frametime_;
 
         if(framedelta_ < framebudget_)
-        {
-            framesleeptime_= framebudget_ - framedelta_;
-            SDL_Delay(framesleeptime_);
-        }
-
-        if(!appRunning)
-            break;
+            SDL_Delay(framebudget_ - framedelta_);
     }
 }
