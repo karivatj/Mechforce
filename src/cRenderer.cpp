@@ -10,7 +10,6 @@
 #include <vector>
 
 #include "cRenderer.h"
-#include "common.h"
 
 bool Renderer::instanceFlag_ = false;
 Renderer* Renderer::thisPointer_ = NULL;
@@ -99,6 +98,11 @@ SDL_Renderer* Renderer::getRenderer()
 void Renderer::setOwner(Game *g)
 {
     owner_ = g;
+}
+
+void Renderer::setWorld(World *w)
+{
+    world_ = w;
 }
 
 void Renderer::enable3D()
@@ -213,7 +217,7 @@ void Renderer::update(float frametime)
     AssetManager    *am     = owner_->getAssetManager();
     Map             *map    = am->getMap();
 
-    std::vector<Vector3> map_data = map->getMapData();
+    VertexVector map_data = map->getMapData();
     std::vector<GLuint>  tile_textures = am->getTileMap();
 
 

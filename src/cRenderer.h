@@ -8,9 +8,10 @@
 
 #include "common.h"
 #include "cGame.h"
+#include "cWorld.h"
+#include "cAssetManager.h"
 
-class Game;
-class FPSCamera;
+class World;
 
 class Renderer
 {
@@ -23,6 +24,8 @@ public:
     void update(float frametime);
 
     void setOwner(Game *g);
+
+    void setWorld(World *w);
 
     void enable3D();
 
@@ -49,6 +52,8 @@ private:
     SDL_Surface     *window_icon_;
 
     Game            *owner_;
+
+    World           *world_;
 
     float           frametime_;
 

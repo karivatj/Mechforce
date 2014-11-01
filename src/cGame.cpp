@@ -1,8 +1,8 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 
-#include "cGame.h"
 #include "common.h"
+#include "cGame.h"
 
 Game::Game() :  frametime_(0),
                 framedelta_(0),
@@ -22,6 +22,7 @@ Game::Game() :  frametime_(0),
 
         renderer_ = Renderer::getInstance();
         renderer_->setOwner(this);
+        renderer_->setWorld(world_);
 
         assetmanager_ = AssetManager::getInstance();
         assetmanager_->setOwner(this);
@@ -44,8 +45,8 @@ Game::~Game()
     std::cout << "Mechforce: Shutting down" << std::endl;
 
     delete world_;
-    delete eventhandler_;
     delete renderer_;
+    delete eventhandler_;
     delete assetmanager_;
 }
 

@@ -1,9 +1,7 @@
 #ifndef EventHandler_H
 #define EventHandler_H
 
-#include "SDL2/SDL.h"
-
-#include "cGame.h"
+#include <SDL2/SDL.h>
 
 class Game;
 

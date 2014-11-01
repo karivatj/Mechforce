@@ -2,13 +2,12 @@
 #define AssetManager_H
 
 #include <vector>
+#include <SDL2/SDL.h>
 
-#include "SDL2/SDL.h"
-#include "cRenderer.h"
+#include "cGame.h"
 #include "cMap.h"
-#include "common.h"
 
-class Renderer;
+class Game;
 class Map;
 
 class AssetManager

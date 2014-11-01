@@ -1,6 +1,7 @@
 #ifndef WORLD_H
 #define WORLD_H
 
+#include "common.h"
 #include "cGame.h"
 
 class Game;
@@ -20,6 +21,8 @@ public:
 private:
 
     World();
+
+    EntityVector    entities_;
 
     float           frametime_;
 

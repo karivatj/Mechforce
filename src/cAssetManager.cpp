@@ -1,6 +1,5 @@
 #include <iostream>
 
-#include "common.h"
 #include "cAssetManager.h"
 
 bool AssetManager::instanceFlag_ = false;

@@ -3,10 +3,10 @@
 
 #include <vector>
 
-#include "SDL2/SDL.h"
+#include <SDL2/SDL.h>
 
-#include "cRenderer.h"
 #include "cWorld.h"
+#include "cRenderer.h"
 #include "cEventHandler.h"
 #include "cAssetManager.h"
 
@@ -40,8 +40,6 @@ private:
     EventHandler *eventhandler_;
 
     AssetManager *assetmanager_;
-
-    EntityVector entities_;
 
     /*FPS related variables*/
     float frametime_;

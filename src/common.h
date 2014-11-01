@@ -3,12 +3,11 @@
 
 #include <vector>
 
+class Entity;
+
 extern bool appRunning;
 extern float camX, camY, camZ;
 extern float rotX, rotY, rotZ;
-
-typedef std::vector<Entity> EntityVector;
-typedef std::vector<Vector3> VertexVector;
 
 struct Vector3
 {
@@ -35,6 +34,9 @@ struct Vector3
 enum class VertexShaderType { DEFAULT };
 enum class FragmentShaderType { DEFAULT };
 enum class EntityType { MAP };
+
+typedef std::vector<Entity> EntityVector;
+typedef std::vector<Vector3> VertexVector;
 
 struct Surface
 {

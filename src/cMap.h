@@ -2,15 +2,10 @@
 #define MAP_H
 
 #include <vector>
+#include <SDL2/SDL.h>
 
-#include "SDL2/SDL.h"
-
-#include "cEntity.h"
-#include "cRenderer.h"
 #include "common.h"
-
-class Entity;
-class Renderer;
+#include "cEntity.h"
 
 class Map : public Entity
 {
