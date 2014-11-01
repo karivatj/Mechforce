@@ -28,6 +28,7 @@ public:
     Renderer* getRenderer();
 
     AssetManager* getAssetManager();
+
 private:
 
     bool loadAssets();
@@ -39,6 +40,8 @@ private:
     EventHandler *eventhandler_;
 
     AssetManager *assetmanager_;
+
+    EntityVector entities_;
 
     /*FPS related variables*/
     float frametime_;

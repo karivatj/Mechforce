@@ -20,6 +20,11 @@ Map::~Map()
     std::cout << "Map: Destroyed" << std::endl;
 }
 
+void Map::draw()
+{
+
+}
+
 float Map::getValueAt(int x, int y, Vector3 *verts)
 {
     return verts[(x & (width_ - 1)) + (y & (heigth_ - 1)) * width_].y;

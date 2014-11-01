@@ -5,12 +5,14 @@
 
 #include "SDL2/SDL.h"
 
+#include "cEntity.h"
 #include "cRenderer.h"
 #include "common.h"
 
+class Entity;
 class Renderer;
 
-class Map
+class Map : public Entity
 {
 public:
 
@@ -18,23 +20,23 @@ public:
 
     Map(int w, int h);
 
+    ~Map();
+
+    void draw();
+
     void generateMap();
 
     int getMapWidth() { return width_; }
 
     int getMapHeight() { return heigth_; }
 
-    std::vector<Vector3> getMapData() { return vertices_; }
-
-    ~Map();
+    VertexVector getMapData() { return vertices_; }
 
     int width_;
 
     int heigth_;
 
 private:
-
-    std::vector<Vector3> vertices_;
 
     float getValueAt(int x, int y, Vector3 *verts);
 

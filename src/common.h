@@ -1,9 +1,14 @@
 #ifndef COMMON_H
 #define COMMON_H
 
+#include <vector>
+
 extern bool appRunning;
 extern float camX, camY, camZ;
 extern float rotX, rotY, rotZ;
+
+typedef std::vector<Entity> EntityVector;
+typedef std::vector<Vector3> VertexVector;
 
 struct Vector3
 {

@@ -50,7 +50,6 @@ void EventHandler::update()
                     default:
                     break;
                 }
-
             break;
 
             case SDL_MOUSEBUTTONDOWN:
@@ -77,16 +76,12 @@ void EventHandler::update()
 
 void EventHandler::MouseButtonPress()
 {
-    std::cout << "Mouse pressed" << std::endl;
-
     if(event_.button.button == SDL_BUTTON_LEFT)  mouseLeftPressed = true;
     if(event_.button.button == SDL_BUTTON_RIGHT) mouseRightPressed = true;
-
 }
 
 void EventHandler::MouseButtonRelease()
 {
-    std::cout << "Mouse released" << std::endl;
     if(event_.button.button == SDL_BUTTON_LEFT)  mouseLeftPressed = false;
     if(event_.button.button == SDL_BUTTON_RIGHT) mouseRightPressed = false;
 }

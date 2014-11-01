@@ -63,6 +63,7 @@ Renderer::Renderer() : screen_width_(800), screen_height_(600)
     if((window_icon_ = SDL_LoadBMP("../Images/icon.bmp")) == NULL)
     {
         std::cout << "Error occured while loading window icon: " << SDL_GetError() << std::endl;
+        SDL_Quit();
     }
 
     //Load and compile shaders
@@ -103,7 +104,7 @@ void Renderer::setOwner(Game *g)
 void Renderer::enable3D()
 {
 ///TODO: Add proper implementation for viewport etc.
-#if 0
+#if 1
     int w, h;
 
     glMatrixMode (GL_PROJECTION);
@@ -170,7 +171,7 @@ GLuint Renderer::loadShaders()
     std::cout << &VertexShaderErrorMessage[0] << std::endl;
 
     // Compile Fragment Shader
-    std::cout << "Renderer: Compiling fragment shader..." << std::endl;
+    std::cout << "Renderer: Compiling fragment shader...";
     char const *FragmentSourcePointer = FragmentShaderCode.c_str();
     glShaderSource(FragmentShaderID, 1, &FragmentSourcePointer , NULL);
     glCompileShader(FragmentShaderID);
@@ -208,7 +209,7 @@ void Renderer::update(float frametime)
 {
     glClearColor(0,0,0,0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-#if 0
+#if 1
     AssetManager    *am     = owner_->getAssetManager();
     Map             *map    = am->getMap();
 
@@ -227,9 +228,9 @@ void Renderer::update(float frametime)
 
     glMatrixMode (GL_MODELVIEW);
     glLoadIdentity();
-    //glColor4f(0,0,0,0.5);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+   // glColor4f(0,0,0,0.5);
+    //glEnable(GL_BLEND);
+    //glBlendFunc(GL_ONE_MINUS_SRC_ALPHA, GL_SRC_ALPHA);
 
     //glEnable(GL_LINE_SMOOTH);
 
