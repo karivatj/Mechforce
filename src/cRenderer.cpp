@@ -1,12 +1,6 @@
 #include <iostream>
 #include <fstream>
 
-#define GLEW_STATIC
-#include <GL/glew.h>
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <glm/glm.hpp>
-
 #include <vector>
 
 #include "cRenderer.h"
@@ -78,6 +72,8 @@ Renderer::Renderer() : screen_width_(800), screen_height_(600)
     //Finally set window title and icon
     SDL_SetWindowTitle(screen_, "Mechforce v.0.0");
     SDL_SetWindowIcon(screen_, window_icon_);
+
+    world_ = World::getInstance();  //Get pointer to World object
 }
 
 Renderer::~Renderer()
@@ -87,22 +83,6 @@ Renderer::~Renderer()
 
     SDL_GL_DeleteContext(glcontext_);
     SDL_DestroyWindow(screen_);
-    std::cout << "Renderer: Destroyed" << std::endl;
-}
-
-SDL_Renderer* Renderer::getRenderer()
-{
-    return renderer_;
-}
-
-void Renderer::setOwner(Game *g)
-{
-    owner_ = g;
-}
-
-void Renderer::setWorld(World *w)
-{
-    world_ = w;
 }
 
 void Renderer::enable3D()
@@ -213,13 +193,21 @@ void Renderer::update(float frametime)
 {
     glClearColor(0,0,0,0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-#if 1
-    AssetManager    *am     = owner_->getAssetManager();
+
+    EntityVector entities = world_->getEntities();
+
+    EntityIterator it;
+
+    for(it = entities.begin(); it != entities.end(); ++it)
+    {
+        (*it)->draw();
+    }
+#if 0
+    AssetManager    *am     = AssetManager::getInstance();
     Map             *map    = am->getMap();
 
     VertexVector map_data = map->getMapData();
     std::vector<GLuint>  tile_textures = am->getTileMap();
-
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -285,19 +273,17 @@ void Renderer::update(float frametime)
 
     ///Move this to entity initialize
     // GL-code start for triangle
-    glUseProgram(shaderProgramID_);
+
 
     ///TODO: This should be defined per entity basis. Atm here just for testing.
     // An array of 3 vectors which represents 3 vertices
     static const GLfloat g_vertex_buffer_data[] = {
        -1.0f, -1.0f, 0.0f,
-       1.0f, -1.0f, 0.0f,
+       1.0f, -1.0fa, 0.0f,
        0.0f,  1.0f, 0.0f,
     };
     GLuint vertexbuffer;
-    glGenBuffers(1, &vertexbuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
+
     //////////
 
     ///Move rest of this stuff to entity draw()

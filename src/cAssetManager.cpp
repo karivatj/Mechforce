@@ -21,7 +21,7 @@ AssetManager* AssetManager::getInstance()
 
 AssetManager::AssetManager()
 {
-    map_data_ = new Map(32,32);
+    map_data_ = new Map();
 }
 
 AssetManager::~AssetManager()
@@ -35,11 +35,6 @@ AssetManager::~AssetManager()
         tileTextures_.erase(iter);
     }
     std::cout << "AssetManager: Destroyed" << std::endl;
-}
-
-void AssetManager::setOwner(Game *g)
-{
-    owner_ = g;
 }
 
 bool AssetManager::loadAssets()

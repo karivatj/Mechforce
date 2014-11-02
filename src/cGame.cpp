@@ -1,7 +1,5 @@
 #include <iostream>
-#include <SDL2/SDL.h>
 
-#include "common.h"
 #include "cGame.h"
 
 Game::Game() :  frametime_(0),
@@ -17,12 +15,11 @@ Game::Game() :  frametime_(0),
 
     try
     {
-        world_ = World::getInstance();
-        eventhandler_ = EventHandler::getInstance();
-
         renderer_ = Renderer::getInstance();
         renderer_->setOwner(this);
-        renderer_->setWorld(world_);
+
+        world_ = World::getInstance();
+        eventhandler_ = EventHandler::getInstance();
 
         assetmanager_ = AssetManager::getInstance();
         assetmanager_->setOwner(this);
@@ -42,22 +39,6 @@ Game::Game() :  frametime_(0),
 
 Game::~Game()
 {
-    std::cout << "Mechforce: Shutting down" << std::endl;
-
-    delete world_;
-    delete renderer_;
-    delete eventhandler_;
-    delete assetmanager_;
-}
-
-Renderer* Game::getRenderer()
-{
-    return renderer_;
-}
-
-AssetManager* Game::getAssetManager()
-{
-    return assetmanager_;
 }
 
 void Game::Start()

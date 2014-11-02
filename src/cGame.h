@@ -3,17 +3,14 @@
 
 #include <vector>
 
-#include <SDL2/SDL.h>
+#include "common.h"
 
 #include "cWorld.h"
 #include "cRenderer.h"
 #include "cEventHandler.h"
 #include "cAssetManager.h"
-
-class Renderer;
-class AssetManager;
-class EventHandler;
-class World;
+#include "cEntity.h"
+#include "cMap.h"
 
 class Game
 {
@@ -24,10 +21,6 @@ public:
     ~Game();
 
     void Start();
-
-    Renderer* getRenderer();
-
-    AssetManager* getAssetManager();
 
 private:
 

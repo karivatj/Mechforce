@@ -1,10 +1,7 @@
 #ifndef WORLD_H
 #define WORLD_H
 
-#include "common.h"
 #include "cGame.h"
-
-class Game;
 
 class World
 {
@@ -12,15 +9,19 @@ public:
 
     static World* getInstance();
 
-    ~World();
-
     void update(float frametime);
 
-    void setOwner(Game *g);
+    void setOwner(Game *g)      { owner_ = g; }
 
-private:
+    EntityVector getEntities()  { return entities_; }
+
+protected:
 
     World();
+
+    ~World();
+
+private:
 
     EntityVector    entities_;
 

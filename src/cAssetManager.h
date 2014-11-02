@@ -5,18 +5,13 @@
 #include <SDL2/SDL.h>
 
 #include "cGame.h"
-#include "cMap.h"
-
-class Game;
-class Map;
 
 class AssetManager
 {
+
 public:
 
     static AssetManager* getInstance();
-
-    ~AssetManager();
 
     Map* getMap() { return map_data_; }
 
@@ -24,11 +19,15 @@ public:
 
     bool loadAssets();
 
-    void setOwner(Game *g);
+    void setOwner(Game *g) { owner_ = g; }
 
-private:
+protected:
 
     AssetManager();
+
+    ~AssetManager();
+
+private:
 
     static AssetManager         *thisPointer_;
 

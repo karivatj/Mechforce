@@ -1,4 +1,5 @@
 #include <iostream>
+
 #include "cWorld.h"
 
 bool World::instanceFlag_ = false;
@@ -20,16 +21,11 @@ World* World::getInstance()
 
 World::World()
 {
+    entities_.push_back(new Map());
 }
 
 World::~World()
 {
-    std::cout << "World: Destroyed" << std::endl;
-}
-
-void World::setOwner(Game *g)
-{
-    owner_ = g;
 }
 
 void World::update(float frametime)

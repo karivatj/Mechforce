@@ -1,41 +1,35 @@
 #ifndef RENDERER_H
 #define RENDERER_H
 
-#include <GL/gl.h>
-#include <SDL2/SDL.h>
-
 #include <map>
 
-#include "common.h"
 #include "cGame.h"
-#include "cWorld.h"
-#include "cAssetManager.h"
-
-class World;
 
 class Renderer
 {
 public:  
 
-    ~Renderer();
-
     static Renderer* getInstance();
 
     void update(float frametime);
-
-    void setOwner(Game *g);
-
-    void setWorld(World *w);
 
     void enable3D();
 
     void enable2D();
 
-    SDL_Renderer* getRenderer();
+    void setOwner(Game *g)      { owner_ = g; }
 
-private:
+    SDL_Renderer* getRenderer() { return renderer_; }
+
+    GLuint getShaderProgram()   { return shaderProgramID_; }
+
+protected:
 
     Renderer();
+
+    ~Renderer();
+
+private:
 
     GLuint          loadShaders();
 

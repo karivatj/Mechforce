@@ -1,9 +1,7 @@
 #ifndef EventHandler_H
 #define EventHandler_H
 
-#include <SDL2/SDL.h>
-
-class Game;
+#include "cGame.h"
 
 class EventHandler
 {
@@ -11,15 +9,17 @@ public:
 
     static EventHandler* getInstance();
 
-    ~EventHandler();
-
     void update();
 
-    void setOwner(Game *g);
+    void setOwner(Game *g) { owner_ = g; }
 
-private:
+protected:
 
     EventHandler();
+
+    ~EventHandler();
+
+private:
 
     static EventHandler     *thisPointer_;
 

@@ -7,7 +7,7 @@
 #include<time.h>
 
 #include "cGame.h"
-#include "common.h"
+
 
 bool appRunning;
 float camX, camY, camZ;

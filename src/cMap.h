@@ -4,8 +4,7 @@
 #include <vector>
 #include <SDL2/SDL.h>
 
-#include "common.h"
-#include "cEntity.h"
+#include "cGame.h"
 
 class Map : public Entity
 {
@@ -13,19 +12,19 @@ public:
 
     Map();
 
-    Map(int w, int h);
-
     ~Map();
+
+    void initialize();
 
     void draw();
 
     void generateMap();
 
-    int getMapWidth() { return width_; }
+    int getMapWidth()           { return width_; }
 
-    int getMapHeight() { return heigth_; }
+    int getMapHeight()          { return heigth_; }
 
-    VertexVector getMapData() { return vertices_; }
+    VertexVector getMapData()   { return vertices_; }
 
     int width_;
 

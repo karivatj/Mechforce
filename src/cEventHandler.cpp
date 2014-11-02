@@ -1,7 +1,6 @@
 #include <iostream>
 
 #include "cEventHandler.h"
-#include "common.h"
 
 bool EventHandler::instanceFlag_ = false;
 EventHandler* EventHandler::thisPointer_ = NULL;
@@ -27,11 +26,6 @@ EventHandler::EventHandler() : mouse_lastx(0), mouse_lasty(0)
 EventHandler::~EventHandler()
 {
     std::cout << "EventHandler: Destroyed" << std::endl;
-}
-
-void EventHandler::setOwner(Game *g)
-{
-    owner_ = g;
 }
 
 void EventHandler::update()
