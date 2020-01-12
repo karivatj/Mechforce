@@ -7,10 +7,11 @@
  * StateMachine.h 1.00 by Kari Vatjus-Anttila
  *
  */
+#pragma once
 
 #ifndef STATEMACHINE_H
 #define STATEMACHINE_H
 
-void MF_StateMachine(void); /*State machine where we check what state the user is in and act accordingly*/
+void MF_StateMachine(int width, int height); /*State machine where we check what state the user is in and act accordingly*/
 
 #endif /*STATEMACHINE_H*/

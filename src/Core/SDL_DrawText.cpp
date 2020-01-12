@@ -13,6 +13,9 @@
 #include "SDL_Engine.h"
 #include "SDL_DrawText.h"
 
+FTGL::FTGLfont *font[MAX_FONTS];        /*FTGL Font Array*/
+TXT_EVENTS text_events[MAX_TXT_EVENTS];
+
 void Print(int size, double x, double y, double r, double g, double b, int fontindex, std::string msg)
 {
     glColor3d(r,g,b);

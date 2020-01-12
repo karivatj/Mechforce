@@ -13,8 +13,14 @@
 #include <stdlib.h>
 #include <math.h>
 #include "main.h"
-#include "Core/SDL_Engine.h"
 #include "MapRoutines.h"
+
+MAP Map[MAP_SIZE * MAP_SIZE];
+Vertexarray *MAP_HD;        //Vertexarray which holds the hexagon data
+Vertexarray *MAP_Outlines;  //Array which holds the outline data for the hexagons
+Vertexarray *MAP_Normals;   //Array which holds the normal data for the hexagons. Used with lighting
+Colorarray  *MAP_Colors;    //Array which holds the color data for the hexagons
+int numberoftriangles = 0;
 
 void Map_LoadMapFromFile(char keyword[])
 {
@@ -138,8 +144,6 @@ void Map_Draw3DTerrain(void)
     glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
     glDisableClientState(GL_VERTEX_ARRAY);
 
-
-
 #if 0
     int i;
 
@@ -202,6 +206,7 @@ void Map_SmoothTerrain(float k, int passes)
 //Generate the map using Diamond-Square Algorithm
 void Map_GenerateMap()
 {
+    printf("Generating Map\n");
     int sideLength;
 
     int x;
@@ -259,6 +264,7 @@ void Map_GenerateMap()
     Map_NormalizeValues();
     Map_SetTiles();
     Map_GenerateMapData(MAP_HD, MAP_Normals, MAP_Outlines, MAP_Colors, Map, MAP_SIZE);
+    printf("Map Generation Process Done\n");
 }
 
 void Map_SetTiles(void)

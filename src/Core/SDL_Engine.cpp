@@ -7,11 +7,6 @@
  * SDL_Engine.c 1.00 by Kari Vatjus-Anttila
  *
  */
-
-#ifdef WIN32
-#include <windows.h>
-#endif
-
 #include "SDL_Engine.h"
 #include "SDL_Textures.h"
 #include "SDL_DrawText.h"
@@ -24,7 +19,17 @@
 #include "../Utils/Utilities.h"
 #include "../Prefs/Preferences.h"
 
-void Init_SDL(void)
+SDL_Surface *screen;            /*The surface where the graphics will be drawn*/
+
+float camerax, cameray, cameraz = 0; /*Variables controlling the camera*/
+float rotx, roty, lastx, lasty = 0;
+
+int SCREEN_WIDTH;
+int SCREEN_HEIGHT;
+int flags;  //Variable that contains info about our videoflags.
+int orthogonalEnabled;
+
+void Init_SDL(int width, int height)
 {
     const SDL_VideoInfo *videoInfo;
 
@@ -45,13 +50,13 @@ void Init_SDL(void)
         fprintf( stderr, "Video query failed: %s\n", SDL_GetError( ) );
         SDL_Close(1);
     }
-
+#if 1
     if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) != 0)
     {
         fprintf(stderr, "Error encountered while initializing SDL_mixer: %s\n", Mix_GetError());
         SDL_Close(1);
     }
-
+#endif
 
     flags = SDL_OPENGL;
 
@@ -71,7 +76,7 @@ void Init_SDL(void)
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
     /* get a SDL surface */
-    if ((screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 16, flags )) == NULL )
+    if ((screen = SDL_SetVideoMode(width, height, 16, flags )) == NULL )
     {
         fprintf(stderr, "Unable to create OpenGL screen: %s\n", SDL_GetError());
         SDL_Close(1);
@@ -89,7 +94,7 @@ void Init_GL()	        // We call this right after our OpenGL window is created.
     printf("Initializing OpenGL.\n\n");
 
     glShadeModel(GL_SMOOTH);			    // Enables Smooth Color Shading
-    glClearColor(0.0f, 0.0f, 1.0f, 0.0f);   // This Will Clear The Background Color To Black
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);   // This Will Clear The Background Color To Black
     glClearDepth(1.0);                      // Enables Clearing Of The Depth Buffer
     glEnable(GL_DEPTH_TEST);			    // Enables Depth Testing
     glDepthFunc(GL_LEQUAL);                 // The Type Of Depth Testing To Do
@@ -100,6 +105,7 @@ void Init_GL()	        // We call this right after our OpenGL window is created.
     glEnable(GL_LIGHT0);
     glLightModelfv(GL_LIGHT_MODEL_AMBIENT, global_ambient);
 #endif
+
     glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 
     glLoadIdentity();
@@ -114,7 +120,7 @@ void Init_GL()	        // We call this right after our OpenGL window is created.
     glEnable(GL_TEXTURE_2D);
 }
 
-void glEnable3D()
+void glEnable3D(int width, int height)
 {
     glViewport (0, 0, (GLsizei)SCREEN_WIDTH, (GLsizei)SCREEN_HEIGHT);
 
@@ -127,7 +133,7 @@ void glEnable3D()
 
     glLoadIdentity();
 
-    //glTranslatef(0, 15, -440);
+    glTranslatef(0, 15, -440);
 
     glTranslatef(camerax, cameray, cameraz);
 
@@ -158,15 +164,15 @@ void OrthogonalEnd()
 }
 
 
-void SDL_DrawScene(void)
+void SDL_DrawScene(int width, int height)
 {
     int i;
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// Clear The Screen And The Depth Buffer
 
-    glEnable3D();
+    glEnable3D(width, height);
 
-    MF_StateMachine();
+    MF_StateMachine(width, height);
 
     OrthogonalStart(); //Start rendering in 2D
 
@@ -269,6 +275,10 @@ void SDL_Close(int code)
     Font_Cleanup();
     Texture_Cleanup();
     Map_Cleanup();
+
+#ifdef FREEIMAGE_LIB
+	FreeImage_Initialise();
+#endif // FREEIMAGE_LIB
 
     printf("Shutting down SDL...\n");
 

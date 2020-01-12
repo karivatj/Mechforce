@@ -16,7 +16,7 @@
 #include "MapRoutines.h"
 
 
-void MF_StateMachine(void)
+void MF_StateMachine(int width, int height)
 {
     switch(state)
     {
@@ -28,6 +28,7 @@ void MF_StateMachine(void)
             OrthogonalStart();
 
             /* Draw the Backgroung for this state */
+            #if 0
             glBindTexture(GL_TEXTURE_2D,backgrounds[0]);
             glBegin(GL_QUADS);
                 glTexCoord2d(0,1);        glVertex2d(0 ,    0);
@@ -35,7 +36,7 @@ void MF_StateMachine(void)
                 glTexCoord2d(1,0);        glVertex2d(SCREEN_WIDTH, SCREEN_HEIGHT);
                 glTexCoord2d(0,0);        glVertex2d(0 ,    SCREEN_HEIGHT);
             glEnd();
-
+            #endif
             //glCallList(background);
             OrthogonalEnd();
         break;
@@ -59,7 +60,7 @@ void MF_StateMachine(void)
         case STATE_GAME:
             Map_Draw3DTerrain();
             //MAP_LoadMapFromFile("MAP1");
-            SDL_DrawHUD();
+            //SDL_DrawHUD();
             //MAP_Draw2DTerrain();
         break;
 
@@ -69,7 +70,7 @@ void MF_StateMachine(void)
 	        if(pref_fullscreen != fullscreen_enabled)
             {
                 #ifdef WIN32
-                Utils_Toggle_Fullscreen();
+                Utils_Toggle_Fullscreen(width, height);
                 #endif
                 #ifdef unix
                 SDL_WM_ToggleFullScreen(screen);

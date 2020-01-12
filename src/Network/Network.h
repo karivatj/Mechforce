@@ -7,6 +7,7 @@
  * Network.h 1.00 by Kari Vatjus-Anttila
  *
  */
+#pragma once
 
 #ifndef NETWORK_H
 #define NETWORK_H

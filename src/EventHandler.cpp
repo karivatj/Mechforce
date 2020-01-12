@@ -13,7 +13,6 @@
 
 #include "main.h"
 #include "Utils/Utilities.h"
-#include "Core/SDL_Engine.h"
 #include "MapRoutines.h"
 #include "Widget.h"
 #include "EventHandler.h"
@@ -27,6 +26,7 @@
  */
 int MF_Event_Handler(void)
 {
+    SDL_Event event;
      while(SDL_PollEvent(&event))
      {
         switch(event.type)

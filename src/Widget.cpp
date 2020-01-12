@@ -17,6 +17,8 @@
 #include "Sound/Sound.h"
 #include "Widget.h"
 
+Widget Buttons[MAX_BUTTONS];
+
 int Widget_ReadButtonData(void)
 {
     FILE *file;

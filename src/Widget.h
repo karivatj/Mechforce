@@ -7,6 +7,7 @@
  * Widget.h 1.00 by Kari Vatjus-Anttila
  *
  */
+#pragma once
 
 #ifndef WIDGET_H
 #define WIDGET_H
@@ -36,7 +37,7 @@ typedef struct {
     STATE targetstate;
 } Widget;
 
-Widget Buttons[MAX_BUTTONS];
+extern Widget Buttons[MAX_BUTTONS];
 
 int Widget_ReadButtonData(void);
 void Widget_HandleButtonStateChanges(SDL_EventType eventtype, int button, int buttonstate, int x, int y);

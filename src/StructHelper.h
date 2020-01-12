@@ -7,6 +7,7 @@
  * StructHelperc 1.00 by Kari Vatjus-Anttila
  *
  */
+#pragma once
 
  #ifdef STRUCT_HELPER_H
  #define STRUCT_HELPER_H

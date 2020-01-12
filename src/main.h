@@ -7,16 +7,23 @@
  * main.h 1.00 by Kari Vatjus-Anttila
  *
  */
+#pragma once
 
 #ifndef MECHFORCE_H
 #define MECHFORCE_H
 
+#ifdef WIN32
+#include <windows.h>
+#endif
+
+#include "FreeImage.h"
+
 #include <GL/gl.h>
 #include <GL/glu.h>
-#include <FreeImage.h>
 #include <SDL/SDL.h>
 #include <SDL/SDL_opengl.h>
 #include <SDL/SDL_image.h>
+#include "Core/SDL_Engine.h"
 
 /*State enum specifies in what state the user is in a given time so we can act as expected*/
 typedef enum {

@@ -7,12 +7,13 @@
  * Preferences.h 1.00 by Kari Vatjus-Anttila
  *
  */
+#pragma once
 
 #ifndef PREFS_H
 #define PREFS_H
 
-int fullscreen_enabled;
-int pref_fullscreen;
-int pref_soundsoff;
+extern int fullscreen_enabled;
+extern int pref_fullscreen;
+extern int pref_soundsoff;
 
 #endif /*PREFS_H*/

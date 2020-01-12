@@ -12,6 +12,8 @@
 #include <windows.h>
 #endif
 
+#define WINDOWS
+
 #include <time.h>
 
 #include "main.h"
@@ -24,10 +26,13 @@
 #include "EventHandler.h"
 #include "Widget.h"
 
+#include <FreeImage.h>
+
 STATE state;
 
 int main(int argc, char **argv)
 {
+    printf("ASD");
     int done = 0, value = 0;
     orthogonalEnabled = 1;
 
@@ -36,7 +41,7 @@ int main(int argc, char **argv)
 
     srand (time(NULL));   //Initialize random seed
 
-    FreeImage_SetOutputMessage(Texture_HandleFreeImageError);
+    //FreeImage_SetOutputMessage(Texture_HandleFreeImageError);
 
     camerax = 0;
     cameray = 15;
@@ -45,7 +50,7 @@ int main(int argc, char **argv)
     rotx = 45;
     roty = 0;
 
-    Init_SDL();
+    Init_SDL(SCREEN_WIDTH, SCREEN_HEIGHT);
     Init_GL();
 
     SDL_EnableKeyRepeat(50, 10);
@@ -56,6 +61,10 @@ int main(int argc, char **argv)
     Sound_LoadSounds();
     Map_AllocateMemoryForMapData();
     Map_GenerateMap();
+
+#ifdef FREEIMAGE_LIB
+	FreeImage_Initialise();
+#endif // FREEIMAGE_LIB
 
     if((font[0] = FTGL::ftglCreatePixmapFont("../Fonts/kimberle.ttf")) == NULL)
     {
@@ -84,7 +93,7 @@ int main(int argc, char **argv)
 
         value = MF_Event_Handler();
 
-        SDL_DrawScene();
+        SDL_DrawScene(SCREEN_WIDTH, SCREEN_HEIGHT);
 
         SDL_GL_SwapBuffers();
 

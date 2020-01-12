@@ -7,6 +7,7 @@
  * SDL_DrawText.h 1.00 by Kari Vatjus-Anttila
  *
  */
+#pragma once
 
 #ifndef SDL_DRAWTEXT_H
 #define SDL_DRAWTEXT_H
@@ -17,7 +18,7 @@
 #include <string>
 #include <FTGL/ftgl.h>
 
-FTGL::FTGLfont *font[MAX_FONTS];      /*FTGL Font Array*/
+extern FTGL::FTGLfont *font[MAX_FONTS];      /*FTGL Font Array*/
 
 typedef struct {
     int reserved;
@@ -31,7 +32,7 @@ typedef struct {
     char text[128];
 } TXT_EVENTS;
 
-TXT_EVENTS text_events[MAX_TXT_EVENTS];
+extern TXT_EVENTS text_events[MAX_TXT_EVENTS];
 
 void SDL_DrawText(int size, int x, int y, double r, double g, double b, int font, std::string msg, ...);
 void Print(int size, double x, double y, double r, double g, double b, int fontindex, const std::string msg);

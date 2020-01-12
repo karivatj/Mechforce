@@ -13,8 +13,11 @@
 #include "../Prefs/Preferences.h"
 #include "Sound.h"
 
+Mix_Chunk *sounds[MAX_SOUNDS];  /*Sound Array*/
+
 void Sound_LoadSounds(void)
 {
+    #if 1
     printf("Loading soundfiles.\n");
     sounds[0] = Mix_LoadWAV("../Sound/MouseClick.wav");
     sounds[1] = Mix_LoadWAV("../Sound/MouseOver.wav");
@@ -27,10 +30,12 @@ void Sound_LoadSounds(void)
     }
 
     printf("Loaded soundfiles succesfully.\n\n");
+    #endif
 }
 
 void Sound_PlaySound(int id)
 {
+    #if 1
     int channel = 0;
 
     if(pref_soundsoff != 1)
@@ -46,10 +51,12 @@ void Sound_PlaySound(int id)
         if (channel == -1)
             fprintf(stderr, "SDL_Mixer Error : %s ", Mix_GetError());
     }
+    #endif
 }
 
 int Sound_Cleanup()
 {
+    #if 1
     int i;
     printf("Freeing Soundfiles...\n");
     for(i = 0;i < MAX_SOUNDS; i++)
@@ -57,4 +64,5 @@ int Sound_Cleanup()
 
     Mix_CloseAudio();
     return 0;
+    #endif
 }

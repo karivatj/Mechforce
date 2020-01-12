@@ -10,8 +10,12 @@
 
 #include "Utilities.h"
 
+GLfloat fps;
+GLfloat framestart;
+
 int Utils_ScreenShot(void)
 {
+    #if 1
     unsigned char pixels[3 * SCREEN_WIDTH * SCREEN_HEIGHT]; //Array which holds the pixel data of the OpenGL screen
 
     glReadPixels(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, GL_BGR, GL_UNSIGNED_BYTE, pixels);  //Read the pixels from the OpenGL buffer
@@ -29,6 +33,7 @@ int Utils_ScreenShot(void)
     FreeImage_Save(FIF_PNG, image, "../Screenshots/Screenshot.png", 0);
 
     free(image);    // Lets free our image data we dont need it anymore
+    #endif
 
     return 0;
 }
@@ -148,10 +153,10 @@ void Utils_ReadConfigFile(void)
     fclose (file);
 }
 
-int Utils_Toggle_Fullscreen(void)
+int Utils_Toggle_Fullscreen(int width, int height)
 {
     /*Reinitialize SDL*/
-    Init_SDL();
+    Init_SDL(width, height);
 
     /*Reinitialize OpenGL*/
     Init_GL();
@@ -159,7 +164,7 @@ int Utils_Toggle_Fullscreen(void)
     if(orthogonalEnabled)
         OrthogonalStart();
     else
-        glEnable3D();
+        glEnable3D(width, height);
 
     /*Reload Textures*/
     Texture_LoadTextures();

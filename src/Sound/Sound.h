@@ -7,7 +7,8 @@
  * Sound.h 1.00 by Kari Vatjus-Anttila
  *
  */
- 
+#pragma once
+
 #ifndef SDL_SOUND_H
 #define SDL_SOUND_H
 
@@ -15,7 +16,7 @@
 
 #define MAX_SOUNDS      3
 
-Mix_Chunk *sounds[MAX_SOUNDS];  /*Sound Array*/
+extern Mix_Chunk *sounds[MAX_SOUNDS];  /*Sound Array*/
 
 void Sound_LoadSounds(void);
 void Sound_PlaySound(int id);

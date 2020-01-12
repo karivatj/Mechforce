@@ -7,6 +7,7 @@
  * MapRoutines.h 1.00 by Kari Vatjus-Anttila
  *
  */
+#pragma once
 
 #ifndef MAP_H
 #define MAP_H
@@ -17,14 +18,14 @@
 #define MAP_SIZE 129                    //Size of the map
 #define POINT(x,y) (MAP_SIZE*(x)+(y))   //Macro for mimicing the behaviour of a 2-dimensional array in 1-dimensional array.
 
-int numberoftriangles;
+extern int numberoftriangles;
 
-MAP Map[MAP_SIZE * MAP_SIZE];
+extern MAP Map[MAP_SIZE * MAP_SIZE];
 
-Vertexarray *MAP_HD;        //Vertexarray which holds the hexagon data
-Vertexarray *MAP_Outlines;  //Array which holds the outline data for the hexagons
-Vertexarray *MAP_Normals;   //Array which holds the normal data for the hexagons. Used with lighting
-Colorarray  *MAP_Colors;    //Array which holds the color data for the hexagons
+extern Vertexarray *MAP_HD;        //Vertexarray which holds the hexagon data
+extern Vertexarray *MAP_Outlines;  //Array which holds the outline data for the hexagons
+extern Vertexarray *MAP_Normals;   //Array which holds the normal data for the hexagons. Used with lighting
+extern Colorarray  *MAP_Colors;    //Array which holds the color data for the hexagons
 
 void Map_LoadMapFromFile(char keyword[]);       /*Loads a map into an array. used in 2D mode. Not sure if working*/
 void Map_Draw3DTerrain(void);                   /*Draws the 3D terrain*/

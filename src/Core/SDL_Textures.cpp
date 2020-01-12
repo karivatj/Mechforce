@@ -12,6 +12,14 @@
 #include "SDL_Engine.h"
 #include "SDL_Textures.h"
 
+#include "FreeImage.h"
+
+GLuint backgrounds[3];
+GLuint background;
+GLuint tiletexture[MAX_TILES];  //Texture array for tile textures
+GLuint buttontextures[14];
+GLuint tile;            //Displaylist variable for states
+
 void Texture_LoadTextures(void)
 {
     printf("Loading textures.\n");
@@ -41,6 +49,7 @@ void Texture_LoadTextures(void)
 
 GLuint Texture_LoadImage(std::string filename, int type, int flag)
 {
+    #if 1
     GLuint texture, width, height;
 
     FREE_IMAGE_FORMAT fif = FIF_UNKNOWN; //Variable used in determining the imageformat
@@ -74,6 +83,7 @@ GLuint Texture_LoadImage(std::string filename, int type, int flag)
     printf("Loaded image %s\n", filename.c_str());
 
     FreeImage_Unload(bitmap);   //Free the memory
+    #endif
 
     return texture;
 }
@@ -118,6 +128,7 @@ GLuint Texture_GenerateGLTexture(void *bits, int type, GLuint width, GLuint heig
 
 SDL_Surface* Texture_getSDLSurfaceFromImage(const char *file, int flag)
 {
+    #if 1
     FREE_IMAGE_FORMAT fif = FIF_UNKNOWN; //Variable used in determining the imageformat
     FIBITMAP *image;                     //Pointer to the image
 
@@ -155,6 +166,7 @@ SDL_Surface* Texture_getSDLSurfaceFromImage(const char *file, int flag)
     }
 
     FreeImage_Unload(image);   //Free the memory
+    #endif
 
     return NULL;
 }
@@ -235,10 +247,12 @@ void Texture_GenerateTilemap()
 void Texture_HandleFreeImageError(FREE_IMAGE_FORMAT fif, const char *message)
 {
     printf("\n*** ");
+
     if(fif != FIF_UNKNOWN)
     {
         printf("%s Format\n", FreeImage_GetFormatFromFIF(fif));
     }
+
     printf("%s\n", message);
     printf(" ***\n");
 }
