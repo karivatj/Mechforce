@@ -80,8 +80,9 @@ FIND_PATH(SDL_INCLUDE_DIR SDL.h
   /opt/local # DarwinPorts
   /opt/csw # Blastwave
   /opt
-  "C:/Program Files (x86)/MinGW"
+  "C:/MinGW"
   "C:/Qt/Qt5.0.2/5.0.2/mingw47_32/include/SDL"
+  "C:/CodeBlocks/MinGW/include/SDL"
 )
 
 #MESSAGE("SDL_INCLUDE_DIR is ${SDL_INCLUDE_DIR}")
@@ -98,8 +99,9 @@ FIND_LIBRARY(SDL_LIBRARY_TEMP
   /opt/local
   /opt/csw
   /opt
-  "C:/Program Files (x86)/MinGW"/
+  "C:/MinGW"
   "C:/Qt/Qt5.0.2/5.0.2/mingw47_32/lib"
+  "C:/CodeBlocks/MinGW/lib"
 )
 
 #MESSAGE("SDL_LIBRARY_TEMP is ${SDL_LIBRARY_TEMP}")
@@ -120,8 +122,8 @@ IF(NOT SDL_BUILDING_LIBRARY)
       /opt/local
       /opt/csw
       /opt
-      "C:/Program Files (x86)/MinGW"
-	  "C:/Qt/Qt5.0.2/5.0.2/mingw47_32/lib"
+      "C:/MinGW"
+      "C:/CodeBlocks/MinGW/lib"
     )
   ENDIF(NOT ${SDL_INCLUDE_DIR} MATCHES ".framework")
 ENDIF(NOT SDL_BUILDING_LIBRARY)
@@ -182,3 +184,10 @@ ENDIF(SDL_LIBRARY_TEMP)
 
 #MESSAGE("SDL_LIBRARY is ${SDL_LIBRARY")
 
+IF (SDL_FOUND)
+  MESSAGE(STATUS "Found SDL libraries at ${SDLMAIN_LIBRARY} and includes at ${SDL_INCLUDE_DIR}")
+ELSE (SDL_FOUND)
+  IF (SDL_FIND_REQUIRED)
+    MESSAGE(FATAL_ERROR "Could not find SDL libraries")
+  ENDIF (SDL_FIND_REQUIRED)
+ENDIF (SDL_FOUND)

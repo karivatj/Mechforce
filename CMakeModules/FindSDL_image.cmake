@@ -49,8 +49,9 @@ FIND_PATH(SDLIMAGE_INCLUDE_DIR SDL_image.h
   /opt/csw/include 
   /opt/include/SDL
   /opt/include
-  "C:/Program Files (x86)/MinGW"
+  "C:/MinGW"
   "C:/Qt/Qt5.0.2/5.0.2/mingw47_32/include/SDL"
+  "C:/CodeBlocks/MinGW/include/SDL"
 )
 
 FIND_LIBRARY(SDLIMAGE_LIBRARY 
@@ -68,8 +69,9 @@ FIND_LIBRARY(SDLIMAGE_LIBRARY
   /opt/local
   /opt/csw
   /opt
-  "C:/Program Files (x86)/MinGW"
+  "C:/MinGW"
   "C:/Qt/Qt5.0.2/5.0.2/mingw47_32/lib"
+  "C:/CodeBlocks/MinGW/lib"
 )
 
 SET(SDLIMAGE_FOUND "NO")
@@ -77,3 +79,10 @@ IF(SDLIMAGE_LIBRARY AND SDLIMAGE_INCLUDE_DIR)
   SET(SDLIMAGE_FOUND "YES")
 ENDIF(SDLIMAGE_LIBRARY AND SDLIMAGE_INCLUDE_DIR)
 
+IF (SDLIMAGE_FOUND)
+  MESSAGE(STATUS "Found SDLIMAGE libraries at ${SDLIMAGE_LIBRARY} and includes at ${SDLIMAGE_INCLUDE_DIR}")
+ELSE (SDLIMAGE_FOUND)
+  IF (SDLIMAGE_FIND_REQUIRED)
+    MESSAGE(FATAL_ERROR "Could not find SDLIMAGE libraries")
+  ENDIF (SDLIMAGE_FIND_REQUIRED)
+ENDIF (SDLIMAGE_FOUND)

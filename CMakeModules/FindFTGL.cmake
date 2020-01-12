@@ -14,16 +14,16 @@ IF (FTGL_LIBRARY AND FTGL_INCLUDE_DIR)
 ELSE (FTGL_LIBRARY AND FTGL_INCLUDE_DIR)
   
 FIND_PATH(FTGL_INCLUDE_DIR FTGL/ftgl.h PATHS 
+"C:/CodeBlocks/MinGW/include"
 /usr/local/include /usr/include 
-"C:/Program Files (x86)/MinGW/include" 
 "C:/Qt/Qt5.0.2/5.0.2/mingw47_32/include")
   
-FIND_LIBRARY(FTGL_LIBRARY NAMES libftgl ftgl libftgl.a libftgl_static ftgl_static PATHS 
+FIND_LIBRARY(FTGL_LIBRARY NAMES libftgl ftgl libftgl.a libftgl_static libftgl_static.a ftgl_static PATHS
+"C:/CodeBlocks/MinGW/lib"
 /usr/local/lib /usr/lib 
-"C:/Program Files (x86)/MinGW/lib"
 "C:/Qt/Qt5.0.2/5.0.2/mingw47_32/lib")
   
-  IF (FTGL_INCLUDE_DIR AND FTGL_LIBRARY)
+IF (FTGL_INCLUDE_DIR AND FTGL_LIBRARY)
     SET(FTGL_FOUND "YES")
   ELSE (FTGL_INCLUDE_DIR AND FTGL_LIBRARY)
     SET(FTGL_FOUND "NO")
@@ -31,7 +31,7 @@ FIND_LIBRARY(FTGL_LIBRARY NAMES libftgl ftgl libftgl.a libftgl_static ftgl_stati
 ENDIF (FTGL_LIBRARY AND FTGL_INCLUDE_DIR)
 
 IF (FTGL_FOUND)
-  #MESSAGE(STATUS "Found FTGL libraries at ${FTGL_LIBRARY} and includes at ${FTGL_INCLUDE_DIR}")
+  MESSAGE(STATUS "Found FTGL libraries at ${FTGL_LIBRARY} and includes at ${FTGL_INCLUDE_DIR}")
 ELSE (FTGL_FOUND)
   IF (FTGL_FIND_REQUIRED)
     MESSAGE(FATAL_ERROR "Could not find FTGL libraries")

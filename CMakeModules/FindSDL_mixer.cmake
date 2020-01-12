@@ -49,8 +49,9 @@ FIND_PATH(SDLMIXER_INCLUDE_DIR SDL_mixer.h
   /opt/csw/include 
   /opt/include/SDL
   /opt/include
-  "C:/Program Files (x86)/MinGW"
+  "C:/MinGW"
   "C:/Qt/Qt5.0.2/5.0.2/mingw47_32/include/SDL"
+  "C:/CodeBlocks/MinGW/include/SDL"
 )
 
 FIND_LIBRARY(SDLMIXER_LIBRARY 
@@ -68,8 +69,9 @@ FIND_LIBRARY(SDLMIXER_LIBRARY
   /opt/local
   /opt/csw
   /opt
-  "C:/Program Files (x86)/MinGW"
+  "C:/MinGW"
   "C:/Qt/Qt5.0.2/5.0.2/mingw47_32/lib"
+  "C:/CodeBlocks/MinGW/lib"
 )
 
 SET(SDLMIXER_FOUND "NO")
@@ -77,3 +79,10 @@ IF(SDLMIXER_LIBRARY AND SDLMIXER_INCLUDE_DIR)
   SET(SDLMIXER_FOUND "YES")
 ENDIF(SDLMIXER_LIBRARY AND SDLMIXER_INCLUDE_DIR)
 
+IF (SDLMIXER_FOUND)
+  MESSAGE(STATUS "Found SDLMIXER libraries at ${SDLMIXER_LIBRARY} and includes at ${SDLMIXER_INCLUDE_DIR}")
+ELSE (SDLMIXER_FOUND)
+  IF (SDLMIXER_FIND_REQUIRED)
+    MESSAGE(FATAL_ERROR "Could not find SDLMIXER libraries")
+  ENDIF (SDLMIXER_FIND_REQUIRED)
+ENDIF (SDLMIXER_FOUND)

@@ -48,41 +48,44 @@ FIND_PATH(FREETYPE_INCLUDE_DIR_ft2build ft2build.h
   /usr/local/X11R6/include
   /usr/local/X11/include
   /usr/freeware/include
-  "C:/Program Files (x86)/MinGW/include"
+  "C:/CodeBlocks/MinGW/include"
   "C:/Qt/Qt5.0.2/5.0.2/mingw47_32/include"
 )
 
-FIND_PATH(FREETYPE_INCLUDE_DIR_freetype2 freetype/config/ftheader.h
+FIND_PATH(FREETYPE_INCLUDE_DIR_freetype2 freetype2/freetype/config/ftheader.h
   HINTS
   $ENV{FREETYPE_DIR}/include/freetype2
   PATH_SUFFIXES freetype
   PATHS
+  "C:/CodeBlocks/MinGW/include"
   /usr/local/X11R6/include
   /usr/local/X11/include
   /usr/freeware/include
-  "C:/Program Files (x86)/MinGW/include/"
+  "C:/CodeBlocks/MinGW/include"
   "C:/Qt/Qt5.0.2/5.0.2/mingw47_32/include"
 )
 
 FIND_LIBRARY(FREETYPE_LIBRARY
-  NAMES freetype libfreetype freetype219
+  NAMES freetype libfreetype freetype219 freetype.lib
   HINTS
+  "C:/CodeBlocks/MinGW/lib"
   $ENV{FREETYPE_DIR}
   PATH_SUFFIXES lib64 lib
   PATHS
   /usr/local/X11R6
   /usr/local/X11
   /usr/freeware
-  "C:/Program Files (x86)/MinGW/lib"
   "C:/Qt/Qt5.0.2/5.0.2/mingw47_32/lib"
 )
 
 # set the user variables
-IF(FREETYPE_INCLUDE_DIR_ft2build AND FREETYPE_INCLUDE_DIR_freetype2)
+IF(FREETYPE_INCLUDE_DIR_ft2build AND FREETYPE_INCLUDE_DIR_freetype2 AND FREETYPE_LIBRARY)
+  SET(FREETYPE_FOUND TRUE CACHE BOOL "Set to TRUE if FREEIMAGE is found, FALSE otherwise")
   SET(FREETYPE_INCLUDE_DIRS "${FREETYPE_INCLUDE_DIR_ft2build};${FREETYPE_INCLUDE_DIR_freetype2}")
-ELSE(FREETYPE_INCLUDE_DIR_ft2build AND FREETYPE_INCLUDE_DIR_freetype2)
-  message( FATAL_ERROR "Freetype Includes not found!")
-ENDIF(FREETYPE_INCLUDE_DIR_ft2build AND FREETYPE_INCLUDE_DIR_freetype2)
+ELSE(FREETYPE_INCLUDE_DIR_ft2build AND FREETYPE_INCLUDE_DIR_freetype2 AND FREETYPE_LIBRARY)
+  SET(FREETYPE_FOUND FALSE CACHE BOOL "Set to TRUE if FREEIMAGE is found, FALSE otherwise")
+ENDIF(FREETYPE_INCLUDE_DIR_ft2build AND FREETYPE_INCLUDE_DIR_freetype2 AND FREETYPE_LIBRARY)
+
 SET(FREETYPE_LIBRARIES "${FREETYPE_LIBRARY}")
 
 # handle the QUIETLY and REQUIRED arguments and set FREETYPE_FOUND to TRUE if
@@ -91,3 +94,11 @@ INCLUDE(${CMAKE_CURRENT_LIST_DIR}/FindPackageHandleStandardArgs.cmake)
 FIND_PACKAGE_HANDLE_STANDARD_ARGS(Freetype  DEFAULT_MSG  FREETYPE_LIBRARY  FREETYPE_INCLUDE_DIRS)
 
 MARK_AS_ADVANCED(FREETYPE_LIBRARY FREETYPE_INCLUDE_DIR_freetype2 FREETYPE_INCLUDE_DIR_ft2build)
+
+IF (FREETYPE_FOUND)
+  MESSAGE(STATUS "Found FREETYPE libraries at ${FREETYPE_LIBRARY} and includes at ${FREETYPE_INCLUDE_DIRS}")
+ELSE (FREETYPE_FOUND)
+  IF (FREETYPE_FIND_REQUIRED)
+    MESSAGE(FATAL_ERROR "Could not find FREETYPE libraries")
+  ENDIF (FTGL_FIND_REQUIRED)
+ENDIF (FREETYPE_FOUND)
